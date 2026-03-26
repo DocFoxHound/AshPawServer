@@ -1,0 +1,800 @@
+PROJECT: 2D Multiplayer Animal Roleplay Game
+PRIMARY GOAL: Build a cross-platform overhead 2D multiplayer roleplay game in C++ while gaining experience in engine/framework design.
+TARGET PLATFORMS: Linux, macOS, Windows
+RECOMMENDED APPROACH: Build a custom C++ game framework on top of proven libraries instead of building a full engine entirely from scratch.
+
+==================================================
+1. HIGH-LEVEL PROJECT DECISION
+==================================================
+
+We are NOT building every low-level engine subsystem from nothing.
+
+We ARE building:
+- the gameplay architecture
+- the world/entity system
+- the rendering flow
+- the networking model
+- the client/server model
+- the asset pipeline
+- the game-specific systems
+
+We SHOULD rely on libraries for:
+- window creation
+- input abstraction
+- cross-platform timing
+- graphics context creation
+- image/audio loading
+- networking transport
+- build tooling
+
+Recommended stack:
+- Language: C++
+- Build system: CMake
+- Window/input/render bootstrap: SDL2 or SDL3
+- Optional graphics path: SDL renderer first, OpenGL later if needed
+- Networking: ENet
+- Serialization: JSON initially, binary later if needed
+- Debug UI: Dear ImGui
+- Image loading: stb_image or SDL_image
+- Audio: SDL_mixer or equivalent
+
+Core design philosophy:
+- keep scope tight
+- prioritize playable milestones
+- build a server-authoritative multiplayer architecture
+- validate each layer before adding the next one
+- do not overengineer early
+
+==================================================
+2. CORE PRODUCT VISION
+==================================================
+
+Game type:
+- overhead 2D multiplayer roleplay game
+- players control animal characters
+- game emphasizes movement, interaction, chat, social presence, and world persistence over twitch combat
+
+Initial playable concept:
+- players connect to a shared map
+- each player appears as an animal sprite
+- players can move, chat, and interact with simple objects/NPCs
+- server controls authoritative state
+- client handles rendering and input
+
+First true success state:
+- two or more players can connect to a server
+- move on the same map
+- see each other in real time
+- chat
+- interact with at least one world object or NPC
+
+==================================================
+3. NON-GOALS FOR EARLY DEVELOPMENT
+==================================================
+
+Do NOT build these in early phases:
+- custom 3D engine
+- advanced physics system
+- fully custom editor
+- account platform with full production auth stack
+- anti-cheat system beyond basic server authority
+- large-scale MMO infrastructure
+- complex crafting/economy
+- procedural world generation
+- advanced AI behaviors
+- huge persistent world
+- elaborate animation pipelines
+- custom scripting language
+
+==================================================
+4. PROJECT STRUCTURE
+==================================================
+
+Suggested repository structure:
+
+/project-root
+  /client
+  /server
+  /shared
+  /assets
+    /sprites
+    /tilesets
+    /maps
+    /audio
+    /ui
+  /external
+  /docs
+  CMakeLists.txt
+
+Responsibilities:
+
+/client
+- rendering
+- input
+- camera
+- client-side prediction/interpolation
+- UI
+- audio
+- local asset management
+
+/server
+- authoritative world simulation
+- player connections
+- movement validation
+- entity state ownership
+- chat routing
+- interaction resolution
+- persistence hooks later
+
+/shared
+- packet definitions
+- serialization helpers
+- shared math types
+- entity IDs
+- common world structures
+- gameplay constants
+
+/docs
+- design notes
+- feature specs
+- protocol notes
+- milestone definitions
+
+==================================================
+5. PHASE-BY-PHASE DEVELOPMENT PLAN
+==================================================
+
+----------------------------------
+PHASE 0: FOUNDATION AND TOOLING
+----------------------------------
+
+Objective:
+Establish the development environment, core libraries, repository layout, and successful cross-platform compilation.
+
+Deliverables:
+- CMake project builds on Linux, macOS, Windows
+- SDL integrated
+- executable launches a window
+- logging works
+- basic asset folder structure exists
+- debug build and release build both compile
+
+Tasks:
+1. Create repository structure.
+2. Configure CMake for client, server, shared targets.
+3. Add SDL dependency.
+4. Add ENet dependency.
+5. Add simple logging utility.
+6. Create a window and a main loop.
+7. Verify builds on all target platforms as early as possible.
+8. Add .gitignore, README, and docs folder.
+9. Create coding standards document.
+10. Create issue/milestone tracking format.
+
+Success criteria:
+- project compiles
+- window opens
+- clean shutdown works
+- all targets can be built locally
+
+Common pitfalls:
+- delaying platform testing
+- mixing client/server code too early
+- messy dependency setup
+
+----------------------------------
+PHASE 1: MINIMAL SINGLE-PLAYER PROTOTYPE
+----------------------------------
+
+Objective:
+Create the smallest playable overhead 2D prototype before networking.
+
+Deliverables:
+- one map or test room
+- one controllable animal
+- keyboard movement
+- camera following player
+- sprite rendering
+- collision against static blockers
+
+Tasks:
+1. Implement fixed timestep game loop.
+2. Create texture loading utility.
+3. Render a sprite to screen.
+4. Implement player transform data.
+5. Add keyboard input mapping.
+6. Add movement with delta/fixed update consistency.
+7. Add a simple tilemap or blocked rectangle test scene.
+8. Add camera following logic.
+9. Add collision detection against static geometry.
+10. Add a debug overlay showing FPS, position, and collision state.
+
+Success criteria:
+- local player can move around a small map
+- camera behaves correctly
+- no major jitter or timing instability
+- collisions prevent walking through blocked areas
+
+Agent instruction:
+Do not optimize prematurely. Prioritize correctness and simplicity.
+
+----------------------------------
+PHASE 2: WORLD MODEL AND ENTITY SYSTEM
+----------------------------------
+
+Objective:
+Build the gameplay data model that will support players, NPCs, objects, and world interactions.
+
+Deliverables:
+- entity system or lightweight ECS
+- map data representation
+- entity spawning
+- entity update/render separation
+- world state container
+
+Tasks:
+1. Define base entity ID system.
+2. Define basic components or data structs:
+   - Transform
+   - Sprite
+   - Collider
+   - Movement
+   - Name/Label
+   - PlayerTag
+   - NPCTag
+   - InteractionTag
+3. Build a World class or similar container.
+4. Implement spawn/despawn flow.
+5. Implement update order and render order.
+6. Add support for world objects such as signs, doors, or decorations.
+7. Add support for entity labels or display names.
+8. Separate simulation state from presentation state where practical.
+
+Success criteria:
+- multiple entities can exist and render
+- player and NPC/object entities can coexist
+- entity creation/destruction is predictable
+- world state is organized enough for networking later
+
+Design note:
+A simple entity model is acceptable. Full ECS is not required yet.
+
+----------------------------------
+PHASE 3: DATA-DRIVEN CONTENT PIPELINE
+----------------------------------
+
+Objective:
+Allow maps, entities, and world setup to be defined through external data instead of hardcoding everything.
+
+Deliverables:
+- external map definition format
+- external spawn definitions
+- tileset references
+- collision metadata
+- interactable object definitions
+
+Tasks:
+1. Choose initial content format:
+   - JSON is fine for now
+2. Define map schema:
+   - width
+   - height
+   - tiles
+   - collision flags
+   - spawn points
+   - object placements
+   - NPC placements
+3. Build map loader.
+4. Build entity spawn loader.
+5. Allow loading different maps without recompiling.
+6. Add map transition hooks if desired.
+7. Validate data loading with helpful error messages.
+
+Success criteria:
+- map content can be edited outside code
+- entities can spawn from data
+- level iteration becomes faster
+
+Agent instruction:
+Keep schema human-readable. Avoid inventing a complex content pipeline early.
+
+----------------------------------
+PHASE 4: ROLEPLAY CORE FEATURES (OFFLINE)
+----------------------------------
+
+Objective:
+Build the core interaction loop for a roleplay game before adding multiplayer.
+
+Deliverables:
+- local chat box prototype
+- interact key or click interaction
+- NPC dialogue
+- simple object interaction
+- names displayed over entities
+- optional emotes or status text
+
+Tasks:
+1. Create basic UI layer.
+2. Add text input support for chat box.
+3. Add message log UI.
+4. Add simple NPC interaction panel.
+5. Add interactable world objects:
+   - sign
+   - door
+   - seat
+   - container
+6. Add display names above animals.
+7. Add basic emote system or short text bubbles.
+8. Build interaction radius / targeting system.
+
+Success criteria:
+- local game already feels like the seed of a roleplay world
+- player can move, talk, and interact
+- interaction systems are clean enough to replicate over network later
+
+Design note:
+Even offline, interactions should be designed as requests/responses because that mirrors the future server model.
+
+----------------------------------
+PHASE 5: NETWORKING FOUNDATION
+----------------------------------
+
+Objective:
+Introduce client/server architecture with the smallest possible multiplayer feature set.
+
+Architecture decision:
+Use a dedicated authoritative server.
+
+Rules:
+- clients send input and requests
+- server owns true world state
+- server broadcasts snapshots/events
+- clients never decide authoritative positions or world outcomes
+
+Deliverables:
+- dedicated server executable
+- client connection to server
+- player join/leave flow
+- player spawn synchronization
+- movement synchronization
+- basic connection recovery/disconnect handling
+
+Tasks:
+1. Integrate ENet into client and server.
+2. Define packet protocol.
+3. Define connection lifecycle:
+   - connect
+   - handshake
+   - join accepted
+   - spawn
+   - disconnect
+4. Create player session tracking on server.
+5. Send input packets from client to server.
+6. Simulate movement on server.
+7. Send world snapshots or entity updates to clients.
+8. Render remote players on client.
+9. Handle disconnect cleanup.
+10. Add debug network logs.
+
+Success criteria:
+- two clients can connect to one server
+- each can see the other move
+- movement is authoritative from server
+- state stays coherent under normal use
+
+Required protocol categories:
+- connection/handshake
+- spawn/despawn
+- movement input
+- transform snapshots
+- chat
+- interaction requests/results
+- server notifications
+
+----------------------------------
+PHASE 6: CLIENT SMOOTHING AND MULTIPLAYER USABILITY
+----------------------------------
+
+Objective:
+Make multiplayer feel stable and visually acceptable.
+
+Deliverables:
+- interpolation for remote players
+- optional local prediction
+- reconciliation hooks if needed
+- connection quality diagnostics
+- reduced visible jitter
+
+Tasks:
+1. Add timestamped snapshots.
+2. Interpolate remote entity positions.
+3. Consider local prediction for player movement.
+4. Reconcile local prediction against server truth if implemented.
+5. Add network metrics overlay:
+   - ping
+   - packet loss
+   - snapshot rate
+6. Test under simulated latency if possible.
+7. Add graceful handling for packet delay or dropped packets.
+
+Success criteria:
+- remote movement looks smooth enough for gameplay
+- local controls feel responsive
+- network conditions do not immediately break playability
+
+Design note:
+For an RP game, perfect shooter-level responsiveness is not required. Stability and consistency matter more.
+
+----------------------------------
+PHASE 7: MULTIPLAYER ROLEPLAY FEATURES
+----------------------------------
+
+Objective:
+Network the actual roleplay systems rather than just movement.
+
+Deliverables:
+- networked chat
+- networked interactions
+- synchronized names/emotes
+- NPC interaction requests through server
+- object state synchronization
+
+Tasks:
+1. Make chat authoritative through server.
+2. Broadcast chat messages to nearby or all players.
+3. Replicate display names.
+4. Replicate emotes/text bubbles/status.
+5. Route interaction requests through server:
+   - open door
+   - inspect sign
+   - talk to NPC
+6. Synchronize world object states.
+7. Add permissions/ownership rules where needed.
+
+Success criteria:
+- social play loop works in multiplayer
+- players can see and react to each other consistently
+- interactions do not desync easily
+
+----------------------------------
+PHASE 8: PERSISTENCE AND WORLD STATE
+----------------------------------
+
+Objective:
+Add saving/loading for player data and selected persistent world data.
+
+Deliverables:
+- basic save format or database layer
+- persistent player identity
+- saved spawn location or last-known map
+- saved display name/customization
+- optional inventory/state persistence
+
+Tasks:
+1. Decide on persistence strategy:
+   - file-based for prototype
+   - SQLite if needed
+2. Define player save schema.
+3. Implement load on connect.
+4. Implement save on disconnect and periodic save.
+5. Add world persistence only for systems that truly need it.
+6. Add migration/version handling if schema changes.
+
+Success criteria:
+- players can leave and rejoin without losing key state
+- persistence layer is simple and reliable
+
+Agent instruction:
+Keep persistence minimal and robust. Do not build full MMO backend infrastructure.
+
+----------------------------------
+PHASE 9: CONTENT SCALING AND TOOLING
+----------------------------------
+
+Objective:
+Make the game easier to expand.
+
+Deliverables:
+- easier content authoring
+- debug/admin commands
+- map iteration improvements
+- content validation tools
+- profiling/debug workflow
+
+Tasks:
+1. Build content validation scripts/tools.
+2. Add debug commands:
+   - teleport
+   - spawn entity
+   - inspect entity
+   - reload map
+3. Improve map authoring flow.
+4. Add logs for network and world events.
+5. Add performance diagnostics.
+6. Add crash-safe error messages where possible.
+7. Consider lightweight editor integration later.
+
+Success criteria:
+- adding new maps/NPCs/objects becomes faster
+- debugging live issues becomes easier
+- development velocity improves
+
+----------------------------------
+PHASE 10: POLISH, TESTING, AND RELEASE PREP
+----------------------------------
+
+Objective:
+Stabilize the project into a usable playable alpha.
+
+Deliverables:
+- cross-platform packaging
+- basic settings menu
+- audio polish
+- bug tracking pass
+- multiplayer test checklist
+- basic player onboarding
+
+Tasks:
+1. Add options/settings:
+   - resolution
+   - audio
+   - controls
+2. Improve animation and presentation.
+3. Improve UI clarity.
+4. Add simple onboarding/help text.
+5. Package builds for Linux/macOS/Windows.
+6. Run multiplayer stability tests.
+7. Fix major crashes, desyncs, and content errors.
+8. Document how to host a server.
+
+Success criteria:
+- a small group can install, connect, and play
+- core systems are stable
+- project can move into active content development
+
+==================================================
+6. TECHNICAL ARCHITECTURE GUIDELINES
+==================================================
+
+Game loop:
+- use fixed timestep simulation
+- keep rendering separate from simulation
+- do not tie gameplay logic directly to render framerate
+
+Suggested pattern:
+- poll input
+- accumulate time
+- run simulation updates at fixed intervals
+- render current state/interpolated state
+
+Networking model:
+- authoritative dedicated server
+- clients send input or requests
+- server simulates authoritative outcomes
+- clients render received state plus smoothing
+
+Why this model:
+- easier anti-cheat baseline
+- fewer desync issues
+- cleaner authority rules
+- more maintainable as features grow
+
+Data boundaries:
+- shared module contains packet/data definitions
+- server should not depend on client rendering code
+- client should not own authoritative gameplay state
+
+Error-handling rules:
+- fail loudly during development
+- add useful logs for map loads, entity spawns, and network packets
+- validate file/data inputs
+- avoid silent failure
+
+==================================================
+7. MULTIPLAYER RULES OF THUMB
+==================================================
+
+Rule 1:
+The client should send intent, not truth.
+
+Examples:
+GOOD:
+- move up
+- interact with object 42
+- send chat message "hello"
+BAD:
+- my new position is X,Y
+- door 5 is now open
+- I own item 10 now
+
+Rule 2:
+The server decides:
+- valid movement
+- interactions
+- object state
+- player visibility rules
+- persistence writes
+
+Rule 3:
+Use reliable delivery only where needed.
+Reliable:
+- chat
+- spawns/despawns
+- important interactions
+- persistence-related messages
+Unreliable or lower-priority:
+- frequent movement/state snapshots
+
+Rule 4:
+Build packet types intentionally.
+Do not send giant generic blobs unless necessary.
+
+==================================================
+8. INITIAL GAMEPLAY SYSTEMS TO PRIORITIZE
+==================================================
+
+Highest priority systems:
+- movement
+- collision
+- camera
+- map loading
+- sprite rendering
+- names over players
+- chat
+- simple interactions
+- player connect/disconnect
+- entity replication
+
+Lower priority systems:
+- combat
+- economy
+- inventories
+- customization depth
+- AI complexity
+- quest systems
+- housing/building
+
+==================================================
+9. SUGGESTED FIRST PLAYABLE MILESTONES
+==================================================
+
+Milestone 1:
+Open window and draw one animal sprite.
+
+Milestone 2:
+Move local animal around test map with collision.
+
+Milestone 3:
+Load map from external file.
+
+Milestone 4:
+Add NPC/object interaction locally.
+
+Milestone 5:
+Run dedicated server and connect one client.
+
+Milestone 6:
+Connect two clients and sync movement.
+
+Milestone 7:
+Add networked chat.
+
+Milestone 8:
+Add one synchronized interactable object.
+
+Milestone 9:
+Add persistent player name and spawn point.
+
+Milestone 10:
+Package first internal alpha build.
+
+==================================================
+10. SCOPE CONTROL RULES
+==================================================
+
+To keep this project achievable:
+
+- finish one thin vertical slice before broadening scope
+- never build a system just because “engines usually have one”
+- avoid refactoring into complexity before there is real pressure
+- do not build editor tooling before content creation pain is real
+- do not build advanced combat if the game’s main value is social RP
+- prefer boring, debuggable systems over clever systems
+
+Every new feature should answer:
+1. Does this improve the first playable multiplayer RP loop?
+2. Can it wait until after two-player map/chat/interact works?
+3. Will it increase maintenance complexity too early?
+
+==================================================
+11. CODING STANDARDS FOR THE AI AGENT
+==================================================
+
+Instructions for the coding agent:
+
+- Use modern C++ but keep it straightforward.
+- Favor clarity over abstraction.
+- Avoid unnecessary template complexity.
+- Avoid large inheritance hierarchies unless clearly justified.
+- Separate client, server, and shared responsibilities cleanly.
+- Use small focused classes/files.
+- Add comments where design intent is not obvious.
+- Prefer deterministic update logic where possible.
+- Build minimal working implementations before generalized systems.
+- Keep external dependencies limited and justified.
+- Do not introduce premature optimization.
+
+When implementing new systems:
+- define the minimal version first
+- make it compile and run
+- validate behavior
+- only then extend it
+
+When proposing refactors:
+- explain why the current structure is insufficient
+- prefer incremental changes over rewriting whole subsystems
+
+==================================================
+12. REQUEST FORMAT FOR THE AI AGENT
+==================================================
+
+Use the following behavior when helping on this project:
+
+1. Always preserve the project goals:
+   - C++ learning
+   - cross-platform support
+   - 2D overhead multiplayer RP game
+   - custom framework approach, not full from-scratch engine reinvention
+
+2. When asked to implement a feature:
+   - identify the current phase
+   - state dependencies
+   - implement the smallest useful version
+   - explain how it fits client/server/shared architecture
+
+3. When asked to design a system:
+   - present the simplest viable design first
+   - note tradeoffs
+   - avoid overengineering
+
+4. When writing code:
+   - produce complete compilable code where practical
+   - include file placement suggestions
+   - include CMake updates when relevant
+   - keep interfaces narrow and understandable
+
+5. When multiple options exist:
+   - recommend the one that best fits current project phase
+   - mention alternatives briefly
+   - do not derail the project into unnecessary complexity
+
+==================================================
+13. NEXT ACTIONS
+==================================================
+
+Immediate next steps:
+1. Set up repository with client/server/shared layout.
+2. Configure CMake.
+3. Integrate SDL.
+4. Open a window and render a test sprite.
+5. Implement fixed timestep loop.
+6. Add player movement and camera.
+7. Add tile/block collision.
+8. Add simple map loading.
+9. Only after that, begin server/client networking prototype.
+
+Current recommended focus:
+PHASE 0 and PHASE 1 only.
+
+Do not start with:
+- persistence
+- combat
+- crafting
+- editor tools
+- advanced AI
+- complex networking features beyond movement sync
+
+End goal reminder:
+The first true proof of success is not “engine complete.”
+The first true proof of success is:
+“Two players can connect to a server, move around the same map as animal characters, see each other, and chat.”
