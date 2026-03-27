@@ -1,800 +1,985 @@
-PROJECT: 2D Multiplayer Animal Roleplay Game
-PRIMARY GOAL: Build a cross-platform overhead 2D multiplayer roleplay game in C++ while gaining experience in engine/framework design.
-TARGET PLATFORMS: Linux, macOS, Windows
-RECOMMENDED APPROACH: Build a custom C++ game framework on top of proven libraries instead of building a full engine entirely from scratch.
+PROJECT: 2D Multiplayer Animal Roleplay Game - SERVER REPOSITORY
+PRIMARY GOAL: Build the authoritative multiplayer server for a cross-platform 2D overhead animal roleplay game.
+LANGUAGE: C++
+TARGET PLATFORMS: Linux first, with portability to macOS/Windows if needed for local dev/testing
+REPOSITORY ROLE: This repo owns authoritative world simulation, player sessions, networking authority, state synchronization, interaction resolution, and persistence.
 
 ==================================================
-1. HIGH-LEVEL PROJECT DECISION
+1. SERVER MISSION
 ==================================================
 
-We are NOT building every low-level engine subsystem from nothing.
+This repository is the authoritative backend simulation for the game.
 
-We ARE building:
-- the gameplay architecture
-- the world/entity system
-- the rendering flow
-- the networking model
-- the client/server model
-- the asset pipeline
-- the game-specific systems
+The server is responsible for:
+- accepting and managing client connections
+- authenticating or identifying sessions later
+- owning the true world state
+- simulating player and NPC state
+- validating movement and interactions
+- broadcasting relevant world updates
+- routing chat and social systems
+- saving/loading persistent state later
 
-We SHOULD rely on libraries for:
-- window creation
-- input abstraction
-- cross-platform timing
-- graphics context creation
-- image/audio loading
-- networking transport
-- build tooling
-
-Recommended stack:
-- Language: C++
-- Build system: CMake
-- Window/input/render bootstrap: SDL2 or SDL3
-- Optional graphics path: SDL renderer first, OpenGL later if needed
-- Networking: ENet
-- Serialization: JSON initially, binary later if needed
-- Debug UI: Dear ImGui
-- Image loading: stb_image or SDL_image
-- Audio: SDL_mixer or equivalent
-
-Core design philosophy:
-- keep scope tight
-- prioritize playable milestones
-- build a server-authoritative multiplayer architecture
-- validate each layer before adding the next one
-- do not overengineer early
-
-==================================================
-2. CORE PRODUCT VISION
-==================================================
-
-Game type:
-- overhead 2D multiplayer roleplay game
-- players control animal characters
-- game emphasizes movement, interaction, chat, social presence, and world persistence over twitch combat
-
-Initial playable concept:
-- players connect to a shared map
-- each player appears as an animal sprite
-- players can move, chat, and interact with simple objects/NPCs
-- server controls authoritative state
-- client handles rendering and input
-
-First true success state:
-- two or more players can connect to a server
-- move on the same map
-- see each other in real time
-- chat
-- interact with at least one world object or NPC
-
-==================================================
-3. NON-GOALS FOR EARLY DEVELOPMENT
-==================================================
-
-Do NOT build these in early phases:
-- custom 3D engine
-- advanced physics system
-- fully custom editor
-- account platform with full production auth stack
-- anti-cheat system beyond basic server authority
-- large-scale MMO infrastructure
-- complex crafting/economy
-- procedural world generation
-- advanced AI behaviors
-- huge persistent world
-- elaborate animation pipelines
-- custom scripting language
-
-==================================================
-4. PROJECT STRUCTURE
-==================================================
-
-Suggested repository structure:
-
-/project-root
-  /client
-  /server
-  /shared
-  /assets
-    /sprites
-    /tilesets
-    /maps
-    /audio
-    /ui
-  /external
-  /docs
-  CMakeLists.txt
-
-Responsibilities:
-
-/client
+The server is NOT responsible for:
 - rendering
-- input
-- camera
-- client-side prediction/interpolation
-- UI
+- input handling
 - audio
-- local asset management
+- client UI
+- local visual effects
+- camera
+- sprite animation presentation
 
-/server
-- authoritative world simulation
-- player connections
-- movement validation
-- entity state ownership
-- chat routing
-- interaction resolution
-- persistence hooks later
+The server should be designed so that clients send requests and input, while the server decides what actually happens.
 
-/shared
-- packet definitions
-- serialization helpers
-- shared math types
+Core rule:
+CLIENTS MAY REQUEST.
+SERVER DECIDES.
+
+==================================================
+2. DESIGN PRINCIPLES
+==================================================
+
+Design the server with these principles:
+
+1. Authoritative simulation
+- the server owns true entity state
+- position, interaction, and object changes are validated on the server
+
+2. Deterministic-enough update flow
+- clear update order
+- fixed simulation tick
+- avoid scattered gameplay mutation from random code paths
+
+3. Simplicity first
+- build a small, robust multiplayer core before advanced features
+
+4. Network-conscious design
+- packet types should be intentional
+- do not send unnecessary data
+- separate frequent updates from reliable event messages
+
+5. Extensible but not overengineered
+- avoid speculative abstractions
+- structure code so new systems can be added without rewriting the core
+
+6. Testability
+- world simulation and validation logic should be testable without a graphical client
+
+==================================================
+3. REPOSITORY STRUCTURE
+==================================================
+
+Suggested layout:
+
+/server-repo
+  /src
+    /app
+    /net
+    /session
+    /world
+    /ecs_or_entities
+    /simulation
+    /systems
+    /chat
+    /interactions
+    /persistence
+    /config
+    /util
+  /include
+  /tests
+  /docs
+  /third_party
+  CMakeLists.txt
+  README.md
+
+Suggested responsibilities:
+
+/app
+- main entry point
+- startup/shutdown
+- config loading
+- dependency wiring
+
+/net
+- ENet integration
+- packet send/receive
+- protocol handling
+- connection transport layer
+
+/session
+- connected player sessions
+- mapping connection to player entity
+- login/handshake state
+- disconnect cleanup
+
+/world
+- map instances
+- zone state
+- entity containers
+- spatial queries later
+
+/ecs_or_entities
 - entity IDs
-- common world structures
-- gameplay constants
-
-/docs
-- design notes
-- feature specs
-- protocol notes
-- milestone definitions
-
-==================================================
-5. PHASE-BY-PHASE DEVELOPMENT PLAN
-==================================================
-
-----------------------------------
-PHASE 0: FOUNDATION AND TOOLING
-----------------------------------
-
-Objective:
-Establish the development environment, core libraries, repository layout, and successful cross-platform compilation.
-
-Deliverables:
-- CMake project builds on Linux, macOS, Windows
-- SDL integrated
-- executable launches a window
-- logging works
-- basic asset folder structure exists
-- debug build and release build both compile
-
-Tasks:
-1. Create repository structure.
-2. Configure CMake for client, server, shared targets.
-3. Add SDL dependency.
-4. Add ENet dependency.
-5. Add simple logging utility.
-6. Create a window and a main loop.
-7. Verify builds on all target platforms as early as possible.
-8. Add .gitignore, README, and docs folder.
-9. Create coding standards document.
-10. Create issue/milestone tracking format.
-
-Success criteria:
-- project compiles
-- window opens
-- clean shutdown works
-- all targets can be built locally
-
-Common pitfalls:
-- delaying platform testing
-- mixing client/server code too early
-- messy dependency setup
-
-----------------------------------
-PHASE 1: MINIMAL SINGLE-PLAYER PROTOTYPE
-----------------------------------
-
-Objective:
-Create the smallest playable overhead 2D prototype before networking.
-
-Deliverables:
-- one map or test room
-- one controllable animal
-- keyboard movement
-- camera following player
-- sprite rendering
-- collision against static blockers
-
-Tasks:
-1. Implement fixed timestep game loop.
-2. Create texture loading utility.
-3. Render a sprite to screen.
-4. Implement player transform data.
-5. Add keyboard input mapping.
-6. Add movement with delta/fixed update consistency.
-7. Add a simple tilemap or blocked rectangle test scene.
-8. Add camera following logic.
-9. Add collision detection against static geometry.
-10. Add a debug overlay showing FPS, position, and collision state.
-
-Success criteria:
-- local player can move around a small map
-- camera behaves correctly
-- no major jitter or timing instability
-- collisions prevent walking through blocked areas
-
-Agent instruction:
-Do not optimize prematurely. Prioritize correctness and simplicity.
-
-----------------------------------
-PHASE 2: WORLD MODEL AND ENTITY SYSTEM
-----------------------------------
-
-Objective:
-Build the gameplay data model that will support players, NPCs, objects, and world interactions.
-
-Deliverables:
-- entity system or lightweight ECS
-- map data representation
-- entity spawning
-- entity update/render separation
-- world state container
-
-Tasks:
-1. Define base entity ID system.
-2. Define basic components or data structs:
-   - Transform
-   - Sprite
-   - Collider
-   - Movement
-   - Name/Label
-   - PlayerTag
-   - NPCTag
-   - InteractionTag
-3. Build a World class or similar container.
-4. Implement spawn/despawn flow.
-5. Implement update order and render order.
-6. Add support for world objects such as signs, doors, or decorations.
-7. Add support for entity labels or display names.
-8. Separate simulation state from presentation state where practical.
-
-Success criteria:
-- multiple entities can exist and render
-- player and NPC/object entities can coexist
-- entity creation/destruction is predictable
-- world state is organized enough for networking later
-
-Design note:
-A simple entity model is acceptable. Full ECS is not required yet.
-
-----------------------------------
-PHASE 3: DATA-DRIVEN CONTENT PIPELINE
-----------------------------------
-
-Objective:
-Allow maps, entities, and world setup to be defined through external data instead of hardcoding everything.
-
-Deliverables:
-- external map definition format
-- external spawn definitions
-- tileset references
-- collision metadata
-- interactable object definitions
-
-Tasks:
-1. Choose initial content format:
-   - JSON is fine for now
-2. Define map schema:
-   - width
-   - height
-   - tiles
-   - collision flags
-   - spawn points
-   - object placements
-   - NPC placements
-3. Build map loader.
-4. Build entity spawn loader.
-5. Allow loading different maps without recompiling.
-6. Add map transition hooks if desired.
-7. Validate data loading with helpful error messages.
-
-Success criteria:
-- map content can be edited outside code
-- entities can spawn from data
-- level iteration becomes faster
-
-Agent instruction:
-Keep schema human-readable. Avoid inventing a complex content pipeline early.
-
-----------------------------------
-PHASE 4: ROLEPLAY CORE FEATURES (OFFLINE)
-----------------------------------
-
-Objective:
-Build the core interaction loop for a roleplay game before adding multiplayer.
-
-Deliverables:
-- local chat box prototype
-- interact key or click interaction
-- NPC dialogue
-- simple object interaction
-- names displayed over entities
-- optional emotes or status text
-
-Tasks:
-1. Create basic UI layer.
-2. Add text input support for chat box.
-3. Add message log UI.
-4. Add simple NPC interaction panel.
-5. Add interactable world objects:
-   - sign
-   - door
-   - seat
-   - container
-6. Add display names above animals.
-7. Add basic emote system or short text bubbles.
-8. Build interaction radius / targeting system.
-
-Success criteria:
-- local game already feels like the seed of a roleplay world
-- player can move, talk, and interact
-- interaction systems are clean enough to replicate over network later
-
-Design note:
-Even offline, interactions should be designed as requests/responses because that mirrors the future server model.
-
-----------------------------------
-PHASE 5: NETWORKING FOUNDATION
-----------------------------------
-
-Objective:
-Introduce client/server architecture with the smallest possible multiplayer feature set.
-
-Architecture decision:
-Use a dedicated authoritative server.
-
-Rules:
-- clients send input and requests
-- server owns true world state
-- server broadcasts snapshots/events
-- clients never decide authoritative positions or world outcomes
-
-Deliverables:
-- dedicated server executable
-- client connection to server
-- player join/leave flow
-- player spawn synchronization
-- movement synchronization
-- basic connection recovery/disconnect handling
-
-Tasks:
-1. Integrate ENet into client and server.
-2. Define packet protocol.
-3. Define connection lifecycle:
-   - connect
-   - handshake
-   - join accepted
-   - spawn
-   - disconnect
-4. Create player session tracking on server.
-5. Send input packets from client to server.
-6. Simulate movement on server.
-7. Send world snapshots or entity updates to clients.
-8. Render remote players on client.
-9. Handle disconnect cleanup.
-10. Add debug network logs.
-
-Success criteria:
-- two clients can connect to one server
-- each can see the other move
-- movement is authoritative from server
-- state stays coherent under normal use
-
-Required protocol categories:
-- connection/handshake
-- spawn/despawn
-- movement input
-- transform snapshots
-- chat
-- interaction requests/results
-- server notifications
-
-----------------------------------
-PHASE 6: CLIENT SMOOTHING AND MULTIPLAYER USABILITY
-----------------------------------
-
-Objective:
-Make multiplayer feel stable and visually acceptable.
-
-Deliverables:
-- interpolation for remote players
-- optional local prediction
-- reconciliation hooks if needed
-- connection quality diagnostics
-- reduced visible jitter
-
-Tasks:
-1. Add timestamped snapshots.
-2. Interpolate remote entity positions.
-3. Consider local prediction for player movement.
-4. Reconcile local prediction against server truth if implemented.
-5. Add network metrics overlay:
-   - ping
-   - packet loss
-   - snapshot rate
-6. Test under simulated latency if possible.
-7. Add graceful handling for packet delay or dropped packets.
-
-Success criteria:
-- remote movement looks smooth enough for gameplay
-- local controls feel responsive
-- network conditions do not immediately break playability
-
-Design note:
-For an RP game, perfect shooter-level responsiveness is not required. Stability and consistency matter more.
-
-----------------------------------
-PHASE 7: MULTIPLAYER ROLEPLAY FEATURES
-----------------------------------
-
-Objective:
-Network the actual roleplay systems rather than just movement.
-
-Deliverables:
-- networked chat
-- networked interactions
-- synchronized names/emotes
-- NPC interaction requests through server
-- object state synchronization
-
-Tasks:
-1. Make chat authoritative through server.
-2. Broadcast chat messages to nearby or all players.
-3. Replicate display names.
-4. Replicate emotes/text bubbles/status.
-5. Route interaction requests through server:
-   - open door
-   - inspect sign
-   - talk to NPC
-6. Synchronize world object states.
-7. Add permissions/ownership rules where needed.
-
-Success criteria:
-- social play loop works in multiplayer
-- players can see and react to each other consistently
-- interactions do not desync easily
-
-----------------------------------
-PHASE 8: PERSISTENCE AND WORLD STATE
-----------------------------------
-
-Objective:
-Add saving/loading for player data and selected persistent world data.
-
-Deliverables:
-- basic save format or database layer
-- persistent player identity
-- saved spawn location or last-known map
-- saved display name/customization
-- optional inventory/state persistence
-
-Tasks:
-1. Decide on persistence strategy:
-   - file-based for prototype
-   - SQLite if needed
-2. Define player save schema.
-3. Implement load on connect.
-4. Implement save on disconnect and periodic save.
-5. Add world persistence only for systems that truly need it.
-6. Add migration/version handling if schema changes.
-
-Success criteria:
-- players can leave and rejoin without losing key state
-- persistence layer is simple and reliable
-
-Agent instruction:
-Keep persistence minimal and robust. Do not build full MMO backend infrastructure.
-
-----------------------------------
-PHASE 9: CONTENT SCALING AND TOOLING
-----------------------------------
-
-Objective:
-Make the game easier to expand.
-
-Deliverables:
-- easier content authoring
-- debug/admin commands
-- map iteration improvements
-- content validation tools
-- profiling/debug workflow
-
-Tasks:
-1. Build content validation scripts/tools.
-2. Add debug commands:
-   - teleport
-   - spawn entity
-   - inspect entity
-   - reload map
-3. Improve map authoring flow.
-4. Add logs for network and world events.
-5. Add performance diagnostics.
-6. Add crash-safe error messages where possible.
-7. Consider lightweight editor integration later.
-
-Success criteria:
-- adding new maps/NPCs/objects becomes faster
-- debugging live issues becomes easier
-- development velocity improves
-
-----------------------------------
-PHASE 10: POLISH, TESTING, AND RELEASE PREP
-----------------------------------
-
-Objective:
-Stabilize the project into a usable playable alpha.
-
-Deliverables:
-- cross-platform packaging
-- basic settings menu
-- audio polish
-- bug tracking pass
-- multiplayer test checklist
-- basic player onboarding
-
-Tasks:
-1. Add options/settings:
-   - resolution
-   - audio
-   - controls
-2. Improve animation and presentation.
-3. Improve UI clarity.
-4. Add simple onboarding/help text.
-5. Package builds for Linux/macOS/Windows.
-6. Run multiplayer stability tests.
-7. Fix major crashes, desyncs, and content errors.
-8. Document how to host a server.
-
-Success criteria:
-- a small group can install, connect, and play
-- core systems are stable
-- project can move into active content development
-
-==================================================
-6. TECHNICAL ARCHITECTURE GUIDELINES
-==================================================
-
-Game loop:
-- use fixed timestep simulation
-- keep rendering separate from simulation
-- do not tie gameplay logic directly to render framerate
-
-Suggested pattern:
-- poll input
-- accumulate time
-- run simulation updates at fixed intervals
-- render current state/interpolated state
-
-Networking model:
-- authoritative dedicated server
-- clients send input or requests
-- server simulates authoritative outcomes
-- clients render received state plus smoothing
-
-Why this model:
-- easier anti-cheat baseline
-- fewer desync issues
-- cleaner authority rules
-- more maintainable as features grow
-
-Data boundaries:
-- shared module contains packet/data definitions
-- server should not depend on client rendering code
-- client should not own authoritative gameplay state
-
-Error-handling rules:
-- fail loudly during development
-- add useful logs for map loads, entity spawns, and network packets
-- validate file/data inputs
-- avoid silent failure
-
-==================================================
-7. MULTIPLAYER RULES OF THUMB
-==================================================
-
-Rule 1:
-The client should send intent, not truth.
-
-Examples:
-GOOD:
-- move up
-- interact with object 42
-- send chat message "hello"
-BAD:
-- my new position is X,Y
-- door 5 is now open
-- I own item 10 now
-
-Rule 2:
-The server decides:
-- valid movement
-- interactions
-- object state
-- player visibility rules
-- persistence writes
-
-Rule 3:
-Use reliable delivery only where needed.
-Reliable:
-- chat
-- spawns/despawns
-- important interactions
-- persistence-related messages
-Unreliable or lower-priority:
-- frequent movement/state snapshots
-
-Rule 4:
-Build packet types intentionally.
-Do not send giant generic blobs unless necessary.
-
-==================================================
-8. INITIAL GAMEPLAY SYSTEMS TO PRIORITIZE
-==================================================
-
-Highest priority systems:
+- components or entity structs
+- shared game-state objects
+
+/simulation
+- fixed tick loop
+- update sequencing
+- time management
+
+/systems
 - movement
 - collision
-- camera
-- map loading
-- sprite rendering
-- names over players
+- NPC logic later
+- visibility rules later
+
+/chat
+- chat channel routing
+- local/global chat rules later
+- moderation hooks later
+
+/interactions
+- doors, signs, NPC talks, interactable objects
+- interaction validation
+- interaction outcomes
+
+/persistence
+- save/load player state
+- file or database backend later
+
+/config
+- server settings
+- map rotation or startup map
+- tick rate
+- ports
+- logging settings
+
+/util
+- logging
+- IDs
+- serialization helpers
+- common utilities
+
+/tests
+- unit tests
+- packet serialization tests
+- simulation validation tests
+
+==================================================
+4. SERVER ARCHITECTURE OVERVIEW
+==================================================
+
+Core runtime model:
+
+- one main server application
+- one authoritative simulation loop
+- one or more loaded maps or zones later
+- connected clients mapped to sessions
+- sessions mapped to player entities
+- world state updated at fixed tick rate
+- state deltas/snapshots broadcast to clients
+
+High-level flow:
+
+1. Server starts.
+2. Network listener opens.
+3. World/map loads.
+4. Client connects.
+5. Handshake occurs.
+6. Session created.
+7. Player entity created or restored.
+8. Player sends input/requests.
+9. Server validates and simulates.
+10. Server broadcasts state/events.
+11. On disconnect, session cleaned up and player saved later.
+
+==================================================
+5. PHASE-BY-PHASE SERVER DEVELOPMENT PLAN
+==================================================
+
+----------------------------------
+PHASE 0: SERVER FOUNDATION
+----------------------------------
+
+Objective:
+Create the standalone server repository, build system, runtime entry point, and basic dependency integration.
+
+This phase aligns with overall project PHASE 0.
+
+Deliverables:
+- CMake project for server repo
+- ENet integrated
+- logging system
+- config file loading
+- server executable starts and shuts down cleanly
+- optional headless console loop
+
+Tasks:
+1. Create server repository structure.
+2. Configure CMake.
+3. Add ENet dependency.
+4. Add config loading system.
+5. Add logging utility with log levels.
+6. Create ServerApp entry point.
+7. Add startup and shutdown flow.
+8. Add dedicated runtime loop skeleton.
+9. Add basic command-line options if desired:
+   - config path
+   - port override
+   - log level
+10. Write README with build/run instructions.
+
+Success criteria:
+- server builds cleanly
+- server launches from command line
+- server reads config
+- server opens and closes without crashes
+
+Recommended first config fields:
+- listen_port
+- tick_rate
+- max_players
+- startup_map
+- log_level
+
+Common pitfalls:
+- mixing gameplay logic into startup/bootstrap code
+- not centralizing configuration early
+- weak logging making debugging harder later
+
+----------------------------------
+PHASE 1: SIMULATION LOOP AND WORLD CONTAINER
+----------------------------------
+
+Objective:
+Build the headless fixed-timestep simulation framework and core world state container.
+
+This phase aligns with overall project PHASE 1 and PHASE 2 groundwork.
+
+Deliverables:
+- fixed simulation tick loop
+- world container
+- basic entity ID system
+- player entity placeholder type
+- static collision map support placeholder
+
+Tasks:
+1. Implement fixed tick loop.
+2. Define simulation step timing.
+3. Create World class.
+4. Create EntityId system.
+5. Define minimal entity data:
+   - entity ID
+   - position
+   - velocity or movement intent
+   - collision bounds
+   - type tag
+6. Create player entity placeholder.
+7. Add map/world bootstrap stub.
+8. Add update ordering framework for future systems.
+9. Add debug logging for ticks/world state transitions.
+
+Success criteria:
+- server can run a stable tick loop
+- world object exists independently from networking
+- entities can be created, tracked, and removed
+- no rendering assumptions exist anywhere in the server code
+
+Agent instruction:
+Keep the simulation code independent of ENet transport details where possible.
+
+----------------------------------
+PHASE 2: CONNECTIONS, SESSIONS, AND HANDSHAKE
+----------------------------------
+
+Objective:
+Allow clients to connect to the server and establish a tracked session.
+
+This phase aligns with overall project PHASE 5 networking foundation.
+
+Deliverables:
+- ENet host setup
+- incoming connection handling
+- basic handshake protocol
+- session creation
+- disconnect handling
+- connection-to-session mapping
+
+Tasks:
+1. Start ENet server host on configured port.
+2. Accept incoming peers.
+3. Define handshake packet types.
+4. Create Session object:
+   - session ID
+   - peer pointer/reference
+   - connection state
+   - player ID later
+   - display name placeholder later
+5. Handle timeouts/disconnects.
+6. Reject invalid or malformed handshake attempts.
+7. Add max player cap handling.
+8. Log all connect/disconnect events.
+
+Recommended connection states:
+- connected_unverified
+- handshaking
+- active
+- disconnecting
+
+Success criteria:
+- a test client can connect
+- a session is created and tracked
+- disconnect cleanup works
+- malformed messages do not crash server
+
+Important note:
+Do not spawn a player into the world until handshake/session activation succeeds.
+
+----------------------------------
+PHASE 3: PLAYER SPAWN AND AUTHORITATIVE MOVEMENT
+----------------------------------
+
+Objective:
+Spawn connected players into the world and process server-authoritative movement.
+
+This phase aligns with overall project PHASE 5 and enables the first real multiplayer sync milestone.
+
+Deliverables:
+- player entity creation on join
+- input packet handling
+- server-side movement simulation
+- collision checks against map blockers
+- state snapshot broadcast
+- disconnect despawn
+
+Tasks:
+1. Define input packet for movement intent.
+2. Map each active session to a player entity.
+3. Spawn player into world on successful join.
+4. Store player movement intent on server.
+5. Run movement system each simulation tick.
+6. Resolve movement against static collision.
+7. Broadcast authoritative position updates.
+8. Despawn player on disconnect.
+9. Add spawn/despawn events for clients.
+
+Recommended movement model:
+- client sends directional input or desired movement vector
+- server computes resulting movement
+- server owns true position
+
+Success criteria:
+- two clients can connect
+- each client can send movement input
+- server moves both entities authoritatively
+- disconnect removes player cleanly from world
+
+Core rule:
+The server never trusts client-reported positions.
+
+----------------------------------
+PHASE 4: MAP LOADING AND STATIC WORLD AUTHORITY
+----------------------------------
+
+Objective:
+Load actual map/world data on the server and use it to control spawning, collision, and interactable world state.
+
+This phase aligns with overall project PHASE 3 data-driven content.
+
+Deliverables:
+- startup map loading
+- spawn point loading
+- collision data loading
+- interactable object registration
+- map metadata accessible to simulation systems
+
+Tasks:
+1. Define server-readable map format.
+2. Load collision layer.
+3. Load spawn points.
+4. Load object definitions:
+   - doors
+   - signs
+   - seats
+   - containers later
+5. Validate map data on startup.
+6. Reject startup if essential map data is invalid.
+7. Associate loaded objects with entity IDs or object IDs.
+8. Make map queries available to movement and interaction systems.
+
+Success criteria:
+- world is loaded from data rather than hardcoded
+- players spawn at valid locations
+- movement obeys real collision map
+- interactable objects exist in authoritative world state
+
+Agent instruction:
+Prioritize simple, robust content loading. Avoid building a full content pipeline in the server repo.
+
+----------------------------------
+PHASE 5: SNAPSHOT BROADCASTING AND STATE REPLICATION
+----------------------------------
+
+Objective:
+Create a clean server-to-client synchronization model for world state.
+
+This phase aligns with overall project PHASE 5 and PHASE 6.
+
+Deliverables:
+- entity state snapshot packets
+- spawn/despawn replication
+- periodic movement/state updates
+- packet categorization by reliability/importance
+- basic interest strategy placeholder
+
+Tasks:
+1. Define snapshot packet structures.
+2. Decide broadcast cadence:
+   - simulation tick rate
+   - snapshot send rate
+3. Broadcast player entity transforms.
+4. Broadcast spawn and despawn events.
+5. Separate reliable from unreliable message types.
+6. Track last-known replicated state if delta compression is added later.
+7. Add packet-level metrics logging/debugging.
+
+Suggested message categories:
+Reliable:
+- join accepted
+- spawn
+- despawn
 - chat
-- simple interactions
-- player connect/disconnect
-- entity replication
+- important interaction results
+Unreliable or lower priority:
+- frequent transform updates
 
-Lower priority systems:
-- combat
-- economy
-- inventories
-- customization depth
-- AI complexity
-- quest systems
-- housing/building
+Success criteria:
+- connected clients receive stable authoritative updates
+- snapshot sending is understandable and maintainable
+- state replication is not tightly coupled to client rendering assumptions
+
+Design note:
+The server should describe state, not presentation.
+
+----------------------------------
+PHASE 6: SERVER-SIDE ROLEPLAY INTERACTIONS
+----------------------------------
+
+Objective:
+Implement authoritative interaction handling for the basic RP loop.
+
+This phase aligns with overall project PHASE 4 offline RP systems and PHASE 7 multiplayer RP systems.
+
+Deliverables:
+- interaction request handling
+- door/sign/NPC/object interactions
+- range validation
+- object state updates
+- interaction result packets
+
+Tasks:
+1. Define interaction request packet:
+   - requesting player
+   - target entity/object
+   - interaction type
+2. Validate target existence.
+3. Validate distance/range.
+4. Validate permissions or state rules.
+5. Execute server-side interaction outcome.
+6. Send result back to requesting client.
+7. Broadcast state changes when relevant.
+
+Examples:
+- open/close door
+- read sign text
+- sit at seat
+- start NPC dialogue
+- inspect object
+
+Success criteria:
+- interaction outcomes are decided on server
+- object states remain synchronized
+- invalid client interaction attempts are rejected safely
+
+Important rule:
+A client may request an interaction. The server decides whether it succeeds.
+
+----------------------------------
+PHASE 7: CHAT AND SOCIAL SYSTEMS
+----------------------------------
+
+Objective:
+Make the server authoritative for multiplayer communication and social presence.
+
+This phase aligns with overall project PHASE 7 multiplayer roleplay features.
+
+Deliverables:
+- chat routing
+- message validation
+- name registration/display data
+- emote/status message routing
+- optional channel/range support later
+
+Tasks:
+1. Define chat message packet.
+2. Validate message size/content rules.
+3. Broadcast chat messages appropriately.
+4. Associate sessions with display names.
+5. Broadcast player name data on spawn or update.
+6. Add emote or text bubble event routing.
+7. Add optional local-area chat rules later.
+8. Add moderation hooks later:
+   - rate limit
+   - mute
+   - admin tools
+
+Success criteria:
+- players can chat reliably through server
+- names/social data are authoritative enough to stay consistent
+- spam or malformed traffic can be handled safely
+
+Agent instruction:
+Start with a simple all-chat or visible-map chat model before complex channels.
+
+----------------------------------
+PHASE 8: PERSISTENCE
+----------------------------------
+
+Objective:
+Persist player identity and selected server state between sessions.
+
+This phase aligns with overall project PHASE 8 persistence and world state.
+
+Deliverables:
+- player save/load
+- reconnectable player identity
+- saved location/map
+- saved display name/customization later
+- persistence backend abstraction kept simple
+
+Tasks:
+1. Choose persistence layer:
+   - file-based JSON/binary for prototype
+   - SQLite later if needed
+2. Define PlayerSave schema.
+3. Save on disconnect.
+4. Load on connect.
+5. Add periodic autosave if needed.
+6. Handle missing/corrupt save data safely.
+7. Add schema versioning field.
+
+Recommended initial persisted fields:
+- player ID
+- display name
+- last map
+- last position
+- simple customization flags later
+
+Success criteria:
+- players can rejoin without losing core state
+- persistence failures do not corrupt active runtime state
+- save/load code remains understandable
+
+Important note:
+Do not build a large account/backend service before prototype needs justify it.
+
+----------------------------------
+PHASE 9: SERVER TOOLING, DEBUGGING, AND ADMIN CONTROLS
+----------------------------------
+
+Objective:
+Improve operability and content debugging for ongoing development.
+
+This phase aligns with overall project PHASE 9 content scaling and tooling.
+
+Deliverables:
+- server console/admin commands
+- debug entity inspection
+- reload or restart-safe workflows where possible
+- stronger logging and metrics
+- test hooks for development
+
+Tasks:
+1. Add admin/debug commands:
+   - list players
+   - kick player
+   - teleport player
+   - inspect entity
+   - reload map in dev mode later
+2. Add runtime metrics:
+   - active players
+   - tick duration
+   - packet counts
+   - queue depths if applicable
+3. Add structured logs where useful.
+4. Add map/object validation utilities.
+5. Add test helpers for packet replay or scripted actions if helpful.
+
+Success criteria:
+- diagnosing server issues becomes easier
+- content iteration is faster
+- admin-level control exists for testing multiplayer behavior
+
+----------------------------------
+PHASE 10: HARDENING AND ALPHA READINESS
+----------------------------------
+
+Objective:
+Stabilize the server for small-scale real multiplayer use.
+
+This phase aligns with overall project PHASE 10 polish/testing/release prep.
+
+Deliverables:
+- stability improvements
+- disconnect/reconnect resilience
+- invalid packet handling hardening
+- config polish
+- deployment notes
+- basic hosting instructions
+
+Tasks:
+1. Audit packet validation.
+2. Audit disconnect cleanup.
+3. Add stronger bounds checks and sanity checks.
+4. Test under repeated joins/leaves.
+5. Test under packet loss/latency if possible.
+6. Improve logs for production-like debugging.
+7. Write deployment/run documentation.
+8. Add save backup or recovery policy if needed.
+
+Success criteria:
+- server can run for extended sessions without obvious instability
+- malformed traffic does not crash the server
+- small group multiplayer sessions work consistently
 
 ==================================================
-9. SUGGESTED FIRST PLAYABLE MILESTONES
+6. CORE SERVER SUBSYSTEMS
 ==================================================
 
-Milestone 1:
-Open window and draw one animal sprite.
+The server should eventually include these core subsystems:
 
-Milestone 2:
-Move local animal around test map with collision.
+1. Network subsystem
+- peer management
+- packet receive/send
+- protocol dispatch
+- channel reliability policy
 
-Milestone 3:
-Load map from external file.
+2. Session subsystem
+- connection lifecycle
+- session state
+- player-to-peer mapping
 
-Milestone 4:
-Add NPC/object interaction locally.
+3. World subsystem
+- maps
+- entities
+- object state
+- world queries
 
-Milestone 5:
-Run dedicated server and connect one client.
+4. Simulation subsystem
+- fixed tick
+- update scheduling
+- system execution order
 
-Milestone 6:
-Connect two clients and sync movement.
+5. Movement subsystem
+- input consumption
+- movement resolution
+- collision validation
 
-Milestone 7:
-Add networked chat.
+6. Interaction subsystem
+- request validation
+- object/NPC outcomes
+- state transitions
 
-Milestone 8:
-Add one synchronized interactable object.
+7. Chat subsystem
+- message validation
+- delivery rules
+- social routing
 
-Milestone 9:
-Add persistent player name and spawn point.
+8. Persistence subsystem
+- player save/load
+- world save hooks later
 
-Milestone 10:
-Package first internal alpha build.
+9. Admin/debug subsystem
+- diagnostics
+- commands
+- metrics
 
 ==================================================
-10. SCOPE CONTROL RULES
+7. NETWORK PROTOCOL GUIDELINES
 ==================================================
 
-To keep this project achievable:
+The server should define and own the protocol contract.
 
-- finish one thin vertical slice before broadening scope
-- never build a system just because “engines usually have one”
-- avoid refactoring into complexity before there is real pressure
-- do not build editor tooling before content creation pain is real
-- do not build advanced combat if the game’s main value is social RP
-- prefer boring, debuggable systems over clever systems
+Initial packet categories:
 
-Every new feature should answer:
-1. Does this improve the first playable multiplayer RP loop?
-2. Can it wait until after two-player map/chat/interact works?
-3. Will it increase maintenance complexity too early?
+Connection:
+- client hello
+- server hello
+- join accepted
+- join rejected
+- disconnect reason optional
+
+Session/player lifecycle:
+- player spawn
+- player despawn
+- identity update later
+
+Gameplay input:
+- movement input
+- interaction request
+- chat send
+- emote/status request
+
+Authoritative state:
+- entity transform snapshot
+- object state update
+- interaction result
+- chat broadcast
+
+Guidelines:
+- packets should be small and intentional
+- use enums/opcodes clearly
+- validate all incoming fields
+- reject impossible or malformed input safely
+- log protocol errors in development
 
 ==================================================
-11. CODING STANDARDS FOR THE AI AGENT
+8. SERVER DATA OWNERSHIP RULES
 ==================================================
 
-Instructions for the coding agent:
+The server owns:
+- active player list
+- authoritative player transforms
+- object open/closed states
+- NPC interaction states
+- chat routing decisions
+- persistence writes
 
-- Use modern C++ but keep it straightforward.
-- Favor clarity over abstraction.
-- Avoid unnecessary template complexity.
-- Avoid large inheritance hierarchies unless clearly justified.
-- Separate client, server, and shared responsibilities cleanly.
-- Use small focused classes/files.
-- Add comments where design intent is not obvious.
-- Prefer deterministic update logic where possible.
-- Build minimal working implementations before generalized systems.
-- Keep external dependencies limited and justified.
-- Do not introduce premature optimization.
+The client may temporarily predict:
+- its own local movement presentation
 
-When implementing new systems:
-- define the minimal version first
-- make it compile and run
-- validate behavior
-- only then extend it
+But the server remains the source of truth for:
+- actual position
+- object state
+- successful interactions
+- spawned/despawned entities
+
+==================================================
+9. SUGGESTED UPDATE ORDER PER TICK
+==================================================
+
+A recommended simulation tick order:
+
+1. Poll/process inbound network messages
+2. Apply validated input to session/player intent state
+3. Run movement system
+4. Resolve collisions
+5. Run interaction system
+6. Run NPC/object state updates if any
+7. Build outbound replication data
+8. Send snapshots/events
+9. Perform cleanup for pending despawns/disconnects
+10. Record metrics/logs as needed
+
+Design note:
+Avoid mutating world state from arbitrary packet handlers directly if possible.
+Prefer packet handlers to stage intent/request data, then let simulation systems process it on tick.
+
+==================================================
+10. TESTING STRATEGY
+==================================================
+
+The server should be testable even before a real client is complete.
+
+Testing priorities by phase:
+
+Phase 0-1:
+- startup/shutdown tests
+- config parsing tests
+- tick loop sanity tests
+- entity ID generation tests
+
+Phase 2-3:
+- handshake tests
+- session lifecycle tests
+- player spawn/despawn tests
+- movement validation tests
+- disconnect cleanup tests
+
+Phase 4-6:
+- map load validation tests
+- collision tests
+- interaction range/state tests
+- invalid request rejection tests
+
+Phase 7-8:
+- chat validation tests
+- persistence save/load tests
+- reconnect tests
+
+Phase 9-10:
+- soak tests
+- repeated connect/disconnect tests
+- malformed packet tests
+- packet flood/rate limit tests if added
+
+Agent instruction:
+Where possible, separate pure logic from transport glue so it can be unit-tested without a real network session.
+
+==================================================
+11. ALIGNMENT WITH FUTURE CLIENT REPO
+==================================================
+
+The server phases should align with the future client phases as follows:
+
+SERVER PHASE 0
+aligns with CLIENT PHASE 0
+- repo foundation
+- dependencies
+- config/build pipeline
+
+SERVER PHASE 1
+aligns with CLIENT PHASE 1 and part of CLIENT PHASE 2
+- simulation/world model on server
+- local entity/world model on client
+
+SERVER PHASE 2
+aligns with CLIENT networking bootstrap phase
+- connect/handshake/session activation
+
+SERVER PHASE 3
+aligns with CLIENT movement/network playback phase
+- authoritative movement
+- client input sending and remote entity display
+
+SERVER PHASE 4
+aligns with CLIENT map/content loading
+- common map assumptions and collision/layout rules
+
+SERVER PHASE 5
+aligns with CLIENT replication/interpolation phase
+- snapshots from server
+- smoothing/presentation on client
+
+SERVER PHASE 6
+aligns with CLIENT interaction UI/interaction request phase
+- client requests interaction
+- server validates and resolves
+
+SERVER PHASE 7
+aligns with CLIENT chat/social UI phase
+- chat send/receive
+- names/emotes display
+
+SERVER PHASE 8
+aligns with CLIENT persistence-facing identity/load behavior
+- load character/state on join
+- display persistent values on client
+
+SERVER PHASE 9
+aligns with CLIENT debugging/tooling phase
+- development/admin workflows
+
+SERVER PHASE 10
+aligns with CLIENT alpha-readiness/polish phase
+- stabilization and release prep
+
+==================================================
+12. SCOPE CONTROL RULES FOR SERVER DEVELOPMENT
+==================================================
+
+To keep the server project achievable:
+
+- do not build for MMO scale
+- do not build sharding/multi-zone infrastructure early
+- do not build advanced account/auth before prototype needs it
+- do not add complex permissions systems too soon
+- do not optimize snapshot compression before basic replication works
+- do not add multithreaded simulation unless single-threaded architecture becomes a proven bottleneck
+- do not mix rendering or UI assumptions into server code
+
+Priority order:
+1. correctness
+2. robustness
+3. clarity
+4. observability
+5. performance optimization
+
+==================================================
+13. CODING STANDARDS FOR THE SERVER AI AGENT
+==================================================
+
+Instructions for the coding agent working on the server repo:
+
+- use modern C++ conservatively
+- favor clear ownership and small focused classes
+- keep networking, world simulation, and persistence separated
+- avoid premature generic abstractions
+- keep packet handling explicit and understandable
+- make invalid states harder to represent where practical
+- prefer simple data flow over clever architecture
+- log important lifecycle and error events
+- keep simulation deterministic enough for debugging
+- build the smallest working server feature before extending it
+
+When implementing a new feature:
+1. identify which server phase it belongs to
+2. identify what existing systems it depends on
+3. implement minimal viable version
+4. add validation and logging
+5. explain how it will align with the client contract
 
 When proposing refactors:
-- explain why the current structure is insufficient
-- prefer incremental changes over rewriting whole subsystems
+- explain what current limitation motivates the refactor
+- preserve behavior unless a change is intentional
+- avoid rewriting working systems for style alone
 
 ==================================================
-12. REQUEST FORMAT FOR THE AI AGENT
+14. IMMEDIATE NEXT ACTIONS
 ==================================================
 
-Use the following behavior when helping on this project:
+Immediate implementation order for the server repo:
 
-1. Always preserve the project goals:
-   - C++ learning
-   - cross-platform support
-   - 2D overhead multiplayer RP game
-   - custom framework approach, not full from-scratch engine reinvention
-
-2. When asked to implement a feature:
-   - identify the current phase
-   - state dependencies
-   - implement the smallest useful version
-   - explain how it fits client/server/shared architecture
-
-3. When asked to design a system:
-   - present the simplest viable design first
-   - note tradeoffs
-   - avoid overengineering
-
-4. When writing code:
-   - produce complete compilable code where practical
-   - include file placement suggestions
-   - include CMake updates when relevant
-   - keep interfaces narrow and understandable
-
-5. When multiple options exist:
-   - recommend the one that best fits current project phase
-   - mention alternatives briefly
-   - do not derail the project into unnecessary complexity
-
-==================================================
-13. NEXT ACTIONS
-==================================================
-
-Immediate next steps:
-1. Set up repository with client/server/shared layout.
-2. Configure CMake.
-3. Integrate SDL.
-4. Open a window and render a test sprite.
-5. Implement fixed timestep loop.
-6. Add player movement and camera.
-7. Add tile/block collision.
-8. Add simple map loading.
-9. Only after that, begin server/client networking prototype.
+1. Create server repo and CMake setup.
+2. Integrate ENet.
+3. Add logging and config loader.
+4. Build ServerApp and startup loop.
+5. Implement fixed simulation tick.
+6. Create World container and EntityId system.
+7. Accept client connections.
+8. Build handshake/session model.
+9. Spawn player entities.
+10. Process movement input authoritatively.
+11. Broadcast snapshots.
+12. Load map data and collision.
+13. Add interactions and chat.
+14. Add persistence later.
 
 Current recommended focus:
-PHASE 0 and PHASE 1 only.
+SERVER PHASE 0 through SERVER PHASE 3 only.
 
 Do not start with:
 - persistence
-- combat
-- crafting
-- editor tools
-- advanced AI
-- complex networking features beyond movement sync
+- advanced admin tools
+- elaborate NPC logic
+- complex map transitions
+- optimization-heavy delta replication
+- large-scale hosting features
 
-End goal reminder:
-The first true proof of success is not “engine complete.”
-The first true proof of success is:
-“Two players can connect to a server, move around the same map as animal characters, see each other, and chat.”
+==================================================
+15. TRUE FIRST SUCCESS CONDITION
+==================================================
+
+The first real proof that the server is succeeding is not:
+- “the architecture looks complete”
+- “the protocol is future-proof”
+- “the persistence layer exists”
+
+The first real proof of success is:
+
+“The server can accept two clients, create sessions for them, spawn them into the world, process movement input authoritatively, and broadcast stable state so both clients can see coherent multiplayer movement.”
+
+After that, the next true proof is:
+
+“The server can also route chat and resolve at least one interaction type authoritatively.”

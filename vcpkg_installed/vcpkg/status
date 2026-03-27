@@ -1,0 +1,105 @@
+Package: vcpkg-cmake-config
+Version: 2024-05-23
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 9cddf7232af0ce86f8c1bbd012ca4e59e6720fb609826dbb731ecdf9629548be
+Status: install ok installed
+
+Package: vcpkg-cmake
+Version: 2024-04-23
+Architecture: x64-linux
+Multi-Arch: same
+Abi: c1e8ad8823dc83432fa33cc3ae7dd685da380c897cd60140eeac55b6ba854b48
+Status: install ok installed
+
+Package: catch2
+Version: 3.13.0
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 832098e1165c39eb4cdfd1452ad619c7a704ed15515373d45cc26720f97cdc14
+Description: A modern, C++-native, test framework for unit-tests, TDD and BDD.
+Status: install ok installed
+
+Package: enet
+Version: 1.3.18
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: e572bec95eace456ec03f9ca3dce8e2a9cc9c9519abdd67da770cebbe29e31ac
+Description: Reliable UDP networking library
+Status: install ok installed
+
+Package: nlohmann-json
+Version: 3.12.0
+Port-Version: 2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 2f795b2bfa96a66315696da1f3f5dcc945989630e390a7791fa0a17887c9bd14
+Description: JSON for Modern C++
+Status: install ok installed
+
+Package: fmt
+Version: 12.1.0
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 16d2ccb7124f3a15c95e125520e08202790f561b305f9cc8d1e9d8c7a6e10843
+Description: {fmt} is an open-source formatting library providing a fast and safe alternative to C stdio and C++ iostreams.
+Status: install ok installed
+
+Package: spdlog
+Version: 1.17.0
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: dcca638914c69e0075edb608d48cd94f04e20071a5ae90770a0a365fe4f2e5a9
+Description: Very fast, header-only/compiled, C++ logging library.
+Default-Features: fmt, tz-offset
+Status: install ok installed
+
+Package: spdlog
+Feature: fmt
+Depends: fmt
+Architecture: x64-linux
+Multi-Arch: same
+Description: Use fmt library
+Status: install ok installed
+
+Package: spdlog
+Feature: tz-offset
+Architecture: x64-linux
+Multi-Arch: same
+Description: Omit %z timezone offset (use on platforms without tm_gmtoff)
+Status: install ok installed
+
+Package: vcpkg-cmake-get-vars
+Version: 2025-05-29
+Depends: vcpkg-cmake
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 8d74fae0f9cf5e8b29f1c66439061ba72da2656b7e015092c21d73f3bc84b356
+Status: install ok installed
+
+Package: vcpkg-tool-meson
+Version: 1.9.0
+Port-Version: 4
+Depends: vcpkg-cmake-get-vars
+Architecture: x64-linux
+Multi-Arch: same
+Abi: ff72da3bfe418729955170bd8e1ee521b4ef5f29ae3b83941ac91445cf2300bf
+Description: Meson build system
+Status: install ok installed
+
+Package: tomlplusplus
+Version: 3.4.0
+Port-Version: 1
+Depends: vcpkg-cmake-config, vcpkg-tool-meson
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 45c4b5df08ea7e204f992bbe0984bef3e3f9e8fd90a5f84ec43a055c669e57f7
+Description: Header-only TOML config file parser and serializer for modern C++.
+Status: install ok installed
+

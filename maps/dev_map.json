@@ -1,0 +1,32 @@
+{
+  "map_id": "dev_meadow",
+  "tile_size": 32,
+  "width": 10,
+  "height": 10,
+  "collision": [
+    "##########",
+    "#........#",
+    "#........#",
+    "#........#",
+    "#........#",
+    "#........#",
+    "#........#",
+    "#........#",
+    "#........#",
+    "##########"
+  ],
+  "spawn_points": [
+    { "name": "north", "x": 64.0, "y": 64.0 },
+    { "name": "south", "x": 224.0, "y": 224.0 }
+  ],
+  "interactables": [
+    { "id": "inn_door", "type": "door", "x": 160.0, "y": 32.0, "blocks_movement": true, "is_open": false },
+    { "id": "town_sign", "type": "sign", "x": 96.0, "y": 160.0, "text": "Welcome to AshPaw Meadow." },
+    { "id": "camp_seat", "type": "seat", "x": 192.0, "y": 192.0 },
+    { "id": "berry_crate", "type": "container", "x": 224.0, "y": 96.0, "is_open": false }
+  ],
+  "tiled_hints": {
+    "collision_layer_name": "collision",
+    "spawn_object_layer_name": "spawns"
+  }
+}

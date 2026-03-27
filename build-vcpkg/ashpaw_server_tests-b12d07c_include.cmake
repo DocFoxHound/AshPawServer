@@ -1,0 +1,5 @@
+if(EXISTS "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests-b12d07c_tests.cmake")
+  include("/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests-b12d07c_tests.cmake")
+else()
+  add_test(ashpaw_server_tests_NOT_BUILT-b12d07c ashpaw_server_tests_NOT_BUILT-b12d07c)
+endif()

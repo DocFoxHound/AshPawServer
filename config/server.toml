@@ -1,0 +1,8 @@
+listen_port = 7777
+tick_rate = 20
+snapshot_rate = 10
+max_players = 16
+visibility_radius_units = 160
+startup_map = "maps/dev_map.json"
+player_save_dir = "data/players"
+log_level = "info"

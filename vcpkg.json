@@ -1,0 +1,11 @@
+{
+  "name": "ashpaw-server",
+  "version-string": "0.1.0",
+  "dependencies": [
+    "catch2",
+    "enet",
+    "nlohmann-json",
+    "spdlog",
+    "tomlplusplus"
+  ]
+}
