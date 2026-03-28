@@ -36,6 +36,7 @@ Important:
 - The server may sanitize the display name.
 - The client must update UI/state to the authoritative name from `identity_update` and chat broadcasts.
 - The authoritative controlled entity is `join_accepted.entity_id`.
+- The current implementation may send duplicate `player_spawn` data for the local entity during join; client spawn handling should be idempotent.
 
 ## Authoritative Data Model
 

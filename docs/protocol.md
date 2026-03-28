@@ -139,7 +139,7 @@ Notes:
 4. Server sends `server_hello`.
 5. Server restores or spawns the authoritative player entity.
 6. Server sends `join_accepted`.
-7. Server sends current `player_spawn` packets for visible entities and current `identity_update` packets.
+7. Server sends current `player_spawn` packets for all currently spawned entities and current `identity_update` packets.
 8. Server sends initial `object_state_update` packets for nearby interactables.
 9. Server continues sending `transform_snapshot` packets on the snapshot cadence.
 
@@ -150,6 +150,7 @@ Notes:
 - The server tracks per-session last-replicated transforms and object states.
 - A client may receive no snapshot packet for a send interval if nothing changed in range.
 - Reliable events like spawn, despawn, identity, interaction results, and object state updates can arrive separately from snapshots.
+- During initial join, the joining client should tolerate duplicate `player_spawn` information for its own entity because the current implementation sends both an initial spawn list and the normal broadcast spawn path.
 
 ## Authoritative Rules
 

@@ -88,6 +88,11 @@ Admin console commands:
 - `maps/`: starter map data
 - `docs/`: protocol and content contracts
 
+Key docs:
+- [`docs/docs_index.md`](/home/martinb/Documents/AshPawServer/docs/docs_index.md)
+- [`docs/client_server_contract.md`](/home/martinb/Documents/AshPawServer/docs/client_server_contract.md)
+- [`docs/client_implementation_playbook.md`](/home/martinb/Documents/AshPawServer/docs/client_implementation_playbook.md)
+
 ## Current Success Condition
 
 Two clients can connect, move, interact, and chat under server authority; reconnect without losing core state; and be inspected or managed through the built-in admin command surface.

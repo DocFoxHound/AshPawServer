@@ -1,6 +1,6 @@
 # Map Contract
 
-Phase 0-3 uses a minimal JSON map file that preserves the future Tiled path without requiring a full import pipeline yet.
+The server currently uses a minimal JSON map format for authoritative startup loading, collision, spawn points, and interactables.
 
 ## Required Fields
 
@@ -17,13 +17,32 @@ Current supported types:
 - `seat`: tracks occupant state authoritatively
 - `container`: toggles open/closed authoritatively
 
+## Validation Rules
+
+Hard-fail validation during load:
+- the map file must open and parse as JSON
+- `collision` row count must match `height`
+- each collision row width must match `width`
+- at least one spawn point must exist
+- interactable `type` must be one of the supported server types
+
+Startup validation warnings and tooling:
+- blocked spawn points are detected by map validation tooling
+- duplicate interactable IDs are detected by map validation tooling
+- out-of-bounds spawn points and interactables are detected by map validation tooling
+- the server logs validation warnings at startup through the map validator
+
+Runtime behavior:
+- player spawn attempts skip blocked/occupied spawn points
+- if no valid spawn location exists, spawning fails instead of placing a player into an invalid tile
+- closed doors and occupied seats participate in authoritative movement blocking
+
 ## Tiled Direction
 
-This format is intentionally close to data we can derive from Tiled later:
-- `collision` maps cleanly to a named collision layer
+This format stays intentionally close to data we can derive from Tiled later:
+- `collision` maps cleanly to a collision layer
 - `spawn_points` map cleanly to spawn objects in an object layer
 - `interactables` map cleanly to named objects in a future object layer export
-- `tiled_hints` stores the expected stable layer/object names for future import tooling
 
 ## Early Expectations
 
