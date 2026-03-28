@@ -46,11 +46,13 @@ class NetworkServer {
     [[nodiscard]] std::vector<std::vector<std::uint8_t>> build_initial_object_state_bytes(session::Session& session);
     [[nodiscard]] std::size_t connected_clients() const noexcept;
     [[nodiscard]] const ReplicationMetrics& metrics() const noexcept;
+    bool disconnect_session(session::Session& session, std::string_view reason);
 
   private:
     void handle_connect(ENetPeer* peer);
     void handle_disconnect(ENetPeer* peer);
-    void handle_receive(ENetPeer* peer, const ENetPacket& packet);
+    void handle_receive(ENetPeer* peer, const ENetPacket& packet, enet_uint8 channel);
+    [[nodiscard]] bool validate_channel(Opcode opcode, enet_uint8 channel) const noexcept;
     void handle_client_hello(session::Session& session, std::span<const std::uint8_t> payload);
     void handle_movement_input(session::Session& session, std::span<const std::uint8_t> payload);
     void handle_interaction_request(session::Session& session, std::span<const std::uint8_t> payload);
@@ -59,6 +61,7 @@ class NetworkServer {
     void broadcast_object_state_update(const world::InteractionResult& result);
     void send_packet(ENetPeer* peer, const std::vector<std::uint8_t>& bytes, enet_uint8 channel, bool reliable);
     void broadcast_packet(const std::vector<std::uint8_t>& bytes, enet_uint8 channel, bool reliable);
+    void reject_session_and_disconnect(session::Session& session, RejectReason reason, std::string_view message);
     void reject_and_disconnect(ENetPeer* peer, RejectReason reason, std::string_view message);
 
     config::ServerConfig config_;

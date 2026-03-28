@@ -588,3 +588,164 @@ TEST_CASE("player reconnect restores persisted position and identity", "[integra
     enet_host_destroy(reconnect_client);
     server.shutdown();
 }
+
+TEST_CASE("malformed handshake and wrong-channel reliable packets are rejected safely", "[integration]") {
+    EnetGuard enet_guard;
+
+    ashpaw::config::ServerConfig config;
+    config.listen_port = 19007;
+    config.max_players = 2;
+    config.max_display_name_length = 8;
+    config.max_packet_size_bytes = 64;
+
+    ashpaw::world::World world(integration_map());
+    ashpaw::session::SessionManager sessions(config.max_players);
+    ashpaw::net::NetworkServer server(config, world, sessions);
+    server.initialize();
+
+    ENetHost* client = enet_host_create(nullptr, 1, 2, 0, 0);
+    REQUIRE(client != nullptr);
+
+    ENetAddress address {};
+    enet_address_set_host(&address, "127.0.0.1");
+    address.port = config.listen_port;
+
+    ENetPeer* peer = enet_host_connect(client, &address, 2, 0);
+    REQUIRE(peer != nullptr);
+    REQUIRE(wait_for_connect(server, client));
+
+    const auto hello = ashpaw::net::encode_client_hello({
+        .protocol_version = ashpaw::net::kProtocolVersion,
+        .display_name = "Birch!@#$%^LongName"
+    });
+    enet_peer_send(peer, 0, enet_packet_create(hello.data(), hello.size(), ENET_PACKET_FLAG_RELIABLE));
+    enet_host_flush(client);
+    pump_server(server, 20);
+    (void)pump_client_packets(client);
+
+    auto active_sessions = sessions.active_sessions();
+    REQUIRE(active_sessions.size() == 1);
+    CHECK(active_sessions.front()->display_name == "BirchLon");
+
+    const auto chat = ashpaw::net::encode_chat_send({.message = "wrong channel"});
+    enet_peer_send(peer, 1, enet_packet_create(chat.data(), chat.size(), 0));
+    enet_host_flush(client);
+    pump_server(server, 20);
+    CHECK(sessions.active_sessions().empty());
+
+    enet_host_destroy(client);
+    server.shutdown();
+}
+
+TEST_CASE("server remains stable across repeated joins and leaves", "[integration]") {
+    EnetGuard enet_guard;
+
+    ashpaw::config::ServerConfig config;
+    config.listen_port = 19008;
+    config.max_players = 2;
+
+    ashpaw::world::World world(integration_map());
+    ashpaw::session::SessionManager sessions(config.max_players);
+    ashpaw::net::NetworkServer server(config, world, sessions);
+    server.initialize();
+
+    ENetAddress address {};
+    enet_address_set_host(&address, "127.0.0.1");
+    address.port = config.listen_port;
+
+    for (int iteration = 0; iteration < 5; ++iteration) {
+        ENetHost* client = enet_host_create(nullptr, 1, 2, 0, 0);
+        REQUIRE(client != nullptr);
+
+        ENetPeer* peer = enet_host_connect(client, &address, 2, 0);
+        REQUIRE(peer != nullptr);
+        REQUIRE(wait_for_connect(server, client));
+
+        const auto hello = ashpaw::net::encode_client_hello({
+            .protocol_version = ashpaw::net::kProtocolVersion,
+            .display_name = "Loop" + std::to_string(iteration)
+        });
+        enet_peer_send(peer, 0, enet_packet_create(hello.data(), hello.size(), ENET_PACKET_FLAG_RELIABLE));
+        enet_host_flush(client);
+        pump_server(server, 20);
+        REQUIRE(sessions.active_sessions().size() == 1);
+
+        enet_peer_disconnect(peer, 0);
+        enet_host_flush(client);
+        pump_server(server, 20);
+        CHECK(sessions.active_sessions().empty());
+        CHECK(world.entity_count() == 0);
+
+        enet_host_destroy(client);
+        pump_server(server, 5);
+    }
+
+    server.shutdown();
+}
+
+TEST_CASE("server tolerates delayed servicing and bursty movement traffic", "[integration]") {
+    EnetGuard enet_guard;
+
+    ashpaw::config::ServerConfig config;
+    config.listen_port = 19009;
+    config.tick_rate = 20;
+    config.snapshot_rate = 10;
+    config.max_players = 2;
+
+    ashpaw::world::World world(integration_map());
+    ashpaw::session::SessionManager sessions(config.max_players);
+    ashpaw::net::NetworkServer server(config, world, sessions);
+    server.initialize();
+
+    ENetHost* client = enet_host_create(nullptr, 1, 2, 0, 0);
+    REQUIRE(client != nullptr);
+
+    ENetAddress address {};
+    enet_address_set_host(&address, "127.0.0.1");
+    address.port = config.listen_port;
+
+    ENetPeer* peer = enet_host_connect(client, &address, 2, 0);
+    REQUIRE(peer != nullptr);
+    REQUIRE(wait_for_connect(server, client));
+
+    const auto hello = ashpaw::net::encode_client_hello({
+        .protocol_version = ashpaw::net::kProtocolVersion,
+        .display_name = "LagTest"
+    });
+    enet_peer_send(peer, 0, enet_packet_create(hello.data(), hello.size(), ENET_PACKET_FLAG_RELIABLE));
+    enet_host_flush(client);
+    pump_server(server, 20);
+    (void)pump_client_packets(client);
+
+    auto active_sessions = sessions.active_sessions();
+    REQUIRE(active_sessions.size() == 1);
+    const auto entity_id = active_sessions.front()->entity_id;
+
+    // Simulate bursty input arriving before the server gets to service and tick.
+    for (int index = 0; index < 25; ++index) {
+        const auto move = ashpaw::net::encode_movement_input({
+            .move_x = static_cast<std::int8_t>((index % 2 == 0) ? 1 : -1),
+            .move_y = 0
+        });
+        enet_peer_send(peer, 1, enet_packet_create(move.data(), move.size(), 0));
+    }
+    enet_host_flush(client);
+
+    std::this_thread::sleep_for(50ms);
+    pump_server(server, 20);
+    world.tick(0.15F);
+    const auto snapshot = server.build_snapshot_bytes_for_session(*active_sessions.front());
+    CHECK(snapshot.has_value());
+
+    const auto entity = world.entity(entity_id);
+    REQUIRE(entity.has_value());
+    CHECK(entity->position.x >= 32.0F);
+    CHECK(entity->position.x <= 224.0F);
+    CHECK(sessions.active_sessions().size() == 1);
+
+    enet_peer_disconnect(peer, 0);
+    enet_host_flush(client);
+    pump_server(server, 20);
+    enet_host_destroy(client);
+    server.shutdown();
+}

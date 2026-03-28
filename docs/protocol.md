@@ -1,6 +1,34 @@
-# Phase 0-3 Protocol
+# AshPaw Server Protocol
 
 All packets begin with a one-byte opcode. Multi-byte integers are little-endian. Strings are encoded as a one-byte length followed by raw UTF-8 bytes.
+
+Protocol version: `1`
+
+## Channels
+
+- Channel `0`: reliable traffic
+- Channel `1`: movement input traffic
+
+Expected client packet routing:
+- `client_hello` on channel `0`
+- `interaction_request` on channel `0`
+- `chat_send` on channel `0`
+- `movement_input` on channel `1` preferred, channel `0` accepted
+
+If a client sends a known opcode on the wrong channel, the server disconnects that session as malformed traffic.
+
+## Limits
+
+- `max_packet_size_bytes`: configured in `config/server.toml`, default `512`
+- `max_display_name_length`: configured in `config/server.toml`, default `24`
+- `max_chat_message_length`: configured in `config/server.toml`, default `120`
+- String fields use a one-byte length prefix, so protocol-level maximum encoded string length is `255`
+
+Display-name sanitation rules on connect:
+- the server keeps only ASCII letters, digits, spaces, `-`, and `_`
+- the server trims leading/trailing spaces
+- the server truncates to `max_display_name_length`
+- if nothing remains, the server uses `player`
 
 ## Opcodes
 
@@ -39,11 +67,18 @@ All packets begin with a one-byte opcode. Multi-byte integers are little-endian.
 - `u8 reason_code`
 - `string message`
 
+Reject reasons:
+- `1`: invalid protocol
+- `2`: server full
+- `3`: malformed packet
+
 ### `movement_input`
 - `i8 move_x`
 - `i8 move_y`
 
-Values are clamped to `[-1, 1]` during decode.
+Server behavior:
+- values are clamped to `[-1, 1]` during decode
+- client positions are never trusted
 
 ### `player_spawn`
 - `u32 entity_id`
@@ -61,10 +96,21 @@ Values are clamped to `[-1, 1]` during decode.
 - `string target_id`
 - `string message`
 
+Interaction statuses:
+- `0`: success
+- `1`: not_found
+- `2`: out_of_range
+- `3`: blocked
+- `4`: invalid_target
+
 ### `object_state_update`
 - `string target_id`
 - `u8 is_open`
 - `u32 occupant_entity_id`
+
+Notes:
+- `occupant_entity_id == 0` means no occupant
+- currently used for doors, seats, and containers
 
 ### `chat_send`
 - `string message`
@@ -85,7 +131,28 @@ Values are clamped to `[-1, 1]` during decode.
   - `f32 x`
   - `f32 y`
 
-Phase 5 note:
-- transform snapshots are periodic authoritative updates sent on a separate snapshot cadence
-- sessions may receive only changed entity transforms rather than a full world dump every send
-- replication is filtered by a simple visibility radius rather than broadcasting the whole world to every client
+## Session Flow
+
+1. Client connects over ENet.
+2. Client sends `client_hello`.
+3. Server validates protocol and sanitized name.
+4. Server sends `server_hello`.
+5. Server restores or spawns the authoritative player entity.
+6. Server sends `join_accepted`.
+7. Server sends current `player_spawn` packets for visible entities and current `identity_update` packets.
+8. Server sends initial `object_state_update` packets for nearby interactables.
+9. Server continues sending `transform_snapshot` packets on the snapshot cadence.
+
+## Replication Semantics
+
+- Snapshots are not a full world dump every send.
+- The server uses visibility filtering with a configured radius.
+- The server tracks per-session last-replicated transforms and object states.
+- A client may receive no snapshot packet for a send interval if nothing changed in range.
+- Reliable events like spawn, despawn, identity, interaction results, and object state updates can arrive separately from snapshots.
+
+## Authoritative Rules
+
+- The client may request movement, chat, and interactions.
+- The server decides positions, interaction outcomes, object state, identity, and chat broadcast.
+- On disconnect, the server despawns the player entity and persists player state.

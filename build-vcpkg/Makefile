@@ -574,6 +574,30 @@ ashpaw_server_tests/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ashpaw_server_tests.dir/build.make CMakeFiles/ashpaw_server_tests.dir/build
 .PHONY : ashpaw_server_tests/fast
 
+src/app/admin_command_processor.o: src/app/admin_command_processor.cpp.o
+.PHONY : src/app/admin_command_processor.o
+
+# target to build an object file
+src/app/admin_command_processor.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ashpaw_server_lib.dir/build.make CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.o
+.PHONY : src/app/admin_command_processor.cpp.o
+
+src/app/admin_command_processor.i: src/app/admin_command_processor.cpp.i
+.PHONY : src/app/admin_command_processor.i
+
+# target to preprocess a source file
+src/app/admin_command_processor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ashpaw_server_lib.dir/build.make CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.i
+.PHONY : src/app/admin_command_processor.cpp.i
+
+src/app/admin_command_processor.s: src/app/admin_command_processor.cpp.s
+.PHONY : src/app/admin_command_processor.s
+
+# target to generate assembly for a file
+src/app/admin_command_processor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ashpaw_server_lib.dir/build.make CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.s
+.PHONY : src/app/admin_command_processor.cpp.s
+
 src/app/main.o: src/app/main.cpp.o
 .PHONY : src/app/main.o
 
@@ -814,6 +838,30 @@ src/world/map.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ashpaw_server_lib.dir/build.make CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.s
 .PHONY : src/world/map.cpp.s
 
+src/world/map_validation.o: src/world/map_validation.cpp.o
+.PHONY : src/world/map_validation.o
+
+# target to build an object file
+src/world/map_validation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ashpaw_server_lib.dir/build.make CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.o
+.PHONY : src/world/map_validation.cpp.o
+
+src/world/map_validation.i: src/world/map_validation.cpp.i
+.PHONY : src/world/map_validation.i
+
+# target to preprocess a source file
+src/world/map_validation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ashpaw_server_lib.dir/build.make CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.i
+.PHONY : src/world/map_validation.cpp.i
+
+src/world/map_validation.s: src/world/map_validation.cpp.s
+.PHONY : src/world/map_validation.s
+
+# target to generate assembly for a file
+src/world/map_validation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ashpaw_server_lib.dir/build.make CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.s
+.PHONY : src/world/map_validation.cpp.s
+
 src/world/world.o: src/world/world.cpp.o
 .PHONY : src/world/world.o
 
@@ -837,6 +885,30 @@ src/world/world.s: src/world/world.cpp.s
 src/world/world.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ashpaw_server_lib.dir/build.make CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.s
 .PHONY : src/world/world.cpp.s
+
+tests/admin_command_tests.o: tests/admin_command_tests.cpp.o
+.PHONY : tests/admin_command_tests.o
+
+# target to build an object file
+tests/admin_command_tests.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ashpaw_server_tests.dir/build.make CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o
+.PHONY : tests/admin_command_tests.cpp.o
+
+tests/admin_command_tests.i: tests/admin_command_tests.cpp.i
+.PHONY : tests/admin_command_tests.i
+
+# target to preprocess a source file
+tests/admin_command_tests.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ashpaw_server_tests.dir/build.make CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.i
+.PHONY : tests/admin_command_tests.cpp.i
+
+tests/admin_command_tests.s: tests/admin_command_tests.cpp.s
+.PHONY : tests/admin_command_tests.s
+
+# target to generate assembly for a file
+tests/admin_command_tests.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ashpaw_server_tests.dir/build.make CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.s
+.PHONY : tests/admin_command_tests.cpp.s
 
 tests/config_tests.o: tests/config_tests.cpp.o
 .PHONY : tests/config_tests.o
@@ -1002,6 +1074,9 @@ help:
 	@echo "... ashpaw_server"
 	@echo "... ashpaw_server_lib"
 	@echo "... ashpaw_server_tests"
+	@echo "... src/app/admin_command_processor.o"
+	@echo "... src/app/admin_command_processor.i"
+	@echo "... src/app/admin_command_processor.s"
 	@echo "... src/app/main.o"
 	@echo "... src/app/main.i"
 	@echo "... src/app/main.s"
@@ -1032,9 +1107,15 @@ help:
 	@echo "... src/world/map.o"
 	@echo "... src/world/map.i"
 	@echo "... src/world/map.s"
+	@echo "... src/world/map_validation.o"
+	@echo "... src/world/map_validation.i"
+	@echo "... src/world/map_validation.s"
 	@echo "... src/world/world.o"
 	@echo "... src/world/world.i"
 	@echo "... src/world/world.s"
+	@echo "... tests/admin_command_tests.o"
+	@echo "... tests/admin_command_tests.i"
+	@echo "... tests/admin_command_tests.s"
 	@echo "... tests/config_tests.o"
 	@echo "... tests/config_tests.i"
 	@echo "... tests/config_tests.s"

@@ -2,6 +2,8 @@ CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o: \
  /home/martinb/Documents/AshPawServer/src/app/server_app.cpp \
  /usr/include/stdc-predef.h \
  /home/martinb/Documents/AshPawServer/include/ashpaw/app/server_app.hpp \
+ /home/martinb/Documents/AshPawServer/include/ashpaw/app/admin_command_processor.hpp \
+ /home/martinb/Documents/AshPawServer/include/ashpaw/net/network_server.hpp \
  /home/martinb/Documents/AshPawServer/include/ashpaw/config/server_config.hpp \
  /usr/include/c++/15/cstdint \
  /usr/include/c++/15/x86_64-redhat-linux/bits/c++config.h \
@@ -167,7 +169,6 @@ CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o: \
  /usr/include/c++/15/bits/fs_dir.h /usr/include/c++/15/bits/fs_ops.h \
  /usr/include/c++/15/optional \
  /usr/include/c++/15/bits/enable_special_members.h \
- /home/martinb/Documents/AshPawServer/include/ashpaw/net/network_server.hpp \
  /home/martinb/Documents/AshPawServer/include/ashpaw/net/protocol.hpp \
  /home/martinb/Documents/AshPawServer/include/ashpaw/world/world.hpp \
  /home/martinb/Documents/AshPawServer/include/ashpaw/world/map.hpp \
@@ -211,7 +212,8 @@ CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o: \
  /usr/include/c++/15/bits/formatfwd.h \
  /usr/include/c++/15/bits/ranges_algobase.h \
  /usr/include/c++/15/bits/unicode.h \
- /usr/include/c++/15/bits/unicode-data.h \
+ /usr/include/c++/15/bits/unicode-data.h /usr/include/c++/15/functional \
+ /usr/include/c++/15/bits/std_function.h \
  /home/martinb/Documents/AshPawServer/include/ashpaw/simulation/simulation_clock.hpp \
  /usr/include/c++/15/atomic /usr/include/c++/15/bits/atomic_base.h \
  /usr/include/c++/15/bits/atomic_lockfree_defines.h \
@@ -231,7 +233,10 @@ CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o: \
  /usr/include/c++/15/bits/ranges_uninitialized.h \
  /usr/include/c++/15/pstl/glue_memory_defs.h \
  /usr/include/c++/15/pstl/execution_defs.h \
+ /home/martinb/Documents/AshPawServer/include/ashpaw/world/map_validation.hpp \
  /home/martinb/Documents/AshPawServer/include/ashpaw/util/logging.hpp \
+ /usr/include/c++/15/algorithm /usr/include/c++/15/bits/ranges_algo.h \
+ /usr/include/c++/15/pstl/glue_algorithm_defs.h \
  /usr/include/c++/15/csignal /usr/include/signal.h \
  /usr/include/bits/signum-generic.h /usr/include/bits/signum-arch.h \
  /usr/include/bits/types/sig_atomic_t.h \
@@ -244,9 +249,10 @@ CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o: \
  /usr/include/sys/ucontext.h /usr/include/bits/sigstack.h \
  /usr/include/bits/sigstksz.h /usr/include/bits/ss_flags.h \
  /usr/include/bits/types/struct_sigstack.h /usr/include/bits/sigthread.h \
- /usr/include/bits/signal_ext.h /usr/include/c++/15/thread \
- /usr/include/c++/15/stop_token /usr/include/c++/15/bits/std_thread.h \
- /usr/include/c++/15/semaphore /usr/include/c++/15/bits/semaphore_base.h \
+ /usr/include/bits/signal_ext.h /usr/include/c++/15/iostream \
+ /usr/include/c++/15/thread /usr/include/c++/15/stop_token \
+ /usr/include/c++/15/bits/std_thread.h /usr/include/c++/15/semaphore \
+ /usr/include/c++/15/bits/semaphore_base.h \
  /usr/include/c++/15/bits/atomic_timed_wait.h \
  /usr/include/c++/15/bits/this_thread_sleep.h /usr/include/semaphore.h \
  /usr/include/bits/semaphore.h \
@@ -255,7 +261,6 @@ CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o: \
  /home/martinb/Documents/AshPawServer/build-vcpkg/vcpkg_installed/x64-linux/include/spdlog/details/null_mutex.h \
  /usr/include/c++/15/utility /usr/include/c++/15/bits/stl_relops.h \
  /home/martinb/Documents/AshPawServer/build-vcpkg/vcpkg_installed/x64-linux/include/spdlog/tweakme.h \
- /usr/include/c++/15/functional /usr/include/c++/15/bits/std_function.h \
  /home/martinb/Documents/AshPawServer/build-vcpkg/vcpkg_installed/x64-linux/include/spdlog/fmt/fmt.h \
  /home/martinb/Documents/AshPawServer/build-vcpkg/vcpkg_installed/x64-linux/include/fmt/format.h \
  /home/martinb/Documents/AshPawServer/build-vcpkg/vcpkg_installed/x64-linux/include/fmt/base.h \

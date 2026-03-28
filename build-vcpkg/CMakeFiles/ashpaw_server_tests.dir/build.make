@@ -72,10 +72,24 @@ include CMakeFiles/ashpaw_server_tests.dir/flags.make
 CMakeFiles/ashpaw_server_tests.dir/codegen:
 .PHONY : CMakeFiles/ashpaw_server_tests.dir/codegen
 
+CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o: CMakeFiles/ashpaw_server_tests.dir/flags.make
+CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o: /home/martinb/Documents/AshPawServer/tests/admin_command_tests.cpp
+CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o: CMakeFiles/ashpaw_server_tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o -MF CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o.d -o CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o -c /home/martinb/Documents/AshPawServer/tests/admin_command_tests.cpp
+
+CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/martinb/Documents/AshPawServer/tests/admin_command_tests.cpp > CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.i
+
+CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/martinb/Documents/AshPawServer/tests/admin_command_tests.cpp -o CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.s
+
 CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o: CMakeFiles/ashpaw_server_tests.dir/flags.make
 CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o: /home/martinb/Documents/AshPawServer/tests/config_tests.cpp
 CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o: CMakeFiles/ashpaw_server_tests.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o -MF CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o.d -o CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o -c /home/martinb/Documents/AshPawServer/tests/config_tests.cpp
 
 CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.i: cmake_force
@@ -89,7 +103,7 @@ CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.s: cmake_force
 CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.o: CMakeFiles/ashpaw_server_tests.dir/flags.make
 CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.o: /home/martinb/Documents/AshPawServer/tests/persistence_tests.cpp
 CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.o: CMakeFiles/ashpaw_server_tests.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.o -MF CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.o.d -o CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.o -c /home/martinb/Documents/AshPawServer/tests/persistence_tests.cpp
 
 CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.i: cmake_force
@@ -103,7 +117,7 @@ CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.s: cmake_force
 CMakeFiles/ashpaw_server_tests.dir/tests/protocol_tests.cpp.o: CMakeFiles/ashpaw_server_tests.dir/flags.make
 CMakeFiles/ashpaw_server_tests.dir/tests/protocol_tests.cpp.o: /home/martinb/Documents/AshPawServer/tests/protocol_tests.cpp
 CMakeFiles/ashpaw_server_tests.dir/tests/protocol_tests.cpp.o: CMakeFiles/ashpaw_server_tests.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ashpaw_server_tests.dir/tests/protocol_tests.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ashpaw_server_tests.dir/tests/protocol_tests.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_tests.dir/tests/protocol_tests.cpp.o -MF CMakeFiles/ashpaw_server_tests.dir/tests/protocol_tests.cpp.o.d -o CMakeFiles/ashpaw_server_tests.dir/tests/protocol_tests.cpp.o -c /home/martinb/Documents/AshPawServer/tests/protocol_tests.cpp
 
 CMakeFiles/ashpaw_server_tests.dir/tests/protocol_tests.cpp.i: cmake_force
@@ -117,7 +131,7 @@ CMakeFiles/ashpaw_server_tests.dir/tests/protocol_tests.cpp.s: cmake_force
 CMakeFiles/ashpaw_server_tests.dir/tests/world_tests.cpp.o: CMakeFiles/ashpaw_server_tests.dir/flags.make
 CMakeFiles/ashpaw_server_tests.dir/tests/world_tests.cpp.o: /home/martinb/Documents/AshPawServer/tests/world_tests.cpp
 CMakeFiles/ashpaw_server_tests.dir/tests/world_tests.cpp.o: CMakeFiles/ashpaw_server_tests.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ashpaw_server_tests.dir/tests/world_tests.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/ashpaw_server_tests.dir/tests/world_tests.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_tests.dir/tests/world_tests.cpp.o -MF CMakeFiles/ashpaw_server_tests.dir/tests/world_tests.cpp.o.d -o CMakeFiles/ashpaw_server_tests.dir/tests/world_tests.cpp.o -c /home/martinb/Documents/AshPawServer/tests/world_tests.cpp
 
 CMakeFiles/ashpaw_server_tests.dir/tests/world_tests.cpp.i: cmake_force
@@ -131,7 +145,7 @@ CMakeFiles/ashpaw_server_tests.dir/tests/world_tests.cpp.s: cmake_force
 CMakeFiles/ashpaw_server_tests.dir/tests/integration_tests.cpp.o: CMakeFiles/ashpaw_server_tests.dir/flags.make
 CMakeFiles/ashpaw_server_tests.dir/tests/integration_tests.cpp.o: /home/martinb/Documents/AshPawServer/tests/integration_tests.cpp
 CMakeFiles/ashpaw_server_tests.dir/tests/integration_tests.cpp.o: CMakeFiles/ashpaw_server_tests.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/ashpaw_server_tests.dir/tests/integration_tests.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/ashpaw_server_tests.dir/tests/integration_tests.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_tests.dir/tests/integration_tests.cpp.o -MF CMakeFiles/ashpaw_server_tests.dir/tests/integration_tests.cpp.o.d -o CMakeFiles/ashpaw_server_tests.dir/tests/integration_tests.cpp.o -c /home/martinb/Documents/AshPawServer/tests/integration_tests.cpp
 
 CMakeFiles/ashpaw_server_tests.dir/tests/integration_tests.cpp.i: cmake_force
@@ -144,6 +158,7 @@ CMakeFiles/ashpaw_server_tests.dir/tests/integration_tests.cpp.s: cmake_force
 
 # Object files for target ashpaw_server_tests
 ashpaw_server_tests_OBJECTS = \
+"CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o" \
 "CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o" \
 "CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.o" \
 "CMakeFiles/ashpaw_server_tests.dir/tests/protocol_tests.cpp.o" \
@@ -153,6 +168,7 @@ ashpaw_server_tests_OBJECTS = \
 # External object files for target ashpaw_server_tests
 ashpaw_server_tests_EXTERNAL_OBJECTS =
 
+ashpaw_server_tests: CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o
 ashpaw_server_tests: CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o
 ashpaw_server_tests: CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.o
 ashpaw_server_tests: CMakeFiles/ashpaw_server_tests.dir/tests/protocol_tests.cpp.o
@@ -168,7 +184,7 @@ ashpaw_server_tests: vcpkg_installed/x64-linux/debug/lib/libfmtd.a
 ashpaw_server_tests: vcpkg_installed/x64-linux/debug/lib/libtomlplusplus.a
 ashpaw_server_tests: vcpkg_installed/x64-linux/debug/lib/libCatch2d.a
 ashpaw_server_tests: CMakeFiles/ashpaw_server_tests.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable ashpaw_server_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable ashpaw_server_tests"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ashpaw_server_tests.dir/link.txt --verbose=$(VERBOSE)
 	/usr/bin/cmake -D TEST_TARGET=ashpaw_server_tests -D TEST_EXECUTABLE=/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/home/martinb/Documents/AshPawServer/build-vcpkg -D TEST_SPEC= -D TEST_EXTRA_ARGS= -D "TEST_PROPERTIES=SKIP_RETURN_CODE;4" -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_LIST=ashpaw_server_tests_TESTS -D TEST_REPORTER= -D TEST_OUTPUT_DIR= -D TEST_OUTPUT_PREFIX= -D TEST_OUTPUT_SUFFIX= -D TEST_DL_PATHS= -D TEST_DL_FRAMEWORK_PATHS= -D CTEST_FILE=/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests-b12d07c_tests.cmake -D ADD_TAGS_AS_LABELS=FALSE -P /home/martinb/Documents/AshPawServer/build-vcpkg/vcpkg_installed/x64-linux/share/catch2/CatchAddTests.cmake
 

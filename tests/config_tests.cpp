@@ -24,6 +24,9 @@ TEST_CASE("server config loads expected fields", "[config]") {
                                       "snapshot_rate = 10\n"
                                       "max_players = 8\n"
                                       "visibility_radius_units = 192\n"
+                                      "max_packet_size_bytes = 600\n"
+                                      "max_display_name_length = 20\n"
+                                      "max_chat_message_length = 90\n"
                                       "startup_map = \"maps/dev_map.json\"\n"
                                       "player_save_dir = \"data/players\"\n"
                                       "log_level = \"debug\"\n");
@@ -35,6 +38,9 @@ TEST_CASE("server config loads expected fields", "[config]") {
     CHECK(config.snapshot_rate == 10);
     CHECK(config.max_players == 8);
     CHECK(config.visibility_radius_units == 192);
+    CHECK(config.max_packet_size_bytes == 600);
+    CHECK(config.max_display_name_length == 20);
+    CHECK(config.max_chat_message_length == 90);
     CHECK(config.startup_map == "maps/dev_map.json");
     CHECK(config.player_save_dir == "data/players");
     CHECK(config.log_level == ashpaw::config::LogLevel::debug);

@@ -72,10 +72,24 @@ include CMakeFiles/ashpaw_server_lib.dir/flags.make
 CMakeFiles/ashpaw_server_lib.dir/codegen:
 .PHONY : CMakeFiles/ashpaw_server_lib.dir/codegen
 
+CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.o: CMakeFiles/ashpaw_server_lib.dir/flags.make
+CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.o: /home/martinb/Documents/AshPawServer/src/app/admin_command_processor.cpp
+CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.o: CMakeFiles/ashpaw_server_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.o -MF CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.o.d -o CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.o -c /home/martinb/Documents/AshPawServer/src/app/admin_command_processor.cpp
+
+CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/martinb/Documents/AshPawServer/src/app/admin_command_processor.cpp > CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.i
+
+CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/martinb/Documents/AshPawServer/src/app/admin_command_processor.cpp -o CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.s
+
 CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o: CMakeFiles/ashpaw_server_lib.dir/flags.make
 CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o: /home/martinb/Documents/AshPawServer/src/app/server_app.cpp
 CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o: CMakeFiles/ashpaw_server_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o -MF CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o.d -o CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o -c /home/martinb/Documents/AshPawServer/src/app/server_app.cpp
 
 CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.i: cmake_force
@@ -89,7 +103,7 @@ CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.s: cmake_force
 CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.o: CMakeFiles/ashpaw_server_lib.dir/flags.make
 CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.o: /home/martinb/Documents/AshPawServer/src/config/server_config.cpp
 CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.o: CMakeFiles/ashpaw_server_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.o -MF CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.o.d -o CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.o -c /home/martinb/Documents/AshPawServer/src/config/server_config.cpp
 
 CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.i: cmake_force
@@ -103,7 +117,7 @@ CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.s: cmake_force
 CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.o: CMakeFiles/ashpaw_server_lib.dir/flags.make
 CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.o: /home/martinb/Documents/AshPawServer/src/net/network_server.cpp
 CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.o: CMakeFiles/ashpaw_server_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.o -MF CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.o.d -o CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.o -c /home/martinb/Documents/AshPawServer/src/net/network_server.cpp
 
 CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.i: cmake_force
@@ -117,7 +131,7 @@ CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.s: cmake_force
 CMakeFiles/ashpaw_server_lib.dir/src/net/protocol.cpp.o: CMakeFiles/ashpaw_server_lib.dir/flags.make
 CMakeFiles/ashpaw_server_lib.dir/src/net/protocol.cpp.o: /home/martinb/Documents/AshPawServer/src/net/protocol.cpp
 CMakeFiles/ashpaw_server_lib.dir/src/net/protocol.cpp.o: CMakeFiles/ashpaw_server_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/net/protocol.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/net/protocol.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_lib.dir/src/net/protocol.cpp.o -MF CMakeFiles/ashpaw_server_lib.dir/src/net/protocol.cpp.o.d -o CMakeFiles/ashpaw_server_lib.dir/src/net/protocol.cpp.o -c /home/martinb/Documents/AshPawServer/src/net/protocol.cpp
 
 CMakeFiles/ashpaw_server_lib.dir/src/net/protocol.cpp.i: cmake_force
@@ -131,7 +145,7 @@ CMakeFiles/ashpaw_server_lib.dir/src/net/protocol.cpp.s: cmake_force
 CMakeFiles/ashpaw_server_lib.dir/src/persistence/player_repository.cpp.o: CMakeFiles/ashpaw_server_lib.dir/flags.make
 CMakeFiles/ashpaw_server_lib.dir/src/persistence/player_repository.cpp.o: /home/martinb/Documents/AshPawServer/src/persistence/player_repository.cpp
 CMakeFiles/ashpaw_server_lib.dir/src/persistence/player_repository.cpp.o: CMakeFiles/ashpaw_server_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/persistence/player_repository.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/persistence/player_repository.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_lib.dir/src/persistence/player_repository.cpp.o -MF CMakeFiles/ashpaw_server_lib.dir/src/persistence/player_repository.cpp.o.d -o CMakeFiles/ashpaw_server_lib.dir/src/persistence/player_repository.cpp.o -c /home/martinb/Documents/AshPawServer/src/persistence/player_repository.cpp
 
 CMakeFiles/ashpaw_server_lib.dir/src/persistence/player_repository.cpp.i: cmake_force
@@ -145,7 +159,7 @@ CMakeFiles/ashpaw_server_lib.dir/src/persistence/player_repository.cpp.s: cmake_
 CMakeFiles/ashpaw_server_lib.dir/src/session/session_manager.cpp.o: CMakeFiles/ashpaw_server_lib.dir/flags.make
 CMakeFiles/ashpaw_server_lib.dir/src/session/session_manager.cpp.o: /home/martinb/Documents/AshPawServer/src/session/session_manager.cpp
 CMakeFiles/ashpaw_server_lib.dir/src/session/session_manager.cpp.o: CMakeFiles/ashpaw_server_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/session/session_manager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/session/session_manager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_lib.dir/src/session/session_manager.cpp.o -MF CMakeFiles/ashpaw_server_lib.dir/src/session/session_manager.cpp.o.d -o CMakeFiles/ashpaw_server_lib.dir/src/session/session_manager.cpp.o -c /home/martinb/Documents/AshPawServer/src/session/session_manager.cpp
 
 CMakeFiles/ashpaw_server_lib.dir/src/session/session_manager.cpp.i: cmake_force
@@ -159,7 +173,7 @@ CMakeFiles/ashpaw_server_lib.dir/src/session/session_manager.cpp.s: cmake_force
 CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.o: CMakeFiles/ashpaw_server_lib.dir/flags.make
 CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.o: /home/martinb/Documents/AshPawServer/src/simulation/simulation_clock.cpp
 CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.o: CMakeFiles/ashpaw_server_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.o -MF CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.o.d -o CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.o -c /home/martinb/Documents/AshPawServer/src/simulation/simulation_clock.cpp
 
 CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.i: cmake_force
@@ -173,7 +187,7 @@ CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.s: cmake_fo
 CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.o: CMakeFiles/ashpaw_server_lib.dir/flags.make
 CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.o: /home/martinb/Documents/AshPawServer/src/util/logging.cpp
 CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.o: CMakeFiles/ashpaw_server_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.o -MF CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.o.d -o CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.o -c /home/martinb/Documents/AshPawServer/src/util/logging.cpp
 
 CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.i: cmake_force
@@ -187,7 +201,7 @@ CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.s: cmake_force
 CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.o: CMakeFiles/ashpaw_server_lib.dir/flags.make
 CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.o: /home/martinb/Documents/AshPawServer/src/world/map.cpp
 CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.o: CMakeFiles/ashpaw_server_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.o -MF CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.o.d -o CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.o -c /home/martinb/Documents/AshPawServer/src/world/map.cpp
 
 CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.i: cmake_force
@@ -198,10 +212,24 @@ CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/martinb/Documents/AshPawServer/src/world/map.cpp -o CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.s
 
+CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.o: CMakeFiles/ashpaw_server_lib.dir/flags.make
+CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.o: /home/martinb/Documents/AshPawServer/src/world/map_validation.cpp
+CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.o: CMakeFiles/ashpaw_server_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.o -MF CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.o.d -o CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.o -c /home/martinb/Documents/AshPawServer/src/world/map_validation.cpp
+
+CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/martinb/Documents/AshPawServer/src/world/map_validation.cpp > CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.i
+
+CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/martinb/Documents/AshPawServer/src/world/map_validation.cpp -o CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.s
+
 CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.o: CMakeFiles/ashpaw_server_lib.dir/flags.make
 CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.o: /home/martinb/Documents/AshPawServer/src/world/world.cpp
 CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.o: CMakeFiles/ashpaw_server_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.o -MF CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.o.d -o CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.o -c /home/martinb/Documents/AshPawServer/src/world/world.cpp
 
 CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.i: cmake_force
@@ -214,6 +242,7 @@ CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.s: cmake_force
 
 # Object files for target ashpaw_server_lib
 ashpaw_server_lib_OBJECTS = \
+"CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.o" \
 "CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o" \
 "CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.o" \
 "CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.o" \
@@ -223,11 +252,13 @@ ashpaw_server_lib_OBJECTS = \
 "CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.o" \
 "CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.o" \
 "CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.o" \
+"CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.o" \
 "CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.o"
 
 # External object files for target ashpaw_server_lib
 ashpaw_server_lib_EXTERNAL_OBJECTS =
 
+libashpaw_server_lib.a: CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.o
 libashpaw_server_lib.a: CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o
 libashpaw_server_lib.a: CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.o
 libashpaw_server_lib.a: CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.o
@@ -237,10 +268,11 @@ libashpaw_server_lib.a: CMakeFiles/ashpaw_server_lib.dir/src/session/session_man
 libashpaw_server_lib.a: CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.o
 libashpaw_server_lib.a: CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.o
 libashpaw_server_lib.a: CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.o
+libashpaw_server_lib.a: CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.o
 libashpaw_server_lib.a: CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.o
 libashpaw_server_lib.a: CMakeFiles/ashpaw_server_lib.dir/build.make
 libashpaw_server_lib.a: CMakeFiles/ashpaw_server_lib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX static library libashpaw_server_lib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/martinb/Documents/AshPawServer/build-vcpkg/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX static library libashpaw_server_lib.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/ashpaw_server_lib.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ashpaw_server_lib.dir/link.txt --verbose=$(VERBOSE)
 

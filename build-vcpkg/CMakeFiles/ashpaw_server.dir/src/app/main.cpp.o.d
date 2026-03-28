@@ -2,6 +2,8 @@ CMakeFiles/ashpaw_server.dir/src/app/main.cpp.o: \
  /home/martinb/Documents/AshPawServer/src/app/main.cpp \
  /usr/include/stdc-predef.h \
  /home/martinb/Documents/AshPawServer/include/ashpaw/app/server_app.hpp \
+ /home/martinb/Documents/AshPawServer/include/ashpaw/app/admin_command_processor.hpp \
+ /home/martinb/Documents/AshPawServer/include/ashpaw/net/network_server.hpp \
  /home/martinb/Documents/AshPawServer/include/ashpaw/config/server_config.hpp \
  /usr/include/c++/15/cstdint \
  /usr/include/c++/15/x86_64-redhat-linux/bits/c++config.h \
@@ -167,7 +169,6 @@ CMakeFiles/ashpaw_server.dir/src/app/main.cpp.o: \
  /usr/include/c++/15/bits/fs_dir.h /usr/include/c++/15/bits/fs_ops.h \
  /usr/include/c++/15/optional \
  /usr/include/c++/15/bits/enable_special_members.h \
- /home/martinb/Documents/AshPawServer/include/ashpaw/net/network_server.hpp \
  /home/martinb/Documents/AshPawServer/include/ashpaw/net/protocol.hpp \
  /home/martinb/Documents/AshPawServer/include/ashpaw/world/world.hpp \
  /home/martinb/Documents/AshPawServer/include/ashpaw/world/map.hpp \
@@ -211,7 +212,8 @@ CMakeFiles/ashpaw_server.dir/src/app/main.cpp.o: \
  /usr/include/c++/15/bits/formatfwd.h \
  /usr/include/c++/15/bits/ranges_algobase.h \
  /usr/include/c++/15/bits/unicode.h \
- /usr/include/c++/15/bits/unicode-data.h \
+ /usr/include/c++/15/bits/unicode-data.h /usr/include/c++/15/functional \
+ /usr/include/c++/15/bits/std_function.h \
  /home/martinb/Documents/AshPawServer/include/ashpaw/simulation/simulation_clock.hpp \
  /usr/include/c++/15/atomic /usr/include/c++/15/bits/atomic_base.h \
  /usr/include/c++/15/bits/atomic_lockfree_defines.h \

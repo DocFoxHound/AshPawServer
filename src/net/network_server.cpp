@@ -3,6 +3,8 @@
 #include "ashpaw/net/protocol.hpp"
 #include "ashpaw/util/logging.hpp"
 
+#include <algorithm>
+#include <cctype>
 #include <stdexcept>
 #include <string_view>
 #include <vector>
@@ -36,6 +38,28 @@ bool same_object_state(const session::ReplicatedObjectState& lhs, const session:
     return lhs.is_open == rhs.is_open && lhs.occupant_entity_id == rhs.occupant_entity_id;
 }
 
+std::string sanitize_display_name(std::string_view value, std::size_t max_length) {
+    std::string sanitized;
+    sanitized.reserve(std::min(value.size(), max_length));
+
+    for (const unsigned char ch : value) {
+        if (sanitized.size() >= max_length) {
+            break;
+        }
+
+        if (std::isalnum(ch) != 0 || ch == ' ' || ch == '-' || ch == '_') {
+            sanitized.push_back(static_cast<char>(ch));
+        }
+    }
+
+    const auto first = sanitized.find_first_not_of(' ');
+    if (first == std::string::npos) {
+        return {};
+    }
+    const auto last = sanitized.find_last_not_of(' ');
+    return sanitized.substr(first, last - first + 1);
+}
+
 }  // namespace
 
 NetworkServer::NetworkServer(config::ServerConfig config, world::World& world, session::SessionManager& sessions)
@@ -60,6 +84,10 @@ void NetworkServer::initialize() {
 }
 
 void NetworkServer::shutdown() {
+    for (auto* session : sessions_.active_sessions()) {
+        save_session_player_state(*session);
+    }
+
     if (host_ != nullptr) {
         enet_host_destroy(host_);
         host_ = nullptr;
@@ -78,7 +106,7 @@ void NetworkServer::service(std::chrono::milliseconds timeout) {
                 handle_connect(event.peer);
                 break;
             case ENET_EVENT_TYPE_RECEIVE:
-                handle_receive(event.peer, *event.packet);
+                handle_receive(event.peer, *event.packet, event.channelID);
                 enet_packet_destroy(event.packet);
                 break;
             case ENET_EVENT_TYPE_DISCONNECT:
@@ -238,6 +266,18 @@ const ReplicationMetrics& NetworkServer::metrics() const noexcept {
     return metrics_;
 }
 
+bool NetworkServer::disconnect_session(session::Session& session, std::string_view reason) {
+    if (session.peer == nullptr || host_ == nullptr) {
+        return false;
+    }
+
+    session.state = session::ConnectionState::disconnecting;
+    spdlog::info("disconnecting session {} (entity {}) reason={}", session.session_id, session.entity_id, reason);
+    enet_peer_disconnect(session.peer, 0);
+    enet_host_flush(host_);
+    return true;
+}
+
 void NetworkServer::handle_connect(ENetPeer* peer) {
     spdlog::info("peer connected");
     if (sessions_.is_full()) {
@@ -260,7 +300,12 @@ void NetworkServer::handle_disconnect(ENetPeer* peer) {
     }
 }
 
-void NetworkServer::handle_receive(ENetPeer* peer, const ENetPacket& packet) {
+void NetworkServer::handle_receive(ENetPeer* peer, const ENetPacket& packet, enet_uint8 channel) {
+    if (packet.dataLength == 0 || packet.dataLength > config_.max_packet_size_bytes) {
+        reject_and_disconnect(peer, RejectReason::malformed_packet, "packet size out of bounds");
+        return;
+    }
+
     auto decoded = decode_header(packet_bytes(packet));
     if (!decoded.has_value()) {
         reject_and_disconnect(peer, RejectReason::malformed_packet, "bad packet header");
@@ -270,6 +315,11 @@ void NetworkServer::handle_receive(ENetPeer* peer, const ENetPacket& packet) {
     auto* session = sessions_.find(peer);
     if (session == nullptr) {
         reject_and_disconnect(peer, RejectReason::malformed_packet, "unknown session");
+        return;
+    }
+
+    if (!validate_channel(decoded->opcode, channel)) {
+        reject_session_and_disconnect(*session, RejectReason::malformed_packet, "unexpected channel");
         return;
     }
 
@@ -292,26 +342,40 @@ void NetworkServer::handle_receive(ENetPeer* peer, const ENetPacket& packet) {
     }
 }
 
+bool NetworkServer::validate_channel(Opcode opcode, enet_uint8 channel) const noexcept {
+    switch (opcode) {
+        case Opcode::movement_input:
+            return channel == kUnreliableChannel || channel == kReliableChannel;
+        case Opcode::client_hello:
+        case Opcode::interaction_request:
+        case Opcode::chat_send:
+            return channel == kReliableChannel;
+        default:
+            return false;
+    }
+}
+
 void NetworkServer::handle_client_hello(session::Session& current_session, std::span<const std::uint8_t> payload) {
     if (current_session.state != ashpaw::session::ConnectionState::connected_unverified) {
-        reject_and_disconnect(current_session.peer, RejectReason::malformed_packet, "duplicate hello");
+        reject_session_and_disconnect(current_session, RejectReason::malformed_packet, "duplicate hello");
         return;
     }
 
     current_session.state = ashpaw::session::ConnectionState::handshaking;
     const auto hello = decode_client_hello(payload);
     if (!hello.has_value()) {
-        reject_and_disconnect(current_session.peer, RejectReason::malformed_packet, "malformed hello");
+        reject_session_and_disconnect(current_session, RejectReason::malformed_packet, "malformed hello");
         return;
     }
 
     if (hello->protocol_version != kProtocolVersion) {
-        reject_and_disconnect(current_session.peer, RejectReason::invalid_protocol, "protocol mismatch");
+        reject_session_and_disconnect(current_session, RejectReason::invalid_protocol, "protocol mismatch");
         return;
     }
 
-    current_session.player_id = player_repository_.normalize_player_id(hello->display_name);
-    current_session.display_name = hello->display_name.empty() ? "player" : hello->display_name;
+    const auto sanitized_name = sanitize_display_name(hello->display_name, config_.max_display_name_length);
+    current_session.display_name = sanitized_name.empty() ? "player" : sanitized_name;
+    current_session.player_id = player_repository_.normalize_player_id(current_session.display_name);
 
     if (const auto restored = player_repository_.load(current_session.player_id); restored.has_value()) {
         current_session.player_id = restored->player_id;
@@ -369,13 +433,13 @@ void NetworkServer::handle_client_hello(session::Session& current_session, std::
 
 void NetworkServer::handle_movement_input(session::Session& current_session, std::span<const std::uint8_t> payload) {
     if (current_session.state != ashpaw::session::ConnectionState::active || current_session.entity_id == 0) {
-        reject_and_disconnect(current_session.peer, RejectReason::malformed_packet, "inactive session input");
+        reject_session_and_disconnect(current_session, RejectReason::malformed_packet, "inactive session input");
         return;
     }
 
     const auto input = decode_movement_input(payload);
     if (!input.has_value()) {
-        reject_and_disconnect(current_session.peer, RejectReason::malformed_packet, "malformed movement");
+        reject_session_and_disconnect(current_session, RejectReason::malformed_packet, "malformed movement");
         return;
     }
 
@@ -388,13 +452,13 @@ void NetworkServer::handle_movement_input(session::Session& current_session, std
 
 void NetworkServer::handle_interaction_request(session::Session& current_session, std::span<const std::uint8_t> payload) {
     if (current_session.state != ashpaw::session::ConnectionState::active || current_session.entity_id == 0) {
-        reject_and_disconnect(current_session.peer, RejectReason::malformed_packet, "inactive session interaction");
+        reject_session_and_disconnect(current_session, RejectReason::malformed_packet, "inactive session interaction");
         return;
     }
 
     const auto request = decode_interaction_request(payload);
     if (!request.has_value()) {
-        reject_and_disconnect(current_session.peer, RejectReason::malformed_packet, "malformed interaction");
+        reject_session_and_disconnect(current_session, RejectReason::malformed_packet, "malformed interaction");
         return;
     }
 
@@ -415,13 +479,13 @@ void NetworkServer::handle_interaction_request(session::Session& current_session
 
 void NetworkServer::handle_chat_send(session::Session& current_session, std::span<const std::uint8_t> payload) {
     if (current_session.state != ashpaw::session::ConnectionState::active || current_session.entity_id == 0) {
-        reject_and_disconnect(current_session.peer, RejectReason::malformed_packet, "inactive session chat");
+        reject_session_and_disconnect(current_session, RejectReason::malformed_packet, "inactive session chat");
         return;
     }
 
     const auto chat = decode_chat_send(payload);
-    if (!chat.has_value() || chat->message.size() > 120) {
-        reject_and_disconnect(current_session.peer, RejectReason::malformed_packet, "malformed chat");
+    if (!chat.has_value() || chat->message.size() > config_.max_chat_message_length) {
+        reject_session_and_disconnect(current_session, RejectReason::malformed_packet, "malformed chat");
         return;
     }
 
@@ -495,7 +559,15 @@ void NetworkServer::broadcast_object_state_update(const world::InteractionResult
     }
 }
 
+void NetworkServer::reject_session_and_disconnect(session::Session& session, RejectReason reason, std::string_view message) {
+    session.state = session::ConnectionState::disconnecting;
+    reject_and_disconnect(session.peer, reason, message);
+}
+
 void NetworkServer::send_packet(ENetPeer* peer, const std::vector<std::uint8_t>& bytes, enet_uint8 channel, bool reliable) {
+    if (host_ == nullptr || peer == nullptr || bytes.empty() || bytes.size() > config_.max_packet_size_bytes) {
+        return;
+    }
     auto* packet = enet_packet_create(bytes.data(),
                                       bytes.size(),
                                       reliable ? kReliableFlag : 0U);
@@ -504,7 +576,7 @@ void NetworkServer::send_packet(ENetPeer* peer, const std::vector<std::uint8_t>&
 }
 
 void NetworkServer::broadcast_packet(const std::vector<std::uint8_t>& bytes, enet_uint8 channel, bool reliable) {
-    if (host_ == nullptr) {
+    if (host_ == nullptr || bytes.empty() || bytes.size() > config_.max_packet_size_bytes) {
         return;
     }
     auto* packet = enet_packet_create(bytes.data(),
@@ -517,6 +589,9 @@ void NetworkServer::broadcast_packet(const std::vector<std::uint8_t>& bytes, ene
 void NetworkServer::reject_and_disconnect(ENetPeer* peer, RejectReason reason, std::string_view message) {
     send_packet(peer, encode_join_rejected(JoinRejected {.reason = reason, .message = std::string(message)}), kReliableChannel, true);
     enet_peer_disconnect(peer, 0);
+    if (host_ != nullptr) {
+        enet_host_flush(host_);
+    }
 }
 
 }  // namespace ashpaw::net

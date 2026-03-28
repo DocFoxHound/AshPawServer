@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ashpaw/app/admin_command_processor.hpp"
 #include "ashpaw/config/server_config.hpp"
 #include "ashpaw/net/network_server.hpp"
 #include "ashpaw/session/session_manager.hpp"
@@ -23,8 +24,12 @@ class ServerApp {
 
     [[nodiscard]] world::World& world() noexcept;
     [[nodiscard]] net::NetworkServer& network() noexcept;
+    [[nodiscard]] const RuntimeMetrics& runtime_metrics() const noexcept;
+    AdminCommandResult execute_admin_command(std::string_view command_line);
 
   private:
+    void poll_console_commands();
+
     config::ServerConfig config_;
     world::MapData map_;
     world::World world_;
@@ -33,6 +38,7 @@ class ServerApp {
     std::chrono::steady_clock::duration snapshot_accumulator_ {};
     std::chrono::steady_clock::duration snapshot_interval_ {};
     net::NetworkServer network_;
+    RuntimeMetrics runtime_metrics_ {};
     std::atomic_bool stop_requested_ {false};
     bool initialized_ {false};
 };

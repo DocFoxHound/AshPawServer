@@ -2,6 +2,7 @@ ashpaw_server_tests: \
   /usr/lib/gcc/x86_64-redhat-linux/15/../../../../lib64/crt1.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/../../../../lib64/crti.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/crtbegin.o \
+  CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o \
   CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o \
   CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.o \
   CMakeFiles/ashpaw_server_tests.dir/tests/protocol_tests.cpp.o \
@@ -46,6 +47,8 @@ ashpaw_server_tests: \
 /usr/lib/gcc/x86_64-redhat-linux/15/../../../../lib64/crti.o:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/crtbegin.o:
+
+CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o:
 
 CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o:
 

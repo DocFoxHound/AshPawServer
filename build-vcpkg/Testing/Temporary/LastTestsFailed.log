@@ -1,1 +1,19 @@
-20:player reconnect restores persisted position and identity
+12:two clients can handshake, spawn, and receive snapshots
+13:client can request sign interaction and receive authoritative result
+14:admin commands can list inspect teleport and stop
+15:map validation catches blocked spawns and duplicate interactables
+16:admin commands validate targets and map issues
+17:world skips blocked spawn points and rejects fully invalid spawn sets
+18:world spawns and despawns players
+19:server remains stable across repeated joins and leaves
+20:cli overrides replace config values
+21:containers toggle authoritative open state
+22:player reconnect restores persisted position and identity
+23:file player repository saves and loads player state
+24:movement input is clamped during decode
+25:server config rejects missing required field
+26:closed doors block movement until the server opens them
+27:client receives object state update for seat interaction
+28:file player repository ignores corrupt player save data
+29:world interactions validate range and mutate door state
+30:invalid opcode is rejected

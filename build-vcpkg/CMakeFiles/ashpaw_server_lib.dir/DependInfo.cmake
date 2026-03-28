@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/martinb/Documents/AshPawServer/src/app/admin_command_processor.cpp" "CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.o" "gcc" "CMakeFiles/ashpaw_server_lib.dir/src/app/admin_command_processor.cpp.o.d"
   "/home/martinb/Documents/AshPawServer/src/app/server_app.cpp" "CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o" "gcc" "CMakeFiles/ashpaw_server_lib.dir/src/app/server_app.cpp.o.d"
   "/home/martinb/Documents/AshPawServer/src/config/server_config.cpp" "CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.o" "gcc" "CMakeFiles/ashpaw_server_lib.dir/src/config/server_config.cpp.o.d"
   "/home/martinb/Documents/AshPawServer/src/net/network_server.cpp" "CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.o" "gcc" "CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.o.d"
@@ -17,6 +18,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/martinb/Documents/AshPawServer/src/simulation/simulation_clock.cpp" "CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.o" "gcc" "CMakeFiles/ashpaw_server_lib.dir/src/simulation/simulation_clock.cpp.o.d"
   "/home/martinb/Documents/AshPawServer/src/util/logging.cpp" "CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.o" "gcc" "CMakeFiles/ashpaw_server_lib.dir/src/util/logging.cpp.o.d"
   "/home/martinb/Documents/AshPawServer/src/world/map.cpp" "CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.o" "gcc" "CMakeFiles/ashpaw_server_lib.dir/src/world/map.cpp.o.d"
+  "/home/martinb/Documents/AshPawServer/src/world/map_validation.cpp" "CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.o" "gcc" "CMakeFiles/ashpaw_server_lib.dir/src/world/map_validation.cpp.o.d"
   "/home/martinb/Documents/AshPawServer/src/world/world.cpp" "CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.o" "gcc" "CMakeFiles/ashpaw_server_lib.dir/src/world/world.cpp.o.d"
   )
 

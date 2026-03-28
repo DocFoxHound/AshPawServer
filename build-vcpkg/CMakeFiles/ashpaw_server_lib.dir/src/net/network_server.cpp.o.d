@@ -230,7 +230,9 @@ CMakeFiles/ashpaw_server_lib.dir/src/net/network_server.cpp.o: \
  /usr/include/c++/15/backward/auto_ptr.h \
  /usr/include/c++/15/bits/ranges_uninitialized.h \
  /usr/include/c++/15/pstl/glue_memory_defs.h \
- /usr/include/c++/15/pstl/execution_defs.h \
+ /usr/include/c++/15/pstl/execution_defs.h /usr/include/c++/15/algorithm \
+ /usr/include/c++/15/bits/ranges_algo.h \
+ /usr/include/c++/15/pstl/glue_algorithm_defs.h \
  /home/martinb/Documents/AshPawServer/build-vcpkg/vcpkg_installed/x64-linux/include/spdlog/spdlog.h \
  /home/martinb/Documents/AshPawServer/build-vcpkg/vcpkg_installed/x64-linux/include/spdlog/common.h \
  /home/martinb/Documents/AshPawServer/build-vcpkg/vcpkg_installed/x64-linux/include/spdlog/details/null_mutex.h \

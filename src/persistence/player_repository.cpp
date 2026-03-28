@@ -50,34 +50,37 @@ std::string FilePlayerRepository::normalize_player_id(std::string_view display_n
 }
 
 std::optional<PlayerSave> FilePlayerRepository::load(std::string_view player_id) const {
-    std::ifstream input(path_for_player(player_id));
-    if (!input.is_open()) {
-        return std::nullopt;
-    }
-
-    try {
-        const auto json = nlohmann::json::parse(input);
-
-        const auto schema_version = json.at("schema_version").get<std::uint32_t>();
-        if (schema_version != kPlayerSaveSchemaVersion) {
-            spdlog::warn("ignoring player save for '{}' with unsupported schema {}", player_id, schema_version);
-            return std::nullopt;
+    for (const auto& path : {path_for_player(player_id), backup_path_for_player(player_id)}) {
+        std::ifstream input(path);
+        if (!input.is_open()) {
+            continue;
         }
 
-        return PlayerSave {
-            .schema_version = schema_version,
-            .player_id = json.at("player_id").get<std::string>(),
-            .display_name = json.at("display_name").get<std::string>(),
-            .last_map = json.at("last_map").get<std::string>(),
-            .last_position = world::Vec2 {
-                .x = json.at("last_position").at("x").get<float>(),
-                .y = json.at("last_position").at("y").get<float>()
+        try {
+            const auto json = nlohmann::json::parse(input);
+
+            const auto schema_version = json.at("schema_version").get<std::uint32_t>();
+            if (schema_version != kPlayerSaveSchemaVersion) {
+                spdlog::warn("ignoring player save for '{}' with unsupported schema {}", player_id, schema_version);
+                continue;
             }
-        };
-    } catch (const std::exception& ex) {
-        spdlog::warn("failed to load player save for '{}': {}", player_id, ex.what());
-        return std::nullopt;
+
+            return PlayerSave {
+                .schema_version = schema_version,
+                .player_id = json.at("player_id").get<std::string>(),
+                .display_name = json.at("display_name").get<std::string>(),
+                .last_map = json.at("last_map").get<std::string>(),
+                .last_position = world::Vec2 {
+                    .x = json.at("last_position").at("x").get<float>(),
+                    .y = json.at("last_position").at("y").get<float>()
+                }
+            };
+        } catch (const std::exception& ex) {
+            spdlog::warn("failed to load player save for '{}' from '{}': {}", player_id, path.string(), ex.what());
+        }
     }
+
+    return std::nullopt;
 }
 
 bool FilePlayerRepository::save(const PlayerSave& save) const {
@@ -85,6 +88,7 @@ bool FilePlayerRepository::save(const PlayerSave& save) const {
         std::filesystem::create_directories(root_directory_);
 
         const auto final_path = path_for_player(save.player_id);
+        const auto backup_path = backup_path_for_player(save.player_id);
         const auto temp_path = final_path.string() + ".tmp";
 
         nlohmann::json json {
@@ -109,6 +113,14 @@ bool FilePlayerRepository::save(const PlayerSave& save) const {
         }
 
         std::error_code error;
+        if (std::filesystem::exists(final_path)) {
+            std::filesystem::copy_file(final_path, backup_path, std::filesystem::copy_options::overwrite_existing, error);
+            if (error) {
+                spdlog::warn("failed to refresh player backup '{}': {}", backup_path.string(), error.message());
+                error.clear();
+            }
+        }
+
         std::filesystem::rename(temp_path, final_path, error);
         if (error) {
             std::filesystem::remove(final_path, error);
@@ -131,6 +143,10 @@ bool FilePlayerRepository::save(const PlayerSave& save) const {
 
 std::filesystem::path FilePlayerRepository::path_for_player(std::string_view player_id) const {
     return root_directory_ / (normalize_player_id_value(player_id) + ".json");
+}
+
+std::filesystem::path FilePlayerRepository::backup_path_for_player(std::string_view player_id) const {
+    return root_directory_ / (normalize_player_id_value(player_id) + ".bak.json");
 }
 
 }  // namespace ashpaw::persistence

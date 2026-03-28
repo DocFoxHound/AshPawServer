@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/martinb/Documents/AshPawServer/tests/admin_command_tests.cpp" "CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o" "gcc" "CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o.d"
   "/home/martinb/Documents/AshPawServer/tests/config_tests.cpp" "CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o" "gcc" "CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o.d"
   "/home/martinb/Documents/AshPawServer/tests/integration_tests.cpp" "CMakeFiles/ashpaw_server_tests.dir/tests/integration_tests.cpp.o" "gcc" "CMakeFiles/ashpaw_server_tests.dir/tests/integration_tests.cpp.o.d"
   "/home/martinb/Documents/AshPawServer/tests/persistence_tests.cpp" "CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.o" "gcc" "CMakeFiles/ashpaw_server_tests.dir/tests/persistence_tests.cpp.o.d"

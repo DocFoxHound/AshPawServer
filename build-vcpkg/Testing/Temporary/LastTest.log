@@ -1,59 +1,35 @@
-Start testing: Mar 27 16:56 MDT
+Start testing: Mar 27 17:35 MDT
 ----------------------------------------------------------
-1/23 Testing: invalid opcode is rejected
-1/23 Test: invalid opcode is rejected
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "invalid opcode is rejected"
+1/31 Testing: world spawns and despawns players
+1/31 Test: world spawns and despawns players
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "world spawns and despawns players"
 Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"invalid opcode is rejected" start time: Mar 27 16:56 MDT
+"world spawns and despawns players" start time: Mar 27 17:35 MDT
 Output:
 ----------------------------------------------------------
-Filters: "invalid opcode is rejected"
-Randomness seeded to: 259352223
+Filters: "world spawns and despawns players"
+Randomness seeded to: 787960857
 ===============================================================================
-All tests passed (1 assertion in 1 test case)
+All tests passed (5 assertions in 1 test case)
 
 <end of output>
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"invalid opcode is rejected" end time: Mar 27 16:56 MDT
-"invalid opcode is rejected" time elapsed: 00:00:00
+"world spawns and despawns players" end time: Mar 27 17:35 MDT
+"world spawns and despawns players" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-2/23 Testing: two clients can handshake, spawn, and receive snapshots
-2/23 Test: two clients can handshake, spawn, and receive snapshots
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "two clients can handshake\, spawn\, and receive snapshots"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"two clients can handshake, spawn, and receive snapshots" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "two clients can handshake\, spawn\, and receive snapshots"
-Randomness seeded to: 1546754524
-[2026-03-27 16:56:18.092] [info] peer connected
-[2026-03-27 16:56:18.092] [info] session 1 activated as entity 1
-[2026-03-27 16:56:18.092] [info] peer connected
-[2026-03-27 16:56:18.093] [info] session 2 activated as entity 2
-===============================================================================
-All tests passed (21 assertions in 1 test case)
-
-<end of output>
-Test time =   0.80 sec
-----------------------------------------------------------
-Test Passed.
-"two clients can handshake, spawn, and receive snapshots" end time: Mar 27 16:56 MDT
-"two clients can handshake, spawn, and receive snapshots" time elapsed: 00:00:00
-----------------------------------------------------------
-
-3/23 Testing: file player repository ignores corrupt player save data
-3/23 Test: file player repository ignores corrupt player save data
+2/31 Testing: file player repository ignores corrupt player save data
+2/31 Test: file player repository ignores corrupt player save data
 Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "file player repository ignores corrupt player save data"
 Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"file player repository ignores corrupt player save data" start time: Mar 27 16:56 MDT
+"file player repository ignores corrupt player save data" start time: Mar 27 17:35 MDT
 Output:
 ----------------------------------------------------------
 Filters: "file player repository ignores corrupt player save data"
-Randomness seeded to: 1099803169
-[2026-03-27 16:56:18.862] [warning] failed to load player save for 'birch': [json.exception.parse_error.101] parse error at line 1, column 4: syntax error while parsing object key - invalid literal; last read: '{ no'; expected string literal
+Randomness seeded to: 2299887137
+[2026-03-27 17:35:36.354] [warning] failed to load player save for 'birch' from '/tmp/ashpaw_persistence_corrupt/birch.json': [json.exception.parse_error.101] parse error at line 1, column 4: syntax error while parsing object key - invalid literal; last read: '{ no'; expected string literal
 ===============================================================================
 All tests passed (1 assertion in 1 test case)
 
@@ -61,148 +37,24 @@ All tests passed (1 assertion in 1 test case)
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"file player repository ignores corrupt player save data" end time: Mar 27 16:56 MDT
+"file player repository ignores corrupt player save data" end time: Mar 27 17:35 MDT
 "file player repository ignores corrupt player save data" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-4/23 Testing: simulation clock accumulates fixed steps
-4/23 Test: simulation clock accumulates fixed steps
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "simulation clock accumulates fixed steps"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"simulation clock accumulates fixed steps" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "simulation clock accumulates fixed steps"
-Randomness seeded to: 1415240552
-===============================================================================
-All tests passed (3 assertions in 1 test case)
-
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"simulation clock accumulates fixed steps" end time: Mar 27 16:56 MDT
-"simulation clock accumulates fixed steps" time elapsed: 00:00:00
-----------------------------------------------------------
-
-5/23 Testing: chat send round-trips through header decode
-5/23 Test: chat send round-trips through header decode
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "chat send round-trips through header decode"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"chat send round-trips through header decode" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "chat send round-trips through header decode"
-Randomness seeded to: 1747677432
-===============================================================================
-All tests passed (4 assertions in 1 test case)
-
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"chat send round-trips through header decode" end time: Mar 27 16:56 MDT
-"chat send round-trips through header decode" time elapsed: 00:00:00
-----------------------------------------------------------
-
-6/23 Testing: cli overrides replace config values
-6/23 Test: cli overrides replace config values
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "cli overrides replace config values"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"cli overrides replace config values" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "cli overrides replace config values"
-Randomness seeded to: 1892182013
-===============================================================================
-All tests passed (2 assertions in 1 test case)
-
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"cli overrides replace config values" end time: Mar 27 16:56 MDT
-"cli overrides replace config values" time elapsed: 00:00:00
-----------------------------------------------------------
-
-7/23 Testing: snapshot replication respects visibility radius
-7/23 Test: snapshot replication respects visibility radius
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "snapshot replication respects visibility radius"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"snapshot replication respects visibility radius" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "snapshot replication respects visibility radius"
-Randomness seeded to: 4177721475
-[2026-03-27 16:56:18.901] [info] peer connected
-[2026-03-27 16:56:18.901] [info] session 1 activated as entity 1
-[2026-03-27 16:56:18.901] [info] peer connected
-[2026-03-27 16:56:18.901] [info] session 2 activated as entity 2
-===============================================================================
-All tests passed (19 assertions in 1 test case)
-
-<end of output>
-Test time =   0.27 sec
-----------------------------------------------------------
-Test Passed.
-"snapshot replication respects visibility radius" end time: Mar 27 16:56 MDT
-"snapshot replication respects visibility radius" time elapsed: 00:00:00
-----------------------------------------------------------
-
-8/23 Testing: world interactions validate range and mutate door state
-8/23 Test: world interactions validate range and mutate door state
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "world interactions validate range and mutate door state"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"world interactions validate range and mutate door state" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "world interactions validate range and mutate door state"
-Randomness seeded to: 51934439
-===============================================================================
-All tests passed (6 assertions in 1 test case)
-
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"world interactions validate range and mutate door state" end time: Mar 27 16:56 MDT
-"world interactions validate range and mutate door state" time elapsed: 00:00:00
-----------------------------------------------------------
-
-9/23 Testing: containers toggle authoritative open state
-9/23 Test: containers toggle authoritative open state
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "containers toggle authoritative open state"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"containers toggle authoritative open state" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "containers toggle authoritative open state"
-Randomness seeded to: 3906317209
-===============================================================================
-All tests passed (6 assertions in 1 test case)
-
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"containers toggle authoritative open state" end time: Mar 27 16:56 MDT
-"containers toggle authoritative open state" time elapsed: 00:00:00
-----------------------------------------------------------
-
-10/23 Testing: player reconnect restores persisted position and identity
-10/23 Test: player reconnect restores persisted position and identity
+3/31 Testing: player reconnect restores persisted position and identity
+3/31 Test: player reconnect restores persisted position and identity
 Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "player reconnect restores persisted position and identity"
 Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"player reconnect restores persisted position and identity" start time: Mar 27 16:56 MDT
+"player reconnect restores persisted position and identity" start time: Mar 27 17:35 MDT
 Output:
 ----------------------------------------------------------
 Filters: "player reconnect restores persisted position and identity"
-Randomness seeded to: 3465028555
-[2026-03-27 16:56:19.167] [info] peer connected
-[2026-03-27 16:56:19.167] [info] session 1 activated as entity 1
-[2026-03-27 16:56:19.515] [info] peer disconnected; session=1
-[2026-03-27 16:56:19.774] [info] peer connected
-[2026-03-27 16:56:19.774] [info] session 2 activated as entity 2
+Randomness seeded to: 2555107698
+[2026-03-27 17:35:36.371] [info] peer connected
+[2026-03-27 17:35:36.371] [info] session 1 activated as entity 1
+[2026-03-27 17:35:36.719] [info] peer disconnected; session=1
+[2026-03-27 17:35:36.976] [info] peer connected
+[2026-03-27 17:35:36.976] [info] session 2 activated as entity 2
 ===============================================================================
 All tests passed (15 assertions in 1 test case)
 
@@ -210,165 +62,19 @@ All tests passed (15 assertions in 1 test case)
 Test time =   1.01 sec
 ----------------------------------------------------------
 Test Passed.
-"player reconnect restores persisted position and identity" end time: Mar 27 16:56 MDT
+"player reconnect restores persisted position and identity" end time: Mar 27 17:35 MDT
 "player reconnect restores persisted position and identity" time elapsed: 00:00:01
 ----------------------------------------------------------
 
-11/23 Testing: client can request sign interaction and receive authoritative result
-11/23 Test: client can request sign interaction and receive authoritative result
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "client can request sign interaction and receive authoritative result"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"client can request sign interaction and receive authoritative result" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "client can request sign interaction and receive authoritative result"
-Randomness seeded to: 1463468939
-[2026-03-27 16:56:20.175] [info] peer connected
-[2026-03-27 16:56:20.175] [info] session 1 activated as entity 1
-===============================================================================
-All tests passed (5 assertions in 1 test case)
-
-<end of output>
-Test time =   0.66 sec
-----------------------------------------------------------
-Test Passed.
-"client can request sign interaction and receive authoritative result" end time: Mar 27 16:56 MDT
-"client can request sign interaction and receive authoritative result" time elapsed: 00:00:00
-----------------------------------------------------------
-
-12/23 Testing: seats track occupant state authoritatively
-12/23 Test: seats track occupant state authoritatively
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "seats track occupant state authoritatively"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"seats track occupant state authoritatively" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "seats track occupant state authoritatively"
-Randomness seeded to: 1119814506
-===============================================================================
-All tests passed (8 assertions in 1 test case)
-
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"seats track occupant state authoritatively" end time: Mar 27 16:56 MDT
-"seats track occupant state authoritatively" time elapsed: 00:00:00
-----------------------------------------------------------
-
-13/23 Testing: clients receive authoritative identity and chat broadcast
-13/23 Test: clients receive authoritative identity and chat broadcast
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "clients receive authoritative identity and chat broadcast"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"clients receive authoritative identity and chat broadcast" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "clients receive authoritative identity and chat broadcast"
-Randomness seeded to: 2055600874
-[2026-03-27 16:56:20.851] [info] peer connected
-[2026-03-27 16:56:20.851] [info] session 1 activated as entity 1
-[2026-03-27 16:56:20.851] [info] peer connected
-[2026-03-27 16:56:20.851] [info] session 2 activated as entity 2
-===============================================================================
-All tests passed (10 assertions in 1 test case)
-
-<end of output>
-Test time =   0.93 sec
-----------------------------------------------------------
-Test Passed.
-"clients receive authoritative identity and chat broadcast" end time: Mar 27 16:56 MDT
-"clients receive authoritative identity and chat broadcast" time elapsed: 00:00:00
-----------------------------------------------------------
-
-14/23 Testing: server config loads expected fields
-14/23 Test: server config loads expected fields
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "server config loads expected fields"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"server config loads expected fields" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "server config loads expected fields"
-Randomness seeded to: 297319823
-===============================================================================
-All tests passed (8 assertions in 1 test case)
-
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"server config loads expected fields" end time: Mar 27 16:56 MDT
-"server config loads expected fields" time elapsed: 00:00:00
-----------------------------------------------------------
-
-15/23 Testing: server config rejects missing required field
-15/23 Test: server config rejects missing required field
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "server config rejects missing required field"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"server config rejects missing required field" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "server config rejects missing required field"
-Randomness seeded to: 3399049141
-===============================================================================
-All tests passed (1 assertion in 1 test case)
-
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"server config rejects missing required field" end time: Mar 27 16:56 MDT
-"server config rejects missing required field" time elapsed: 00:00:00
-----------------------------------------------------------
-
-16/23 Testing: world spawns and despawns players
-16/23 Test: world spawns and despawns players
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "world spawns and despawns players"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"world spawns and despawns players" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "world spawns and despawns players"
-Randomness seeded to: 136009302
-===============================================================================
-All tests passed (5 assertions in 1 test case)
-
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"world spawns and despawns players" end time: Mar 27 16:56 MDT
-"world spawns and despawns players" time elapsed: 00:00:00
-----------------------------------------------------------
-
-17/23 Testing: closed doors block movement until the server opens them
-17/23 Test: closed doors block movement until the server opens them
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "closed doors block movement until the server opens them"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"closed doors block movement until the server opens them" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "closed doors block movement until the server opens them"
-Randomness seeded to: 1400880733
-===============================================================================
-All tests passed (10 assertions in 1 test case)
-
-<end of output>
-Test time =   0.00 sec
-----------------------------------------------------------
-Test Passed.
-"closed doors block movement until the server opens them" end time: Mar 27 16:56 MDT
-"closed doors block movement until the server opens them" time elapsed: 00:00:00
-----------------------------------------------------------
-
-18/23 Testing: interaction request round-trips through header decode
-18/23 Test: interaction request round-trips through header decode
+4/31 Testing: interaction request round-trips through header decode
+4/31 Test: interaction request round-trips through header decode
 Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "interaction request round-trips through header decode"
 Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"interaction request round-trips through header decode" start time: Mar 27 16:56 MDT
+"interaction request round-trips through header decode" start time: Mar 27 17:35 MDT
 Output:
 ----------------------------------------------------------
 Filters: "interaction request round-trips through header decode"
-Randomness seeded to: 31671643
+Randomness seeded to: 4052568961
 ===============================================================================
 All tests passed (4 assertions in 1 test case)
 
@@ -376,19 +82,230 @@ All tests passed (4 assertions in 1 test case)
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"interaction request round-trips through header decode" end time: Mar 27 16:56 MDT
+"interaction request round-trips through header decode" end time: Mar 27 17:35 MDT
 "interaction request round-trips through header decode" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-19/23 Testing: world movement obeys collision and staged intent
-19/23 Test: world movement obeys collision and staged intent
+5/31 Testing: simulation clock accumulates fixed steps
+5/31 Test: simulation clock accumulates fixed steps
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "simulation clock accumulates fixed steps"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"simulation clock accumulates fixed steps" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "simulation clock accumulates fixed steps"
+Randomness seeded to: 3622808891
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"simulation clock accumulates fixed steps" end time: Mar 27 17:35 MDT
+"simulation clock accumulates fixed steps" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/31 Testing: clients receive authoritative identity and chat broadcast
+6/31 Test: clients receive authoritative identity and chat broadcast
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "clients receive authoritative identity and chat broadcast"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"clients receive authoritative identity and chat broadcast" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "clients receive authoritative identity and chat broadcast"
+Randomness seeded to: 2701330913
+[2026-03-27 17:35:37.398] [info] peer connected
+[2026-03-27 17:35:37.398] [info] session 1 activated as entity 1
+[2026-03-27 17:35:37.398] [info] peer connected
+[2026-03-27 17:35:37.398] [info] session 2 activated as entity 2
+===============================================================================
+All tests passed (10 assertions in 1 test case)
+
+<end of output>
+Test time =   0.94 sec
+----------------------------------------------------------
+Test Passed.
+"clients receive authoritative identity and chat broadcast" end time: Mar 27 17:35 MDT
+"clients receive authoritative identity and chat broadcast" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/31 Testing: client can request sign interaction and receive authoritative result
+7/31 Test: client can request sign interaction and receive authoritative result
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "client can request sign interaction and receive authoritative result"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"client can request sign interaction and receive authoritative result" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "client can request sign interaction and receive authoritative result"
+Randomness seeded to: 2482903962
+[2026-03-27 17:35:38.325] [info] peer connected
+[2026-03-27 17:35:38.326] [info] session 1 activated as entity 1
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+
+<end of output>
+Test time =   0.66 sec
+----------------------------------------------------------
+Test Passed.
+"client can request sign interaction and receive authoritative result" end time: Mar 27 17:35 MDT
+"client can request sign interaction and receive authoritative result" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/31 Testing: snapshot replication respects visibility radius
+8/31 Test: snapshot replication respects visibility radius
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "snapshot replication respects visibility radius"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"snapshot replication respects visibility radius" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "snapshot replication respects visibility radius"
+Randomness seeded to: 3816498019
+[2026-03-27 17:35:39.000] [info] peer connected
+[2026-03-27 17:35:39.000] [info] session 1 activated as entity 1
+[2026-03-27 17:35:39.000] [info] peer connected
+[2026-03-27 17:35:39.000] [info] session 2 activated as entity 2
+===============================================================================
+All tests passed (19 assertions in 1 test case)
+
+<end of output>
+Test time =   0.27 sec
+----------------------------------------------------------
+Test Passed.
+"snapshot replication respects visibility radius" end time: Mar 27 17:35 MDT
+"snapshot replication respects visibility radius" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/31 Testing: file player repository falls back to backup save
+9/31 Test: file player repository falls back to backup save
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "file player repository falls back to backup save"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"file player repository falls back to backup save" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "file player repository falls back to backup save"
+Randomness seeded to: 1726990649
+[2026-03-27 17:35:39.245] [warning] failed to load player save for 'birch' from '/tmp/ashpaw_persistence_backup/birch.json': [json.exception.parse_error.101] parse error at line 1, column 3: syntax error while parsing object key - invalid literal; last read: '{ b'; expected string literal
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"file player repository falls back to backup save" end time: Mar 27 17:35 MDT
+"file player repository falls back to backup save" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/31 Testing: chat send round-trips through header decode
+10/31 Test: chat send round-trips through header decode
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "chat send round-trips through header decode"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"chat send round-trips through header decode" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "chat send round-trips through header decode"
+Randomness seeded to: 3027097849
+===============================================================================
+All tests passed (4 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"chat send round-trips through header decode" end time: Mar 27 17:35 MDT
+"chat send round-trips through header decode" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/31 Testing: client hello round-trips through header decode
+11/31 Test: client hello round-trips through header decode
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "client hello round-trips through header decode"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"client hello round-trips through header decode" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "client hello round-trips through header decode"
+Randomness seeded to: 1964065989
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"client hello round-trips through header decode" end time: Mar 27 17:35 MDT
+"client hello round-trips through header decode" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/31 Testing: admin commands can list inspect teleport and stop
+12/31 Test: admin commands can list inspect teleport and stop
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "admin commands can list inspect teleport and stop"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"admin commands can list inspect teleport and stop" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "admin commands can list inspect teleport and stop"
+Randomness seeded to: 3974666747
+===============================================================================
+All tests passed (17 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"admin commands can list inspect teleport and stop" end time: Mar 27 17:35 MDT
+"admin commands can list inspect teleport and stop" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/31 Testing: world interactions validate range and mutate door state
+13/31 Test: world interactions validate range and mutate door state
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "world interactions validate range and mutate door state"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"world interactions validate range and mutate door state" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "world interactions validate range and mutate door state"
+Randomness seeded to: 115354640
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"world interactions validate range and mutate door state" end time: Mar 27 17:35 MDT
+"world interactions validate range and mutate door state" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/31 Testing: cli overrides replace config values
+14/31 Test: cli overrides replace config values
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "cli overrides replace config values"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"cli overrides replace config values" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "cli overrides replace config values"
+Randomness seeded to: 3560031884
+===============================================================================
+All tests passed (2 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cli overrides replace config values" end time: Mar 27 17:35 MDT
+"cli overrides replace config values" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/31 Testing: world movement obeys collision and staged intent
+15/31 Test: world movement obeys collision and staged intent
 Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "world movement obeys collision and staged intent"
 Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"world movement obeys collision and staged intent" start time: Mar 27 16:56 MDT
+"world movement obeys collision and staged intent" start time: Mar 27 17:35 MDT
 Output:
 ----------------------------------------------------------
 Filters: "world movement obeys collision and staged intent"
-Randomness seeded to: 2130956862
+Randomness seeded to: 2343337113
 ===============================================================================
 All tests passed (7 assertions in 1 test case)
 
@@ -396,41 +313,161 @@ All tests passed (7 assertions in 1 test case)
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"world movement obeys collision and staged intent" end time: Mar 27 16:56 MDT
+"world movement obeys collision and staged intent" end time: Mar 27 17:35 MDT
 "world movement obeys collision and staged intent" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-20/23 Testing: client receives object state update for seat interaction
-20/23 Test: client receives object state update for seat interaction
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "client receives object state update for seat interaction"
+16/31 Testing: seats track occupant state authoritatively
+16/31 Test: seats track occupant state authoritatively
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "seats track occupant state authoritatively"
 Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"client receives object state update for seat interaction" start time: Mar 27 16:56 MDT
+"seats track occupant state authoritatively" start time: Mar 27 17:35 MDT
 Output:
 ----------------------------------------------------------
-Filters: "client receives object state update for seat interaction"
-Randomness seeded to: 1504538743
-[2026-03-27 16:56:21.794] [info] peer connected
-[2026-03-27 16:56:21.794] [info] session 1 activated as entity 1
+Filters: "seats track occupant state authoritatively"
+Randomness seeded to: 2271927797
 ===============================================================================
-All tests passed (5 assertions in 1 test case)
+All tests passed (8 assertions in 1 test case)
 
 <end of output>
-Test time =   0.66 sec
+Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"client receives object state update for seat interaction" end time: Mar 27 16:56 MDT
-"client receives object state update for seat interaction" time elapsed: 00:00:00
+"seats track occupant state authoritatively" end time: Mar 27 17:35 MDT
+"seats track occupant state authoritatively" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-21/23 Testing: movement input is clamped during decode
-21/23 Test: movement input is clamped during decode
+17/31 Testing: map validation catches blocked spawns and duplicate interactables
+17/31 Test: map validation catches blocked spawns and duplicate interactables
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "map validation catches blocked spawns and duplicate interactables"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"map validation catches blocked spawns and duplicate interactables" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "map validation catches blocked spawns and duplicate interactables"
+Randomness seeded to: 1446710114
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"map validation catches blocked spawns and duplicate interactables" end time: Mar 27 17:35 MDT
+"map validation catches blocked spawns and duplicate interactables" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/31 Testing: containers toggle authoritative open state
+18/31 Test: containers toggle authoritative open state
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "containers toggle authoritative open state"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"containers toggle authoritative open state" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "containers toggle authoritative open state"
+Randomness seeded to: 1108928965
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"containers toggle authoritative open state" end time: Mar 27 17:35 MDT
+"containers toggle authoritative open state" time elapsed: 00:00:00
+----------------------------------------------------------
+
+19/31 Testing: admin commands validate targets and map issues
+19/31 Test: admin commands validate targets and map issues
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "admin commands validate targets and map issues"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"admin commands validate targets and map issues" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "admin commands validate targets and map issues"
+Randomness seeded to: 2627800762
+===============================================================================
+All tests passed (7 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"admin commands validate targets and map issues" end time: Mar 27 17:35 MDT
+"admin commands validate targets and map issues" time elapsed: 00:00:00
+----------------------------------------------------------
+
+20/31 Testing: invalid opcode is rejected
+20/31 Test: invalid opcode is rejected
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "invalid opcode is rejected"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"invalid opcode is rejected" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "invalid opcode is rejected"
+Randomness seeded to: 2229945328
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"invalid opcode is rejected" end time: Mar 27 17:35 MDT
+"invalid opcode is rejected" time elapsed: 00:00:00
+----------------------------------------------------------
+
+21/31 Testing: malformed handshake and wrong-channel reliable packets are rejected safely
+21/31 Test: malformed handshake and wrong-channel reliable packets are rejected safely
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "malformed handshake and wrong-channel reliable packets are rejected safely"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"malformed handshake and wrong-channel reliable packets are rejected safely" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "malformed handshake and wrong-channel reliable packets are rejected safely"
+Randomness seeded to: 142584606
+[2026-03-27 17:35:39.291] [info] peer connected
+[2026-03-27 17:35:39.291] [info] session 1 activated as entity 1
+===============================================================================
+All tests passed (7 assertions in 1 test case)
+
+<end of output>
+Test time =   0.45 sec
+----------------------------------------------------------
+Test Passed.
+"malformed handshake and wrong-channel reliable packets are rejected safely" end time: Mar 27 17:35 MDT
+"malformed handshake and wrong-channel reliable packets are rejected safely" time elapsed: 00:00:00
+----------------------------------------------------------
+
+22/31 Testing: closed doors block movement until the server opens them
+22/31 Test: closed doors block movement until the server opens them
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "closed doors block movement until the server opens them"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"closed doors block movement until the server opens them" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "closed doors block movement until the server opens them"
+Randomness seeded to: 2299786814
+===============================================================================
+All tests passed (10 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"closed doors block movement until the server opens them" end time: Mar 27 17:35 MDT
+"closed doors block movement until the server opens them" time elapsed: 00:00:00
+----------------------------------------------------------
+
+23/31 Testing: movement input is clamped during decode
+23/31 Test: movement input is clamped during decode
 Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "movement input is clamped during decode"
 Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"movement input is clamped during decode" start time: Mar 27 16:56 MDT
+"movement input is clamped during decode" start time: Mar 27 17:35 MDT
 Output:
 ----------------------------------------------------------
 Filters: "movement input is clamped during decode"
-Randomness seeded to: 2207551226
+Randomness seeded to: 3444604458
 ===============================================================================
 All tests passed (4 assertions in 1 test case)
 
@@ -438,48 +475,192 @@ All tests passed (4 assertions in 1 test case)
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"movement input is clamped during decode" end time: Mar 27 16:56 MDT
+"movement input is clamped during decode" end time: Mar 27 17:35 MDT
 "movement input is clamped during decode" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-22/23 Testing: file player repository saves and loads player state
-22/23 Test: file player repository saves and loads player state
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "file player repository saves and loads player state"
+24/31 Testing: client receives object state update for seat interaction
+24/31 Test: client receives object state update for seat interaction
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "client receives object state update for seat interaction"
 Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"file player repository saves and loads player state" start time: Mar 27 16:56 MDT
+"client receives object state update for seat interaction" start time: Mar 27 17:35 MDT
 Output:
 ----------------------------------------------------------
-Filters: "file player repository saves and loads player state"
-Randomness seeded to: 2633674998
-===============================================================================
-All tests passed (8 assertions in 1 test case)
-
-<end of output>
-Test time =   0.01 sec
-----------------------------------------------------------
-Test Passed.
-"file player repository saves and loads player state" end time: Mar 27 16:56 MDT
-"file player repository saves and loads player state" time elapsed: 00:00:00
-----------------------------------------------------------
-
-23/23 Testing: client hello round-trips through header decode
-23/23 Test: client hello round-trips through header decode
-Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "client hello round-trips through header decode"
-Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
-"client hello round-trips through header decode" start time: Mar 27 16:56 MDT
-Output:
-----------------------------------------------------------
-Filters: "client hello round-trips through header decode"
-Randomness seeded to: 1464897714
+Filters: "client receives object state update for seat interaction"
+Randomness seeded to: 391845099
+[2026-03-27 17:35:39.749] [info] peer connected
+[2026-03-27 17:35:39.749] [info] session 1 activated as entity 1
 ===============================================================================
 All tests passed (5 assertions in 1 test case)
+
+<end of output>
+Test time =   0.66 sec
+----------------------------------------------------------
+Test Passed.
+"client receives object state update for seat interaction" end time: Mar 27 17:35 MDT
+"client receives object state update for seat interaction" time elapsed: 00:00:00
+----------------------------------------------------------
+
+25/31 Testing: server config rejects missing required field
+25/31 Test: server config rejects missing required field
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "server config rejects missing required field"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"server config rejects missing required field" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "server config rejects missing required field"
+Randomness seeded to: 1139622146
+===============================================================================
+All tests passed (1 assertion in 1 test case)
 
 <end of output>
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"client hello round-trips through header decode" end time: Mar 27 16:56 MDT
-"client hello round-trips through header decode" time elapsed: 00:00:00
+"server config rejects missing required field" end time: Mar 27 17:35 MDT
+"server config rejects missing required field" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Mar 27 16:56 MDT
+26/31 Testing: two clients can handshake, spawn, and receive snapshots
+26/31 Test: two clients can handshake, spawn, and receive snapshots
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "two clients can handshake\, spawn\, and receive snapshots"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"two clients can handshake, spawn, and receive snapshots" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "two clients can handshake\, spawn\, and receive snapshots"
+Randomness seeded to: 1329815171
+[2026-03-27 17:35:40.425] [info] peer connected
+[2026-03-27 17:35:40.425] [info] session 1 activated as entity 1
+[2026-03-27 17:35:40.425] [info] peer connected
+[2026-03-27 17:35:40.425] [info] session 2 activated as entity 2
+===============================================================================
+All tests passed (21 assertions in 1 test case)
+
+<end of output>
+Test time =   0.80 sec
+----------------------------------------------------------
+Test Passed.
+"two clients can handshake, spawn, and receive snapshots" end time: Mar 27 17:35 MDT
+"two clients can handshake, spawn, and receive snapshots" time elapsed: 00:00:00
+----------------------------------------------------------
+
+27/31 Testing: file player repository saves and loads player state
+27/31 Test: file player repository saves and loads player state
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "file player repository saves and loads player state"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"file player repository saves and loads player state" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "file player repository saves and loads player state"
+Randomness seeded to: 2407276676
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"file player repository saves and loads player state" end time: Mar 27 17:35 MDT
+"file player repository saves and loads player state" time elapsed: 00:00:00
+----------------------------------------------------------
+
+28/31 Testing: world skips blocked spawn points and rejects fully invalid spawn sets
+28/31 Test: world skips blocked spawn points and rejects fully invalid spawn sets
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "world skips blocked spawn points and rejects fully invalid spawn sets"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"world skips blocked spawn points and rejects fully invalid spawn sets" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "world skips blocked spawn points and rejects fully invalid spawn sets"
+Randomness seeded to: 1827454390
+===============================================================================
+All tests passed (4 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"world skips blocked spawn points and rejects fully invalid spawn sets" end time: Mar 27 17:35 MDT
+"world skips blocked spawn points and rejects fully invalid spawn sets" time elapsed: 00:00:00
+----------------------------------------------------------
+
+29/31 Testing: server tolerates delayed servicing and bursty movement traffic
+29/31 Test: server tolerates delayed servicing and bursty movement traffic
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "server tolerates delayed servicing and bursty movement traffic"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"server tolerates delayed servicing and bursty movement traffic" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "server tolerates delayed servicing and bursty movement traffic"
+Randomness seeded to: 2208106990
+[2026-03-27 17:35:41.217] [info] peer connected
+[2026-03-27 17:35:41.217] [info] session 1 activated as entity 1
+[2026-03-27 17:35:41.707] [info] peer disconnected; session=1
+===============================================================================
+All tests passed (10 assertions in 1 test case)
+
+<end of output>
+Test time =   0.63 sec
+----------------------------------------------------------
+Test Passed.
+"server tolerates delayed servicing and bursty movement traffic" end time: Mar 27 17:35 MDT
+"server tolerates delayed servicing and bursty movement traffic" time elapsed: 00:00:00
+----------------------------------------------------------
+
+30/31 Testing: server config loads expected fields
+30/31 Test: server config loads expected fields
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "server config loads expected fields"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"server config loads expected fields" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "server config loads expected fields"
+Randomness seeded to: 952279468
+===============================================================================
+All tests passed (11 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"server config loads expected fields" end time: Mar 27 17:35 MDT
+"server config loads expected fields" time elapsed: 00:00:00
+----------------------------------------------------------
+
+31/31 Testing: server remains stable across repeated joins and leaves
+31/31 Test: server remains stable across repeated joins and leaves
+Command: "/home/martinb/Documents/AshPawServer/build-vcpkg/ashpaw_server_tests" "server remains stable across repeated joins and leaves"
+Directory: /home/martinb/Documents/AshPawServer/build-vcpkg
+"server remains stable across repeated joins and leaves" start time: Mar 27 17:35 MDT
+Output:
+----------------------------------------------------------
+Filters: "server remains stable across repeated joins and leaves"
+Randomness seeded to: 2742922223
+[2026-03-27 17:35:41.846] [info] peer connected
+[2026-03-27 17:35:41.847] [info] session 1 activated as entity 1
+[2026-03-27 17:35:41.966] [info] peer disconnected; session=1
+[2026-03-27 17:35:42.128] [info] peer connected
+[2026-03-27 17:35:42.128] [info] session 2 activated as entity 2
+[2026-03-27 17:35:42.247] [info] peer disconnected; session=2
+[2026-03-27 17:35:42.411] [info] peer connected
+[2026-03-27 17:35:42.411] [info] session 3 activated as entity 3
+[2026-03-27 17:35:42.531] [info] peer disconnected; session=3
+[2026-03-27 17:35:42.695] [info] peer connected
+[2026-03-27 17:35:42.695] [info] session 4 activated as entity 4
+[2026-03-27 17:35:42.815] [info] peer disconnected; session=4
+[2026-03-27 17:35:42.979] [info] peer connected
+[2026-03-27 17:35:42.979] [info] session 5 activated as entity 5
+[2026-03-27 17:35:43.100] [info] peer disconnected; session=5
+===============================================================================
+All tests passed (31 assertions in 1 test case)
+
+<end of output>
+Test time =   1.42 sec
+----------------------------------------------------------
+Test Passed.
+"server remains stable across repeated joins and leaves" end time: Mar 27 17:35 MDT
+"server remains stable across repeated joins and leaves" time elapsed: 00:00:01
+----------------------------------------------------------
+
+End testing: Mar 27 17:35 MDT

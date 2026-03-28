@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/ashpaw_server_tests.dir/link.d"
+  "CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o"
+  "CMakeFiles/ashpaw_server_tests.dir/tests/admin_command_tests.cpp.o.d"
   "CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o"
   "CMakeFiles/ashpaw_server_tests.dir/tests/config_tests.cpp.o.d"
   "CMakeFiles/ashpaw_server_tests.dir/tests/integration_tests.cpp.o"

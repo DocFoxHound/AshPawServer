@@ -116,9 +116,7 @@ EntityId World::spawn_player() {
 
 EntityId World::spawn_player(Vec2 position) {
     const auto entity_id = next_entity_id();
-    if (!can_spawn_at(position)) {
-        position = map_.spawn_point_for_index(next_spawn_index_++).position;
-    }
+    position = resolve_spawn_position(position);
     entities_.emplace(entity_id, EntityState {
                                    .id = entity_id,
                                    .type = EntityType::player,
@@ -137,6 +135,21 @@ bool World::set_movement_intent(EntityId id, MovementIntent intent) {
         return false;
     }
     found->second.movement_intent = clamp_intent(intent);
+    return true;
+}
+
+bool World::set_entity_position(EntityId id, Vec2 position) {
+    const auto found = entities_.find(id);
+    if (found == entities_.end()) {
+        return false;
+    }
+
+    if (is_position_blocked(position) || is_occupied_by_entity(position, id)) {
+        return false;
+    }
+
+    found->second.position = position;
+    found->second.movement_intent = {};
     return true;
 }
 
@@ -281,6 +294,22 @@ void World::tick(float delta_seconds) {
 
 EntityId World::next_entity_id() {
     return next_entity_id_++;
+}
+
+Vec2 World::resolve_spawn_position(Vec2 requested_position) {
+    if (can_spawn_at(requested_position)) {
+        return requested_position;
+    }
+
+    for (std::size_t index = 0; index < map_.spawn_points.size(); ++index) {
+        const auto& candidate = map_.spawn_point_for_index(next_spawn_index_ + index);
+        if (can_spawn_at(candidate.position)) {
+            next_spawn_index_ += index + 1;
+            return candidate.position;
+        }
+    }
+
+    throw std::runtime_error("map has no valid spawn positions");
 }
 
 bool World::can_spawn_at(Vec2 position) const {

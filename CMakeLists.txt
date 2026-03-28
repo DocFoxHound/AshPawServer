@@ -18,6 +18,7 @@ find_package(nlohmann_json CONFIG REQUIRED)
 find_package(Catch2 CONFIG REQUIRED)
 
 set(ASHPAW_PUBLIC_HEADERS
+    include/ashpaw/app/admin_command_processor.hpp
     include/ashpaw/app/server_app.hpp
     include/ashpaw/config/server_config.hpp
     include/ashpaw/net/network_server.hpp
@@ -28,10 +29,12 @@ set(ASHPAW_PUBLIC_HEADERS
     include/ashpaw/simulation/simulation_clock.hpp
     include/ashpaw/util/logging.hpp
     include/ashpaw/world/map.hpp
+    include/ashpaw/world/map_validation.hpp
     include/ashpaw/world/world.hpp
 )
 
 set(ASHPAW_SOURCES
+    src/app/admin_command_processor.cpp
     src/app/server_app.cpp
     src/config/server_config.cpp
     src/net/network_server.cpp
@@ -41,6 +44,7 @@ set(ASHPAW_SOURCES
     src/simulation/simulation_clock.cpp
     src/util/logging.cpp
     src/world/map.cpp
+    src/world/map_validation.cpp
     src/world/world.cpp
 )
 
@@ -83,6 +87,7 @@ add_executable(ashpaw_server src/app/main.cpp)
 target_link_libraries(ashpaw_server PRIVATE ashpaw_server_lib)
 
 add_executable(ashpaw_server_tests
+    tests/admin_command_tests.cpp
     tests/config_tests.cpp
     tests/persistence_tests.cpp
     tests/protocol_tests.cpp

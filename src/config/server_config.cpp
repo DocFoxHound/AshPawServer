@@ -101,6 +101,9 @@ ServerConfig load_server_config(const std::filesystem::path& path) {
     config.snapshot_rate = require_u16(table, "snapshot_rate");
     config.max_players = require_u16(table, "max_players");
     config.visibility_radius_units = require_u16(table, "visibility_radius_units");
+    config.max_packet_size_bytes = require_u16(table, "max_packet_size_bytes");
+    config.max_display_name_length = require_u16(table, "max_display_name_length");
+    config.max_chat_message_length = require_u16(table, "max_chat_message_length");
     config.startup_map = require_string(table, "startup_map");
     config.player_save_dir = require_string(table, "player_save_dir");
     config.log_level = parse_log_level(require_string(table, "log_level"));

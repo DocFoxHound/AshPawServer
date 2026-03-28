@@ -22,6 +22,9 @@ struct ServerConfig {
     std::uint16_t snapshot_rate {10};
     std::uint16_t max_players {16};
     std::uint16_t visibility_radius_units {160};
+    std::uint16_t max_packet_size_bytes {512};
+    std::uint16_t max_display_name_length {24};
+    std::uint16_t max_chat_message_length {120};
     std::filesystem::path startup_map {"maps/dev_map.json"};
     std::filesystem::path player_save_dir {"data/players"};
     LogLevel log_level {LogLevel::info};

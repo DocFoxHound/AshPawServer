@@ -9,6 +9,7 @@ CMakeFiles/ashpaw_server.dir/src/app/main.cpp.o
  /home/martinb/Documents/AshPawServer/build-vcpkg/vcpkg_installed/x64-linux/include/enet/protocol.h
  /home/martinb/Documents/AshPawServer/build-vcpkg/vcpkg_installed/x64-linux/include/enet/types.h
  /home/martinb/Documents/AshPawServer/build-vcpkg/vcpkg_installed/x64-linux/include/enet/unix.h
+ /home/martinb/Documents/AshPawServer/include/ashpaw/app/admin_command_processor.hpp
  /home/martinb/Documents/AshPawServer/include/ashpaw/app/server_app.hpp
  /home/martinb/Documents/AshPawServer/include/ashpaw/config/server_config.hpp
  /home/martinb/Documents/AshPawServer/include/ashpaw/net/network_server.hpp
@@ -199,6 +200,7 @@ CMakeFiles/ashpaw_server.dir/src/app/main.cpp.o
  /usr/include/c++/15/bits/shared_ptr_base.h
  /usr/include/c++/15/bits/sstream.tcc
  /usr/include/c++/15/bits/std_abs.h
+ /usr/include/c++/15/bits/std_function.h
  /usr/include/c++/15/bits/std_mutex.h
  /usr/include/c++/15/bits/stl_algo.h
  /usr/include/c++/15/bits/stl_algobase.h
@@ -256,6 +258,7 @@ CMakeFiles/ashpaw_server.dir/src/app/main.cpp.o
  /usr/include/c++/15/ext/type_traits.h
  /usr/include/c++/15/filesystem
  /usr/include/c++/15/format
+ /usr/include/c++/15/functional
  /usr/include/c++/15/initializer_list
  /usr/include/c++/15/iomanip
  /usr/include/c++/15/ios

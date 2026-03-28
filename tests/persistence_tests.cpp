@@ -64,3 +64,32 @@ TEST_CASE("file player repository ignores corrupt player save data", "[persisten
     const auto loaded = repository.load("birch");
     CHECK_FALSE(loaded.has_value());
 }
+
+TEST_CASE("file player repository falls back to backup save", "[persistence]") {
+    TempDirectory directory("ashpaw_persistence_backup");
+    ashpaw::persistence::FilePlayerRepository repository(directory.path());
+
+    REQUIRE(repository.save({
+        .schema_version = 1,
+        .player_id = "birch",
+        .display_name = "Birch",
+        .last_map = "dev_map",
+        .last_position = {.x = 96.0F, .y = 128.0F}
+    }));
+    REQUIRE(repository.save({
+        .schema_version = 1,
+        .player_id = "birch",
+        .display_name = "Birch",
+        .last_map = "dev_map",
+        .last_position = {.x = 144.0F, .y = 160.0F}
+    }));
+
+    std::ofstream output(directory.path() / "birch.json", std::ios::trunc);
+    output << "{ broken primary";
+    output.close();
+
+    const auto loaded = repository.load("birch");
+    REQUIRE(loaded.has_value());
+    CHECK(loaded->last_position.x == 96.0F);
+    CHECK(loaded->last_position.y == 128.0F);
+}

@@ -3,6 +3,7 @@
 #include "ashpaw/session/session.hpp"
 
 #include <optional>
+#include <string_view>
 #include <unordered_map>
 #include <vector>
 
@@ -18,6 +19,8 @@ class SessionManager {
 
     [[nodiscard]] Session* find(_ENetPeer* peer);
     [[nodiscard]] const Session* find(_ENetPeer* peer) const;
+    [[nodiscard]] Session* find_by_entity_id(world::EntityId entity_id);
+    [[nodiscard]] Session* find_by_display_name(std::string_view display_name);
     [[nodiscard]] std::vector<Session*> active_sessions();
     [[nodiscard]] std::size_t size() const noexcept;
 

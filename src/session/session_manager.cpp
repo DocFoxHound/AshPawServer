@@ -1,5 +1,7 @@
 #include "ashpaw/session/session_manager.hpp"
 
+#include <string_view>
+
 namespace ashpaw::session {
 
 SessionManager::SessionManager(std::uint16_t max_players)
@@ -38,6 +40,26 @@ Session* SessionManager::find(_ENetPeer* peer) {
 const Session* SessionManager::find(_ENetPeer* peer) const {
     const auto found = sessions_.find(peer);
     return found == sessions_.end() ? nullptr : &found->second;
+}
+
+Session* SessionManager::find_by_entity_id(world::EntityId entity_id) {
+    for (auto& [peer, session] : sessions_) {
+        (void)peer;
+        if (session.entity_id == entity_id) {
+            return &session;
+        }
+    }
+    return nullptr;
+}
+
+Session* SessionManager::find_by_display_name(std::string_view display_name) {
+    for (auto& [peer, session] : sessions_) {
+        (void)peer;
+        if (session.display_name == display_name) {
+            return &session;
+        }
+    }
+    return nullptr;
 }
 
 std::vector<Session*> SessionManager::active_sessions() {

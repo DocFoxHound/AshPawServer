@@ -64,4 +64,4 @@ tomlplusplus provides pkg-config modules:
   # TOML config file parser and serializer for C++
   tomlplusplus
 
-All requested installations completed successfully in: 76 us
+All requested installations completed successfully in: 74.5 us

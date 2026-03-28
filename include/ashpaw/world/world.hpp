@@ -47,11 +47,13 @@ class World {
     EntityId spawn_player(Vec2 position);
     bool despawn(EntityId id);
     bool set_movement_intent(EntityId id, MovementIntent intent);
+    bool set_entity_position(EntityId id, Vec2 position);
     InteractionResult interact(EntityId entity_id, std::string_view target_id);
     void tick(float delta_seconds);
 
   private:
     [[nodiscard]] EntityId next_entity_id();
+    [[nodiscard]] Vec2 resolve_spawn_position(Vec2 requested_position);
     [[nodiscard]] bool can_spawn_at(Vec2 position) const;
     [[nodiscard]] bool is_position_blocked(Vec2 position) const;
     [[nodiscard]] bool is_occupied_by_closed_object(Vec2 position) const;

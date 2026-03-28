@@ -29,6 +29,7 @@ class FilePlayerRepository {
 
   private:
     [[nodiscard]] std::filesystem::path path_for_player(std::string_view player_id) const;
+    [[nodiscard]] std::filesystem::path backup_path_for_player(std::string_view player_id) const;
 
     std::filesystem::path root_directory_;
 };

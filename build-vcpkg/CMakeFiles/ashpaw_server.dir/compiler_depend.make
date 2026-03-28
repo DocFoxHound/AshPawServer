@@ -8,6 +8,7 @@ CMakeFiles/ashpaw_server.dir/src/app/main.cpp.o: /home/martinb/Documents/AshPawS
   vcpkg_installed/x64-linux/include/enet/protocol.h \
   vcpkg_installed/x64-linux/include/enet/types.h \
   vcpkg_installed/x64-linux/include/enet/unix.h \
+  /home/martinb/Documents/AshPawServer/include/ashpaw/app/admin_command_processor.hpp \
   /home/martinb/Documents/AshPawServer/include/ashpaw/app/server_app.hpp \
   /home/martinb/Documents/AshPawServer/include/ashpaw/config/server_config.hpp \
   /home/martinb/Documents/AshPawServer/include/ashpaw/net/network_server.hpp \
@@ -198,6 +199,7 @@ CMakeFiles/ashpaw_server.dir/src/app/main.cpp.o: /home/martinb/Documents/AshPawS
   /usr/include/c++/15/bits/shared_ptr_base.h \
   /usr/include/c++/15/bits/sstream.tcc \
   /usr/include/c++/15/bits/std_abs.h \
+  /usr/include/c++/15/bits/std_function.h \
   /usr/include/c++/15/bits/std_mutex.h \
   /usr/include/c++/15/bits/stl_algo.h \
   /usr/include/c++/15/bits/stl_algobase.h \
@@ -255,6 +257,7 @@ CMakeFiles/ashpaw_server.dir/src/app/main.cpp.o: /home/martinb/Documents/AshPawS
   /usr/include/c++/15/ext/type_traits.h \
   /usr/include/c++/15/filesystem \
   /usr/include/c++/15/format \
+  /usr/include/c++/15/functional \
   /usr/include/c++/15/initializer_list \
   /usr/include/c++/15/iomanip \
   /usr/include/c++/15/ios \
@@ -490,7 +493,9 @@ libashpaw_server_lib.a:
 
 /usr/include/c++/15/iosfwd:
 
-/usr/include/c++/15/bits/atomic_lockfree_defines.h:
+/usr/include/c++/15/ios:
+
+/usr/include/c++/15/initializer_list:
 
 /usr/include/c++/15/bits/atomic_base.h:
 
@@ -580,8 +585,6 @@ libashpaw_server_lib.a:
 
 /usr/include/bits/types/struct_osockaddr.h:
 
-/usr/include/bits/socket_type.h:
-
 /usr/include/bits/sockaddr.h:
 
 /usr/include/c++/15/bits/locale_facets_nonio.h:
@@ -611,6 +614,8 @@ vcpkg_installed/x64-linux/include/enet/protocol.h:
 /usr/include/bits/socket.h:
 
 vcpkg_installed/x64-linux/include/enet/list.h:
+
+/usr/include/bits/pthreadtypes.h:
 
 vcpkg_installed/x64-linux/include/enet/callbacks.h:
 
@@ -672,24 +677,6 @@ vcpkg_installed/x64-linux/debug/lib/libenet.a:
 
 /usr/include/bits/confname.h:
 
-/usr/include/asm/unistd.h:
-
-/home/martinb/Documents/AshPawServer/include/ashpaw/session/session_manager.hpp:
-
-vcpkg_installed/x64-linux/debug/lib/libspdlogd.a:
-
-/usr/include/c++/15/bits/uses_allocator_args.h:
-
-/usr/include/bits/posix2_lim.h:
-
-/usr/include/features.h:
-
-/usr/include/bits/sched.h:
-
-/usr/include/bits/types/__FILE.h:
-
-/usr/include/bits/pthreadtypes.h:
-
 /home/martinb/Documents/AshPawServer/include/ashpaw/session/session.hpp:
 
 /usr/include/c++/15/bits/unicode.h:
@@ -705,6 +692,22 @@ vcpkg_installed/x64-linux/debug/lib/libspdlogd.a:
 /usr/include/c++/15/locale:
 
 /usr/include/asm/socket.h:
+
+/usr/include/asm/unistd.h:
+
+/home/martinb/Documents/AshPawServer/include/ashpaw/session/session_manager.hpp:
+
+vcpkg_installed/x64-linux/debug/lib/libspdlogd.a:
+
+/usr/include/c++/15/bits/uses_allocator_args.h:
+
+/usr/include/bits/posix2_lim.h:
+
+/usr/include/features.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/bits/types/__FILE.h:
 
 /usr/include/bits/types/time_t.h:
 
@@ -728,10 +731,6 @@ vcpkg_installed/x64-linux/debug/lib/libspdlogd.a:
 
 /usr/include/arpa/inet.h:
 
-/usr/include/c++/15/bits/memory_resource.h:
-
-vcpkg_installed/x64-linux/include/enet/types.h:
-
 /home/martinb/Documents/AshPawServer/include/ashpaw/net/network_server.hpp:
 
 /usr/include/bits/types/wint_t.h:
@@ -749,6 +748,10 @@ vcpkg_installed/x64-linux/include/enet/unix.h:
 /home/martinb/Documents/AshPawServer/include/ashpaw/app/server_app.hpp:
 
 /usr/include/bits/byteswap.h:
+
+/usr/include/bits/socket_type.h:
+
+/home/martinb/Documents/AshPawServer/include/ashpaw/app/admin_command_processor.hpp:
 
 /usr/include/bits/pthread_stack_min-dynamic.h:
 
@@ -830,6 +833,12 @@ vcpkg_installed/x64-linux/include/enet/enet.h:
 
 /usr/include/c++/15/codecvt:
 
+/usr/include/c++/15/bits/atomic_lockfree_defines.h:
+
+vcpkg_installed/x64-linux/include/enet/types.h:
+
+/usr/include/c++/15/bits/memory_resource.h:
+
 /usr/include/c++/15/bits/atomic_wait.h:
 
 /usr/include/c++/15/bits/basic_ios.h:
@@ -848,10 +857,6 @@ vcpkg_installed/x64-linux/include/enet/enet.h:
 
 /usr/include/c++/15/bits/chrono_io.h:
 
-/usr/include/c++/15/x86_64-redhat-linux/bits/c++locale.h:
-
-/usr/include/c++/15/bits/codecvt.h:
-
 /usr/include/bits/waitstatus.h:
 
 /usr/include/bits/wchar.h:
@@ -867,8 +872,6 @@ vcpkg_installed/x64-linux/include/enet/enet.h:
 /usr/include/c++/15/ostream:
 
 /usr/include/c++/15/bits/exception.h:
-
-/usr/include/c++/15/initializer_list:
 
 /usr/include/sys/single_threaded.h:
 
@@ -936,9 +939,9 @@ vcpkg_installed/x64-linux/debug/lib/libfmtd.a:
 
 /usr/include/c++/15/bits/nested_exception.h:
 
-/usr/include/asm/posix_types_64.h:
-
 /usr/include/c++/15/iomanip:
+
+/usr/include/asm/posix_types_64.h:
 
 /usr/include/c++/15/bits/ranges_base.h:
 
@@ -979,6 +982,14 @@ vcpkg_installed/x64-linux/debug/lib/libfmtd.a:
 /usr/include/c++/15/bits/sstream.tcc:
 
 /usr/include/c++/15/bits/std_abs.h:
+
+/usr/include/c++/15/x86_64-redhat-linux/bits/c++locale.h:
+
+/usr/include/c++/15/bits/codecvt.h:
+
+/usr/include/c++/15/bits/std_function.h:
+
+/usr/include/c++/15/concepts:
 
 /usr/include/c++/15/bits/stl_algo.h:
 
@@ -1058,8 +1069,6 @@ vcpkg_installed/x64-linux/debug/lib/libfmtd.a:
 
 /usr/include/c++/15/climits:
 
-/usr/include/c++/15/concepts:
-
 /usr/include/c++/15/stdlib.h:
 
 /usr/include/c++/15/ctime:
@@ -1082,4 +1091,4 @@ vcpkg_installed/x64-linux/debug/lib/libfmtd.a:
 
 /usr/include/c++/15/ext/string_conversions.h:
 
-/usr/include/c++/15/ios:
+/usr/include/c++/15/functional:

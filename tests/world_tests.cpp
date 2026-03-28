@@ -156,3 +156,49 @@ TEST_CASE("containers toggle authoritative open state", "[world]") {
     CHECK(closed.state_changed);
     CHECK_FALSE(closed.is_open);
 }
+
+TEST_CASE("world skips blocked spawn points and rejects fully invalid spawn sets", "[world]") {
+    ashpaw::world::MapData map {
+        .map_id = "spawn_test",
+        .tile_size = 32,
+        .width = 5,
+        .height = 5,
+        .collision = {
+            "#####",
+            "##..#",
+            "#...#",
+            "#...#",
+            "#####"
+        },
+        .spawn_points = {
+            {"blocked", {32.0F, 32.0F}},
+            {"valid", {64.0F, 64.0F}}
+        }
+    };
+
+    ashpaw::world::World world(map);
+    const auto entity_id = world.spawn_player();
+    const auto entity = world.entity(entity_id);
+    REQUIRE(entity.has_value());
+    CHECK(entity->position.x == 64.0F);
+    CHECK(entity->position.y == 64.0F);
+
+    ashpaw::world::MapData invalid_map {
+        .map_id = "invalid_spawn_test",
+        .tile_size = 32,
+        .width = 4,
+        .height = 4,
+        .collision = {
+            "####",
+            "####",
+            "####",
+            "####"
+        },
+        .spawn_points = {
+            {"blocked_only", {32.0F, 32.0F}}
+        }
+    };
+
+    ashpaw::world::World invalid_world(invalid_map);
+    CHECK_THROWS_AS(invalid_world.spawn_player(), std::runtime_error);
+}
