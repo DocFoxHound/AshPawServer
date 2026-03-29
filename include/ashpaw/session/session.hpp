@@ -15,6 +15,11 @@ struct ReplicatedObjectState {
     std::uint32_t occupant_entity_id {0};
 };
 
+struct ReplicatedEntityState {
+    world::Vec2 position {};
+    std::int32_t z {0};
+};
+
 enum class ConnectionState {
     connected_unverified,
     handshaking,
@@ -29,7 +34,7 @@ struct Session {
     std::string player_id;
     std::string display_name;
     world::EntityId entity_id {0};
-    std::unordered_map<world::EntityId, world::Vec2> last_replicated_positions;
+    std::unordered_map<world::EntityId, ReplicatedEntityState> last_replicated_positions;
     std::unordered_map<std::string, ReplicatedObjectState> last_replicated_object_states;
 };
 

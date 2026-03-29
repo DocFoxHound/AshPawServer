@@ -557,35 +557,111 @@ client 0 0
 file 0 0
 world 0 0
 invalid 0 0
-world spawns and despawns players 1 0.00304839
-file player repository ignores corrupt player save data 1 0.00251476
-player reconnect restores persisted position and identity 1 1.00793
-interaction request round-trips through header decode 1 0.00290524
-simulation clock accumulates fixed steps 1 0.00251815
-clients receive authoritative identity and chat broadcast 1 0.939316
-client can request sign interaction and receive authoritative result 1 0.662
-snapshot replication respects visibility radius 1 0.270128
-file player repository falls back to backup save 1 0.0044129
-chat send round-trips through header decode 1 0.00264241
-client hello round-trips through header decode 1 0.00274818
-admin commands can list inspect teleport and stop 1 0.00218173
-world interactions validate range and mutate door state 1 0.00257216
-cli overrides replace config values 1 0.00255864
-world movement obeys collision and staged intent 1 0.0024437
-seats track occupant state authoritatively 1 0.00232499
-map validation catches blocked spawns and duplicate interactables 1 0.00230814
-containers toggle authoritative open state 1 0.00235876
-admin commands validate targets and map issues 1 0.00241898
-invalid opcode is rejected 1 0.0018446
-malformed handshake and wrong-channel reliable packets are rejected safely 1 0.451078
-closed doors block movement until the server opens them 1 0.00303132
-movement input is clamped during decode 1 0.00252619
-client receives object state update for seat interaction 1 0.658846
-server config rejects missing required field 1 0.00317411
-two clients can handshake, spawn, and receive snapshots 1 0.797566
-file player repository saves and loads player state 1 0.00321006
-world skips blocked spawn points and rejects fully invalid spawn sets 1 0.00290876
-server tolerates delayed servicing and bursty movement traffic 1 0.62616
-server config loads expected fields 1 0.00294245
-server remains stable across repeated joins and leaves 1 1.42143
+world 0 0
+file 0 0
+player 0 0
+interaction 0 0
+simulation 0 0
+clients 0 0
+client 0 0
+snapshot 0 0
+file 0 0
+chat 0 0
+client 0 0
+admin 0 0
+world 0 0
+cli 0 0
+world 0 0
+seats 0 0
+map 0 0
+containers 0 0
+admin 0 0
+invalid 0 0
+malformed 0 0
+closed 0 0
+movement 0 0
+client 0 0
+server 0 0
+two 0 0
+file 0 0
+world 0 0
+server 0 0
+server 0 0
+server 0 0
+seats 0 0
+clients 0 0
+cli 0 0
+chat 0 0
+server 0 0
+map 0 0
+interaction 0 0
+file 0 0
+movement 0 0
+world 0 0
+server 0 0
+admin 0 0
+malformed 0 0
+two 0 0
+file 0 0
+client 0 0
+client 0 0
+world 0 0
+client 0 0
+player 0 0
+simulation 0 0
+world 0 0
+server 0 0
+containers 0 0
+closed 0 0
+world 0 0
+snapshot 0 0
+invalid 0 0
+admin 0 0
+server 0 0
+file 0 0
+seats 0 0
+clients 0 0
+cli 0 0
+chat 0 0
+server 0 0
+map 0 0
+interaction 0 0
+file 0 0
+movement 0 0
+world 0 0
+server 0 0
+admin 0 0
+malformed 0 0
+two 0 0
+file 0 0
+client 0 0
+client 0 0
+world 0 0
+client 0 0
+player 0 0
+simulation 0 0
+world 0 0
+server 0 0
+containers 0 0
+closed 0 0
+world 0 0
+snapshot 0 0
+invalid 0 0
+admin 0 0
+server 0 0
+file 0 0
+clients 0 0
+two 0 0
+client 0 0
+player 0 0
+server 0 0
+server remains stable across repeated joins and leaves 1 1.41276
+player reconnect restores persisted position and identity 0 0
+clients receive authoritative identity and chat broadcast 0 0
+client hello round-trips through header decode 0 0
+two clients can handshake, spawn, and receive snapshots 0 0
 ---
+player reconnect restores persisted position and identity
+clients receive authoritative identity and chat broadcast
+client hello round-trips through header decode
+two clients can handshake, spawn, and receive snapshots

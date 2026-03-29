@@ -67,11 +67,27 @@ std::optional<ClientHello> decode_client_hello(std::span<const std::uint8_t> pay
     ClientHello packet;
     const auto version = read_scalar<std::uint16_t>(payload);
     const auto display_name = read_string(payload);
-    if (!version.has_value() || !display_name.has_value() || !payload.empty()) {
+    if (!version.has_value() || !display_name.has_value()) {
         return std::nullopt;
     }
     packet.protocol_version = *version;
     packet.display_name = *display_name;
+
+    if (!payload.empty()) {
+        const auto local_map_id = read_string(payload);
+        const auto local_package_version = read_string(payload);
+        const auto local_content_hash = read_string(payload);
+        if (!local_map_id.has_value() || !local_package_version.has_value() || !local_content_hash.has_value()) {
+            return std::nullopt;
+        }
+        packet.local_map_id = *local_map_id;
+        packet.local_package_version = *local_package_version;
+        packet.local_content_hash = *local_content_hash;
+    }
+
+    if (!payload.empty()) {
+        return std::nullopt;
+    }
     return packet;
 }
 
@@ -116,13 +132,15 @@ std::optional<TransformSnapshot> decode_transform_snapshot(std::span<const std::
         const auto entity_id = read_scalar<std::uint32_t>(payload);
         const auto x = read_scalar<float>(payload);
         const auto y = read_scalar<float>(payload);
-        if (!entity_id.has_value() || !x.has_value() || !y.has_value()) {
+        const auto z = read_scalar<std::int32_t>(payload);
+        if (!entity_id.has_value() || !x.has_value() || !y.has_value() || !z.has_value()) {
             return std::nullopt;
         }
         snapshot.entries.push_back(TransformSnapshotEntry {
             .entity_id = *entity_id,
             .x = *x,
-            .y = *y
+            .y = *y,
+            .z = *z
         });
     }
 
@@ -136,6 +154,9 @@ std::vector<std::uint8_t> encode_client_hello(const ClientHello& packet) {
     auto bytes = begin_packet(Opcode::client_hello);
     append_scalar<std::uint16_t>(bytes, packet.protocol_version);
     append_string(bytes, packet.display_name);
+    append_string(bytes, packet.local_map_id);
+    append_string(bytes, packet.local_package_version);
+    append_string(bytes, packet.local_content_hash);
     return bytes;
 }
 
@@ -143,6 +164,10 @@ std::vector<std::uint8_t> encode_server_hello(const ServerHello& packet) {
     auto bytes = begin_packet(Opcode::server_hello);
     append_scalar<std::uint16_t>(bytes, packet.protocol_version);
     append_scalar<std::uint16_t>(bytes, packet.tick_rate);
+    append_string(bytes, packet.map_id);
+    append_string(bytes, packet.package_version);
+    append_string(bytes, packet.content_hash);
+    append_scalar<std::uint8_t>(bytes, packet.package_download_required ? 1U : 0U);
     return bytes;
 }
 
@@ -152,6 +177,7 @@ std::vector<std::uint8_t> encode_join_accepted(const JoinAccepted& packet) {
     append_scalar<std::uint32_t>(bytes, packet.entity_id);
     append_scalar<float>(bytes, packet.spawn_x);
     append_scalar<float>(bytes, packet.spawn_y);
+    append_scalar<std::int32_t>(bytes, packet.spawn_z);
     return bytes;
 }
 
@@ -174,6 +200,7 @@ std::vector<std::uint8_t> encode_player_spawn(const PlayerSpawn& packet) {
     append_scalar<std::uint32_t>(bytes, packet.entity_id);
     append_scalar<float>(bytes, packet.x);
     append_scalar<float>(bytes, packet.y);
+    append_scalar<std::int32_t>(bytes, packet.z);
     return bytes;
 }
 
@@ -233,6 +260,7 @@ std::vector<std::uint8_t> encode_transform_snapshot(const TransformSnapshot& pac
         append_scalar<std::uint32_t>(bytes, entry.entity_id);
         append_scalar<float>(bytes, entry.x);
         append_scalar<float>(bytes, entry.y);
+        append_scalar<std::int32_t>(bytes, entry.z);
     }
     return bytes;
 }
@@ -244,7 +272,8 @@ TransformSnapshot snapshot_from_world(const std::vector<world::EntityState>& ent
         snapshot.entries.push_back(TransformSnapshotEntry {
             .entity_id = entity.id,
             .x = entity.position.x,
-            .y = entity.position.y
+            .y = entity.position.y,
+            .z = entity.z
         });
     }
     return snapshot;

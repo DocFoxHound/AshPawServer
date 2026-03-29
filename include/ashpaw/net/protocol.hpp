@@ -37,11 +37,18 @@ enum class RejectReason : std::uint8_t {
 struct ClientHello {
     std::uint16_t protocol_version {1};
     std::string display_name;
+    std::string local_map_id;
+    std::string local_package_version;
+    std::string local_content_hash;
 };
 
 struct ServerHello {
     std::uint16_t protocol_version {1};
     std::uint16_t tick_rate {20};
+    std::string map_id;
+    std::string package_version;
+    std::string content_hash;
+    bool package_download_required {false};
 };
 
 struct JoinAccepted {
@@ -49,6 +56,7 @@ struct JoinAccepted {
     std::uint32_t entity_id {0};
     float spawn_x {0.0F};
     float spawn_y {0.0F};
+    std::int32_t spawn_z {0};
 };
 
 struct JoinRejected {
@@ -65,6 +73,7 @@ struct PlayerSpawn {
     std::uint32_t entity_id {0};
     float x {0.0F};
     float y {0.0F};
+    std::int32_t z {0};
 };
 
 struct PlayerDespawn {
@@ -106,6 +115,7 @@ struct TransformSnapshotEntry {
     std::uint32_t entity_id {0};
     float x {0.0F};
     float y {0.0F};
+    std::int32_t z {0};
 };
 
 struct TransformSnapshot {

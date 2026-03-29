@@ -24,8 +24,8 @@ std::vector<std::uint8_t> packet_bytes(const ENetPacket& packet) {
     return std::vector<std::uint8_t>(begin, begin + packet.dataLength);
 }
 
-bool same_position(world::Vec2 lhs, world::Vec2 rhs) {
-    return lhs.x == rhs.x && lhs.y == rhs.y;
+bool same_position(const session::ReplicatedEntityState& lhs, const world::EntityState& rhs) {
+    return lhs.position.x == rhs.position.x && lhs.position.y == rhs.position.y && lhs.z == rhs.z;
 }
 
 float distance_squared(world::Vec2 lhs, world::Vec2 rhs) {
@@ -138,7 +138,11 @@ std::size_t NetworkServer::broadcast_snapshots() {
 std::vector<std::uint8_t> NetworkServer::build_server_hello_bytes() const {
     return encode_server_hello(ServerHello {
         .protocol_version = kProtocolVersion,
-        .tick_rate = config_.tick_rate
+        .tick_rate = config_.tick_rate,
+        .map_id = world_.map().map_id,
+        .package_version = world_.map().package_version,
+        .content_hash = world_.map().content_hash,
+        .package_download_required = false
     });
 }
 
@@ -152,7 +156,8 @@ std::vector<std::uint8_t> NetworkServer::build_join_accepted_bytes(const session
         .session_id = session.session_id,
         .entity_id = session.entity_id,
         .spawn_x = entity->position.x,
-        .spawn_y = entity->position.y
+        .spawn_y = entity->position.y,
+        .spawn_z = entity->z
     });
 }
 
@@ -165,7 +170,8 @@ std::vector<std::uint8_t> NetworkServer::build_spawn_bytes(world::EntityId entit
     return encode_player_spawn(PlayerSpawn {
         .entity_id = entity->id,
         .x = entity->position.x,
-        .y = entity->position.y
+        .y = entity->position.y,
+        .z = entity->z
     });
 }
 
@@ -182,13 +188,17 @@ std::optional<std::vector<std::uint8_t>> NetworkServer::build_snapshot_bytes_for
 
     for (const auto& entity : world_.snapshot_entities_near(viewer->position, static_cast<float>(config_.visibility_radius_units))) {
         const auto found = session.last_replicated_positions.find(entity.id);
-        if (found == session.last_replicated_positions.end() || !same_position(found->second, entity.position)) {
+        if (found == session.last_replicated_positions.end() || !same_position(found->second, entity)) {
             snapshot.entries.push_back(TransformSnapshotEntry {
                 .entity_id = entity.id,
                 .x = entity.position.x,
-                .y = entity.position.y
+                .y = entity.position.y,
+                .z = entity.z
             });
-            session.last_replicated_positions[entity.id] = entity.position;
+            session.last_replicated_positions[entity.id] = session::ReplicatedEntityState {
+                .position = entity.position,
+                .z = entity.z
+            };
         }
     }
 
@@ -385,7 +395,30 @@ void NetworkServer::handle_client_hello(session::Session& current_session, std::
         }
     }
 
-    send_packet(current_session.peer, build_server_hello_bytes(), kReliableChannel, true);
+    const bool missing_package_metadata =
+        hello->local_map_id.empty() && hello->local_package_version.empty() && hello->local_content_hash.empty();
+    const bool package_matches =
+        missing_package_metadata ||
+        (hello->local_map_id == world_.map().map_id &&
+         hello->local_package_version == world_.map().package_version &&
+         hello->local_content_hash == world_.map().content_hash);
+
+    send_packet(current_session.peer,
+                encode_server_hello(ServerHello {
+                    .protocol_version = kProtocolVersion,
+                    .tick_rate = config_.tick_rate,
+                    .map_id = world_.map().map_id,
+                    .package_version = world_.map().package_version,
+                    .content_hash = world_.map().content_hash,
+                    .package_download_required = !package_matches
+                }),
+                kReliableChannel,
+                true);
+
+    if (!package_matches) {
+        reject_session_and_disconnect(current_session, RejectReason::malformed_packet, "package download required");
+        return;
+    }
 
     if (current_session.entity_id == 0) {
         current_session.entity_id = world_.spawn_player();
@@ -400,7 +433,8 @@ void NetworkServer::handle_client_hello(session::Session& current_session, std::
         send_packet(current_session.peer, encode_player_spawn(PlayerSpawn {
                                .entity_id = entity.id,
                                .x = entity.position.x,
-                               .y = entity.position.y
+                               .y = entity.position.y,
+                               .z = entity.z
                            }),
                     kReliableChannel,
                     true);
@@ -530,7 +564,8 @@ void NetworkServer::broadcast_object_state_update(const world::InteractionResult
             continue;
         }
 
-        if (distance_squared(viewer->position, object->position) >
+        if (viewer->z != object->z ||
+            distance_squared(viewer->position, object->position) >
             static_cast<float>(config_.visibility_radius_units * config_.visibility_radius_units)) {
             ++metrics_.object_state_packets_suppressed;
             continue;

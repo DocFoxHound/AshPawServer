@@ -2,6 +2,8 @@
 
 The server currently uses a minimal JSON map format for authoritative startup loading, collision, spawn points, and interactables.
 
+The WorldBuilder export now embeds richer runtime-facing visual data alongside the authoritative fields. The server should continue to treat those extra sections as optional and ignore them unless or until runtime consumers explicitly use them.
+
 ## Required Fields
 
 - `map_id`: stable identifier
@@ -43,6 +45,17 @@ This format stays intentionally close to data we can derive from Tiled later:
 - `collision` maps cleanly to a collision layer
 - `spawn_points` map cleanly to spawn objects in an object layer
 - `interactables` map cleanly to named objects in a future object layer export
+
+## Runtime Visual Payload
+
+Exported maps may also include:
+- top-level `projection`
+- `client_payload.projection`
+- `client_payload.tilesets`
+- `client_payload.tile_layers`
+- `client_payload.animated_sprites`
+
+These sections are editor/runtime data, not new authoritative gameplay rules. Current server loading should remain compatible by continuing to depend on `levels`, `spawn_points`, `interactables`, `objects`, and `transitions`.
 
 ## Early Expectations
 
